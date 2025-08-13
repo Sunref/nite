@@ -6,7 +6,8 @@ int main() {
     initscr(); // aloca memoria inicia terminal em modo curses...
     raw(); // a entrada do teclado é passada de forma indireta (sem nenhum tipo de sinal gerado)
     keypad(stdscr, TRUE); // garante que o terminal na memoria alocada receba ações do teclado
-    noecho(); // Desliga o modo de "echo" da biblioteca ncurses, ou seja, impede que os caracteres digitados apareçam automaticamente na tela.
+    noecho(); // Desliga o modo de "echo" da biblioteca ncurses, ou seja, impede que os caracteres
+    // digitados apareçam automaticamente na tela.
 
     printw("Pressione alguma tecla e a mesma será exibida em negrito.\n");
     ch = getch(); // getch vai receber a tecla pressionada
