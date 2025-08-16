@@ -9,10 +9,12 @@
 
 // Cores
 #define COLOR_O COLOR_BLUE
+#define COLOR_N COLOR_YELLOW
 #define COLOR_Q COLOR_RED
 
 // Comandos
 #define CMD_OPEN 'o'
+#define CMD_NEW 'n'
 #define CMD_EXIT 'q'
 
 #endif // CONFIG_H

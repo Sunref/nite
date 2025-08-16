@@ -21,8 +21,12 @@ void draw_centered_screen(WINDOW *win) {
     printw(" para abrir um arquivo");
 
     mvprintw(cmd_y + 1, (col - 40) / 2, "Digite ");
-    attron(COLOR_PAIR(2)); printw("%c", CMD_EXIT); attroff(COLOR_PAIR(2));  // "q" para sair (na cor vermelha)
-    printw(" para sair");
+    attron(COLOR_PAIR(2)); printw("%c", CMD_NEW); attroff(COLOR_PAIR(2));  // "n" para criar novo arquivo (na cor amarelo)
+    printw(" para criar novo arquivo");
+
+    mvprintw(cmd_y + 2, (col - 40) / 2, "Digite ");
+    attron(COLOR_PAIR(3)); printw("%c", CMD_EXIT); attroff(COLOR_PAIR(3));  // "q" para sair (na cor vermelho)
+    printw(" para sair do editor");
 
     refresh(); // atualiza a tela
 

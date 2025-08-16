@@ -1,5 +1,6 @@
 #include "../include/config.h"
 #include "../include/menu.h"
+#include <ncurses.h>
 
 int main() {
 
@@ -11,7 +12,8 @@ int main() {
     start_color();                  // inicia o modo de cores
     use_default_colors();           // permite usar a cor padrão do terminal
     init_pair(1, COLOR_O, -1);      // define o par de cores 1 (azul)
-    init_pair(2, COLOR_Q, -1);      // define o par de cores 2 (vermelho)
+    init_pair(2,COLOR_N,-1);        // define o par de cores 2 (amarelo)
+    init_pair(3, COLOR_Q, -1);      // define o par de cores 3 (vermelho)
 
     while (1) {
 
