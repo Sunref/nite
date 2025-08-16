@@ -1,0 +1,107 @@
+% Desenvolvido por: Prof. Dr. David Buzatto
+%
+% Versão 1.6.3
+% Data: 04/12/2023
+
+\documentclass[
+    12pt,
+    oneside,
+    a4paper,
+    chapter=TITLE,
+    english,
+    french,
+    spanish,
+    brazil,
+]{abntex2}
+
+\usepackage{estrutura}
+
+% ---
+% Dados do documento
+% ---
+
+\tipotrabalho{Relatório Técnico}
+
+\titulo{Criação de um editor de texto inspirado em nano utilizando ncurses em linguagem C}
+% caso não haja, comente a linha abaixo
+\subtitulo{NITE: Nano-Inspired Text Editor}
+
+\autor{Fernanda Martins da Silva}
+\orientador{Prof.Dr.David Buzatto}
+% caso não haja, comente a linha abaixo
+% \coorientador{Prof./Profa. Me./Dr./Dra. Nome Completo}
+
+\curso{Bacharelado em Ciência da Computação}
+\grau{Definição do grau}
+
+%exemplos
+%\curso{Bacharelado em Ciência da Computação}
+%\grau{Bacharel em Ciência da Computação em Sistemas para Internet}
+%\curso{Especialização em Desenvolvimento de Aplicações para Dispositivos Móveis}
+%\grau{Especialista em Desenvolvimento de Aplicações para Dispositivos Móveis}
+
+\campus{São João da Boa Vista}
+\area{Área de Concentração do Trabalho}
+
+\local{São João da Boa Vista}
+\mes{MÊS}
+\ano{2025}
+
+\instituicao{%
+Instituto Federal de Educação, Ciência e Tecnologia de São Paulo \par Câmpus \imprimircampus }
+
+\preambulo{\imprimirtipotrabalho\ elaborado conforme a ABNT NBR 10719:10, apresentado ao Instituto Federal de Educação, Ciência e Tecnologia de São Paulo, como parte dos requisitos para a obtenção do grau de \imprimirgrau. \\ \\ Área de Concentração: \imprimirarea}
+
+\setlength{\parindent}{1.3cm}
+\setlength{\parskip}{0.2cm}
+
+\makeindex
+
+% ---------------------------------------------------------------------------------
+%                                   INÍCIO DO DOCUMENTO
+% ---------------------------------------------------------------------------------
+\begin{document}
+    % Seleciona o idioma do documento
+    \selectlanguage{brazil}
+
+    % Retira espaço extra obsoleto entre as frases.
+    \frenchspacing
+
+    \pretextual
+    \input{01Capa}
+    \input{02FolhaDeRosto}
+
+    % ---
+    % Inserir a ficha catalográfica
+    % ---
+    \input{03FichaCatalografica}
+
+    % ---
+    % Inserir ata de defesa
+    % ---
+    \input{04AtaDefesa}
+
+    % ---
+    % inserir o sumário
+    % ---
+    \pdfbookmark[0]{\contentsname}{toc}
+    \tableofcontents
+    *
+    \cleardoublepage
+    % ---
+
+    \input{05Resumo}
+
+    \textual
+    \input{capitulo01Introducao}
+    \input{capitulo02ConsideracoesGerais}
+    \input{capitulo03Metodologia}
+    \input{capitulo04AnaliseDosResultados}
+    \input{capitulo05ConclusoesRecomendacoes}
+
+    % ----------------------------------------------------------
+    % Referências bibliográficas
+    % ----------------------------------------------------------
+    \postextual
+    \bibliography{referencias}
+\end{document}
