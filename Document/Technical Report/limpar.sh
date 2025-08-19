@@ -6,10 +6,11 @@ echo "Iniciando limpeza de arquivos temporários..."
 
 # Lista de extensões para remover
 extensions=(
-    "aux" "bak" "bbl" "blg" "brf" "def" "equ" "exp" 
-    "gz" "idx" "ilg" "lis" "listing" "lof" "log" "loq" 
-    "lot" "nav" "out" "pdf" "pyg" "sav" "sigla" "siglax" 
+    "aux" "bak" "bbl" "blg" "brf" "def" "equ" "exp"
+    "gz" "idx" "ilg" "lis" "listing" "lof" "log" "loq"
+    "lot" "nav" "out" "pdf" "pyg" "sav" "sigla" "siglax"
     "snm" "stf" "symbols" "symbolsx" "synctex" "toc" "xwm"
+    "fdb_latexmk" "fls" "ind"
 )
 
 # Contador de arquivos removidos
