@@ -1,7 +1,7 @@
 ```
- _   _ ___ _____ _____ 
+ _   _ ___ _____ _____
 | \ | |_ _|_   _| ____|
-|  \| || |  | | |  _| 
+|  \| || |  | | |  _|
 | |\  || |  | | | |___
 |_| \_|___| |_| |_____|
 
@@ -11,8 +11,14 @@ Inspired by the **nano** editor, NITE provides an intuitive and efficient interf
 
 ![Screenshot](screenshot.png)
 
+## Why nano?
+I chose nano as a reference because it represents the balance between simplicity, speed, reliability, and portability. While other terminal editors can be more complex, nano proves that it is possible to be minimalistic and efficient without losing usability. My project follows this philosophy, keeping nano’s straightforward usability while integrating features inspired by other terminal editors.
+
 ## Features
 - Simple and clean terminal interface.
-- Keyboard shortcuts inspired by **nano** and **vim**.
 - Support for creating and editing text files.
 - Written in **C** for maximum performance.
+
+## *Note*
+This project was developed as the final requirement for my Computer Science degree.
+Feel free to contribute, use it as a reference, or reach out for future collaborations!
