@@ -11,10 +11,12 @@
 #define COLOR_O COLOR_BLUE
 #define COLOR_N COLOR_YELLOW
 #define COLOR_Q COLOR_RED
+#define COLOR_H COLOR_WHITE
 
 // Comandos
-#define CMD_OPEN 'o'
-#define CMD_NEW 'n'
-#define CMD_EXIT 'q'
+#define CMD_OPEN  "!o"      // Open
+#define CMD_NEW   "!n"      // New
+#define CMD_EXIT  "!q"      // Quit
+#define CMD_HELP  "!help"   // Help
 
-#endif // CONFIG_H
+#endif

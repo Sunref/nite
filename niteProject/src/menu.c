@@ -1,33 +1,50 @@
-#include "../include/config.h"
+// Desenha a tela principal centralizada na janela fornecida
+
 #include "../include/menu.h"
+#include "../include/config.h"
+#include <ncurses.h>
 #include <string.h>
 
 void draw_centered_screen(WINDOW *win) {
 
-    int row;                    // variaveis para armazenar o tamanho da janela
+    int row;
     int col;
-    getmaxyx(win, row, col);    // pegando o tamanho da janela
-    clear();                    // limpa a tela
+    getmaxyx(win, row, col);    // Obtém o tamanho atual da janela (linhas e colunas)
 
-    mvprintw(row/2 - 4, (col - strlen(TITLE)) / 2, "%s", TITLE);        // titulo
-    mvprintw(row/2 - 2, (col - strlen(SUBTITLE)) / 2, "%s", SUBTITLE);  // subtitulo
-    mvprintw(row/2, (col - strlen(VERSION)) / 2, "%s", VERSION);        // versao
-    mvprintw(row/2 + 1, (col - strlen(AUTHOR)) / 2, "%s", AUTHOR);      // autor
+    wclear(win);    // Limpa a janela antes de desenhar
+    use_default_colors(); // Usa as cores padrão do terminal
 
-    int cmd_y = row/2 + 4; // posicao y para os comandos
+    // Título e subtítulo, versão e autor  centralizados
+    wattron(win, COLOR_PAIR(4));
+    mvwprintw(win, row/2 - 4, (col - strlen(TITLE)) / 2, "%s", TITLE);
+    mvwprintw(win, row/2 - 2, (col - strlen(SUBTITLE)) / 2, "%s", SUBTITLE);
+    mvwprintw(win, row/2, (col - strlen(VERSION)) / 2, "%s", VERSION);
+    mvwprintw(win, row/2 + 1, (col - strlen(AUTHOR)) / 2, "%s", AUTHOR);
+    wattroff(win, COLOR_PAIR(4));
 
-    mvprintw(cmd_y, (col - 40) / 2, "Digite ");
-    attron(COLOR_PAIR(1)); printw("%c", CMD_OPEN); attroff(COLOR_PAIR(1));  // "o" para abrir (na cor azul)
-    printw(" para abrir um arquivo");
+    int cmd_y = row/2 + 4; // Linha onde os comandos serão exibidos
 
-    mvprintw(cmd_y + 1, (col - 40) / 2, "Digite ");
-    attron(COLOR_PAIR(2)); printw("%c", CMD_NEW); attroff(COLOR_PAIR(2));  // "n" para criar novo arquivo (na cor amarelo)
-    printw(" para criar novo arquivo");
+    // Digite !o para abrir um arquivo
+    mvwprintw(win, cmd_y, (col - 50) / 2, "Digite ");
+    wattron(win, COLOR_PAIR(1)); // azul
+    wprintw(win, "!o");
+    wattroff(win, COLOR_PAIR(1));
+    wprintw(win, " para abrir um arquivo");
 
-    mvprintw(cmd_y + 2, (col - 40) / 2, "Digite ");
-    attron(COLOR_PAIR(3)); printw("%c", CMD_EXIT); attroff(COLOR_PAIR(3));  // "q" para sair (na cor vermelho)
-    printw(" para sair do editor");
+    // Digite !n para criar novo arquivo
+    mvwprintw(win, cmd_y + 1, (col - 50) / 2, "Digite ");
+    wattron(win, COLOR_PAIR(2)); // amarelo
+    wprintw(win, "!n");
+    wattroff(win, COLOR_PAIR(2));
+    wprintw(win, " para criar novo arquivo");
 
-    refresh(); // atualiza a tela
+    // Digite !q para sair do editor
+    mvwprintw(win, cmd_y + 2, (col - 50) / 2, "Digite ");
+    wattron(win, COLOR_PAIR(3)); // vermelho
+    wprintw(win, "!q");
+    wattroff(win, COLOR_PAIR(3));
+    wprintw(win, " para sair do editor");
+
+    wrefresh(win);      // Atualiza a janela para mostrar as mudanças
 
 }
