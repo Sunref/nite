@@ -182,7 +182,7 @@ memorizar uma série de comandos e sintaxes, o que tornava o uso do computador m
 
 O terminal VT100, lançado em 1978 pela Digital Equipment Corporation (DEC), foi um marco por introduzir códigos de escape ANSI (American National Standards
 Institute) e permitir controle de cursor e formatação de texto, características que tornaram a linha de comando mais funcional e eficiente. Apesar disso,
-o uso da CLI ainda exigia conhecimento técnico bastante avançado, o que ainda limitava bastante o acesso ao uso do computador.
+o uso da CLI continuava exigindo conhecimento técnico avançado, o que ainda limitava bastante o acesso ao uso do computador.
 
 Mas os avanços não se limitaram apenas ao hardware, as constantes descobertas na tecnologia possibilitaram a criação dos primeiros Sistemas Operacionais (OS),
 como o UNIX (1970) e o MS-DOS (1981), popularizando o uso de terminais e CLIs e os tornando mais acessíveis ao público. Ainda no início do UNIX surgiram
@@ -194,7 +194,9 @@ O Vi introduziu uma abordagem modal para edição de texto, onde os usuários po
 eficiente. O Emacs, por outro lado, foi desenvolvido por Richard M. Stallman, e se destacou por sua extensibilidade e personalização, permitindo que os
 usuários criassem seus próprios comandos e macros. Atualmente existem diversas variações desses editores, como o Vim (Vi Improved) e o NeoVim, versões
 aprimoradas do Vi, e também com o Emacs, possuíndo diversas variações e extensões, como o Spacemacs e o Doom Emacs, todos seguindo a mesma filosofia de edição
-de texto em CLI. Já na linha do MS-DOS, o editor de texto mais conhecido é o EDIT.COM, que foi introduzido no MS-DOS 2.0 em 1983. O EDIT.COM era um editor de
+de texto em CLI.
+
+Já na linha do MS-DOS, o editor de texto mais conhecido é o EDIT.COM, que foi introduzido no MS-DOS 2.0 em 1983. O EDIT.COM era um editor de
 texto simples, mas permitia aos usuários criar e editar arquivos de texto diretamente no terminal. Com o tempo, outros editores de texto CLI surgiram, como o
 Nano (1999), que se destacou por sua simplicidade e facilidade de uso, tornando-se uma escolha popular para usuários que preferiam uma interface mais amigável
 em comparação com o Vi e o Emacs. O Nano foi projetado para ser um editor de texto fácil de usar, com uma interface intuitiva e comandos simples, tornando-o
@@ -218,16 +220,15 @@ autocompletar, entre outros, tornando a edição de texto mais eficiente e produ
 
 O Notepad++ é um editor de texto de código aberto que se destaca por sua leveza e simplicidade, oferecendo uma interface amigável e recursos avançados
 para edição de código-fonte. Ele suporta várias linguagens de programação e possui recursos como realceamento de sintaxe, autocompletar, busca avançada e
-suporte a plugins, tornando-o uma escolha popular entre usuários que buscam um editor de texto simples mas eficiente. O Visual Studio Code,
-por outro lado, é um editor de código-fonte desenvolvido pela Microsoft que se tornou extremamente popular devido à sua extensibilidade e integração com
-diversas ferramentas de desenvolvimento, além de oferecer uma ampla gama de recursos como depuração integrada, controle de versão, suporte a várias linguagens
-de programação e uma vasta biblioteca de extensões, permitindo que os usuários personalizem sua experiência de edição de texto de acordo com suas necessidades.
-O Zed é um editor de código-fonte mais recente que se destaca por sua abordagem colaborativa e em tempo real, permitindo que vários usuários editem o mesmo
-arquivo simultaneamente. Ele oferece uma interface moderna e intuitiva e que se assemelha muito ao Visual Studio Code, com recursos como realceamento de sintaxe,
-autocompletar, integração com sistemas de controle de versão e suporte a plugins, tornando-o uma escolha interessante para equipes de desenvolvimento que buscam
-uma experiência de edição colaborativa e eficiente.
+suporte a plugins, tornando-o uma escolha popular entre usuários que buscam um editor de texto simples mas eficiente.
+
+Por outro lado o Visual Studio Code é um editor de código-fonte desenvolvido pela Microsoft que se tornou extremamente popular devido à sua extensibilidade e
+integração com diversas ferramentas de desenvolvimento, além de oferecer uma ampla gama de recursos como depuração integrada, controle de versão, suporte a
+várias linguagens de programação e uma vasta biblioteca de extensões, permitindo que os usuários personalizem sua experiência de edição de texto de acordo com
+suas necessidades.
 
 \FloatBarrier
+
 \begin{figure}[!htbp]
 	\centering
 	\caption{Visual Studio Code}
@@ -237,6 +238,11 @@ uma experiência de edição colaborativa e eficiente.
 \end{figure}
 \FloatBarrier
 
+Já o recente e ainda em desenvolvimento Zed Editor se destaca por sua abordagem colaborativa e em tempo real, permitindo que vários usuários editem o mesmo
+arquivo simultaneamente. Ele oferece uma interface moderna e intuitiva e que se assemelha muito ao Visual Studio Code, com recursos como realceamento de sintaxe,
+autocompletar, integração com sistemas de controle de versão e suporte a plugins, tornando-o uma escolha interessante para equipes de desenvolvimento que buscam
+uma experiência de edição colaborativa e eficiente.
+
 Ainda hoje, após décadas de evolução, há usuários que preferem interagir por meio de CLIs, especialmente em ambientes de desenvolvimento, como ao utilizar o
 editor NeoVim em sistemas UNIX. Com base nisso, este trabalho propõe a criação de um editor CLI inspirado no Nano, mas com uma interface mais moderna e
 intuitiva, mantendo a essência dos clássicos editores de texto em terminal mencionados anteriormente.
@@ -245,12 +251,24 @@ intuitiva, mantendo a essência dos clássicos editores de texto em terminal men
 
 MEIA PÁGINA PARA CADA UM (ou mais se julgar necessário)
 
-Deve conter: Listar editores antigos (por questões históricas); Talvez um detalhe baixo nível, sobre como funcionam os buffers de busca
-em um texto.
+AAAAAAAAAAAAAAA NÃO SEI COMO COMEÇAR AQUI
 
-\subsection{Principais Bibliotecas para Lidar com Terminal em linguagem C} % TODO: Mudar nome depois
+EDITORES: Vi, Emacs, Nano, NeoVim, Visual Studio Code, Zed, Notepad++, etc. (PASSAR POR CIMA BREVEMENTE, já que já foram citados acima) mas falar um pouco mais
+sobre buffer, como funcionam, etc.
+
+PROCESSADORES DE TEXTO: Microsoft Word, LibreOffice Writer, Google Docs, etc.
+
+IDEs: Visual Studio, CodeBlocks, NetBeans, IntelliJ IDEA, PyCharm, etc.
+
+\subsection{Principais Bibliotecas para Lidar com Terminal em linguagem C}
 
 MEIA PÁGINA PARA CADA BIBLIOTECA
+Falar um pouco sobre cada uma e por que a escolhida foi a ncurses.
 
-Deve conter: As principais bibliotecas para lidar com terminal (ncurses, termbox, etc); Falar um pouco sobre cada uma e
-por que a escolhida foi a ncurses.
+NCURSES e CURSES:
+
+TERMBOX:
+
+TERMINFO e TERMCAP:
+
+S-LANG:
