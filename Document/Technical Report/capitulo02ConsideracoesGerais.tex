@@ -19,7 +19,6 @@ Texto das considerações gerais, dividido em subseções. % TODO: Perguntar ao 
 % \end{figure}
 % \FloatBarrier
 
-
 % Este é um exemplo de como usar tabelas. Referência cruzada: Tabela~\ref{tab:exemplo}
 
 % \FloatBarrier
@@ -170,27 +169,77 @@ Pesquise e descreva no mínimo três trabalhos correlatos ao seu.
 
 \subsection{Interface Modo Texto x Modo Gráfico}
 
-% 4 PÁGINAS (Duas páginas para cada modo? pensar)
-
-% Deve conter: Histórico, exemplos...; Dar um gancho e falar dos editores de texto em modo texto (Vim, Emacs, Nano, helix, etc)
-% e em modo gráfico (Notepad++, VSCode, Zed, etc); Falar que o foco do trabalho é editor  em modo texto.
-
 Como os usuários interagiam com computadores antes das interfaces gráficas? Nos primórdios da computação, programas e dados eram armazenados em cartões
-perfurados, estes que eram pré-processados e geravam saída após um longo tempo de espera. Com a constante evolução das maquinas e a criação dos mainframes, a
-interação usuário-máquina passou a ser  feita principalmente por meio de interfaces de linha de comando (CLI), como o TTY. Nestes sistemas os usuários digitavam
+perfurados, estes que eram pré-processados em lote e com longa espera de resultados. Com a constante evolução das maquinas e a criação dos mainframes,
+grandes e poderosos computadores que suportavam diversas interações simultaneamente e com níveis de confiabilidade e multitarefa, fez com que a comunicação
+entre usuário e máquina passasse a ser realizada de forma mais iterativa, principalmente por meio de interfaces de linha de comando (CLI),
+como o TTY (Teletypewriter) e o terminal VT100 (um tipo de terminal fisíco que continha apenas tela e teclado). Nestes sistemas os usuários digitavam
 comandos diretamente em um terminal e recebiam uma saída quase em tempo real.
 
-Diferente da atualidade dominada pelas interfaces gráficas (GUI), as interfaces de linha de comando
-exigiam que os usuários conhecessem os comandos exatos para realizar tarefas simples, como copiar arquivos ou executar programas. Essa ausência de uma interface
-gráfica significava que os usuários precisavam memorizar uma série de comandos e sintaxes, o que tornava o uso do computador muito mais técnico e menos acessível
-ao público em geral.
+Diferente da atualidade dominada pelas interfaces gráficas (GUI), as interfaces de linha de comando exigiam que os usuários conhecessem os comandos exatos
+para realizar tarefas simples, como copiar arquivos ou executar programas. Essa ausência de uma interface gráfica significava que os usuários precisavam
+memorizar uma série de comandos e sintaxes, o que tornava o uso do computador muito mais técnico e menos acessível ao público em geral.
 
-Um exemplo notável dessa era é o terminal VT100, lançado em 1978 pela Digital Equipment Corporation (DEC), pioneiro a introduzir códigos de escape ANSI e
-permitindo controle absoluto do cursor e formatação de texto.
+O terminal VT100, lançado em 1978 pela Digital Equipment Corporation (DEC), foi um marco por introduzir códigos de escape ANSI (American National Standards
+Institute) e permitir controle de cursor e formatação de texto, características que tornaram a linha de comando mais funcional e eficiente. Apesar disso,
+o uso da CLI ainda exigia conhecimento técnico bastante avançado, o que ainda limitava bastante o acesso ao uso do computador.
 
-Ainda hoje, após decadas de evolução, ainda é possível encontrar usuários que preferem a interação por meio das CLIs, especialmente em ambientes
-de desenvolvimento de sistemas. A popularidade de editores de texto em terminais, como o Vim em ambientes UNIX desmonstra exatamente a força dessa comunidade.
+Mas os avanços não se limitaram apenas ao hardware, as constantes descobertas na tecnologia possibilitaram a criação dos primeiros Sistemas Operacionais (OS),
+como o UNIX (1970) e o MS-DOS (1981), popularizando o uso de terminais e CLIs e os tornando mais acessíveis ao público. Ainda no início do UNIX surgiram
+os primeiros editores, como o Vi (1976) e o Emacs (1976), possibilitando um uso mais robusto da máquina com execução de comandos em tempo real,
+automatização de tarefas e o principal, a manipulação de texto.
 
+Baseado no editor EX, o Vi foi criado por Bill Joy e rapidamente se tornou um dos editores de texto mais icônicos e amplamente utilizados no mundo UNIX.
+O Vi introduziu uma abordagem modal para edição de texto, onde os usuários podiam alternar entre modos de inserção e comando, permitindo uma edição mais
+eficiente. O Emacs, por outro lado, foi desenvolvido por Richard M. Stallman, e se destacou por sua extensibilidade e personalização, permitindo que os
+usuários criassem seus próprios comandos e macros. Atualmente existem diversas variações desses editores, como o Vim (Vi Improved) e o NeoVim, versões
+aprimoradas do Vi, e também com o Emacs, possuíndo diversas variações e extensões, como o Spacemacs e o Doom Emacs, todos seguindo a mesma filosofia de edição
+de texto em CLI. Já na linha do MS-DOS, o editor de texto mais conhecido é o EDIT.COM, que foi introduzido no MS-DOS 2.0 em 1983. O EDIT.COM era um editor de
+texto simples, mas permitia aos usuários criar e editar arquivos de texto diretamente no terminal. Com o tempo, outros editores de texto CLI surgiram, como o
+Nano (1999), que se destacou por sua simplicidade e facilidade de uso, tornando-se uma escolha popular para usuários que preferiam uma interface mais amigável
+em comparação com o Vi e o Emacs. O Nano foi projetado para ser um editor de texto fácil de usar, com uma interface intuitiva e comandos simples, tornando-o
+acessível para usuários menos experientes. Recentemente a Microsoft relançou o editor EDIT como parte do Windows Terminal, mantendo a mesma
+simplicidade e funcionalidade do original, mas com melhorias na interface e na integração com o Windows.
+
+\FloatBarrier
+\begin{figure}[!htbp]
+	\centering
+	\caption{EDIT.COM no MS-DOS}
+	\includegraphics[scale=0.8]{imagens/EDIT_MSDOS}
+	\\\textbf{Fonte: Internet Archive}
+	\label{fig:EDIT_MSDOS}
+\end{figure}
+\FloatBarrier
+
+Mais adiante na história, com o avanço das interfaces gráficas os editores de texto passaram a se tornar mais visuais. É possível notar essa evolução em
+softwares como o Notepad++ (2003) até editores mais famosos como Visual Studio Code (2015) e o recente Zed (2022). Esses editores de texto modernos oferecem
+uma ampla gama de recursos, como customização e extensibilidade, suporte a plugins, integração com sistemas de controle de versão, destacamento de sintaxe,
+autocompletar, entre outros, tornando a edição de texto mais eficiente e produtiva.
+
+O Notepad++ é um editor de texto de código aberto que se destaca por sua leveza e simplicidade, oferecendo uma interface amigável e recursos avançados
+para edição de código-fonte. Ele suporta várias linguagens de programação e possui recursos como realceamento de sintaxe, autocompletar, busca avançada e
+suporte a plugins, tornando-o uma escolha popular entre usuários que buscam um editor de texto simples mas eficiente. O Visual Studio Code,
+por outro lado, é um editor de código-fonte desenvolvido pela Microsoft que se tornou extremamente popular devido à sua extensibilidade e integração com
+diversas ferramentas de desenvolvimento, além de oferecer uma ampla gama de recursos como depuração integrada, controle de versão, suporte a várias linguagens
+de programação e uma vasta biblioteca de extensões, permitindo que os usuários personalizem sua experiência de edição de texto de acordo com suas necessidades.
+O Zed é um editor de código-fonte mais recente que se destaca por sua abordagem colaborativa e em tempo real, permitindo que vários usuários editem o mesmo
+arquivo simultaneamente. Ele oferece uma interface moderna e intuitiva e que se assemelha muito ao Visual Studio Code, com recursos como realceamento de sintaxe,
+autocompletar, integração com sistemas de controle de versão e suporte a plugins, tornando-o uma escolha interessante para equipes de desenvolvimento que buscam
+uma experiência de edição colaborativa e eficiente.
+
+\FloatBarrier
+\begin{figure}[!htbp]
+	\centering
+	\caption{Visual Studio Code}
+	\includegraphics[scale=0.3]{imagens/VSCode}
+	\\\textbf{Fonte: Github Microsoft - Visual Studio Code}
+	\label{fig:VSCode}
+\end{figure}
+\FloatBarrier
+
+Ainda hoje, após décadas de evolução, há usuários que preferem interagir por meio de CLIs, especialmente em ambientes de desenvolvimento, como ao utilizar o
+editor NeoVim em sistemas UNIX. Com base nisso, este trabalho propõe a criação de um editor CLI inspirado no Nano, mas com uma interface mais moderna e
+intuitiva, mantendo a essência dos clássicos editores de texto em terminal mencionados anteriormente.
 
 \subsection{Editores, Processadores de Texto e IDEs}
 
@@ -199,7 +248,7 @@ MEIA PÁGINA PARA CADA UM (ou mais se julgar necessário)
 Deve conter: Listar editores antigos (por questões históricas); Talvez um detalhe baixo nível, sobre como funcionam os buffers de busca
 em um texto.
 
-\subsection{Bibliotecas para Lidar com Terminal} % TODO: Mudar nome depois
+\subsection{Principais Bibliotecas para Lidar com Terminal em linguagem C} % TODO: Mudar nome depois
 
 MEIA PÁGINA PARA CADA BIBLIOTECA
 
