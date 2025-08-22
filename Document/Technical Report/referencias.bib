@@ -1,126 +1,140 @@
 @COMMENT{
-	tipos de entradas mais comuns = {},
-	article = {artigo em periódico},
-	book = {livro},
-	online = {recurso online ou página web}
+  tipos de entradas mais comuns = {},
+  article = {artigo em periódico},
+  book = {livro},
+  misc = {recurso online ou página web}
 }
-
-% Referencias
-% INTERFACE MODO GRAFICO X MODO TEXTO
-% “The Art of Unix Programming” – Eric S. Raymond
-% Documentação de VT100/ANSI escape codes (para entender terminal antigo)
-% "A brief history of text editors”
-% Interfaces gráficas históricas
-% “Designing Interfaces” – Jenifer Tidwell (conceitos de GUI vs CLI)
-%
-% EDITORES, PROCESSADORES  DE TEXTO E IDE's
-% Código-fonte do nano: https://www.nano-editor.org (História do nano https://dev.to/deniselemonaki/don-t-fear-the-command-line-text-editors-6lh?utm_source=chatgpt.com)
-% Practical Vim” – Drew Neil (explica modos, buffers, busca) Documentação oficial: https://www.vim.org/docs.php (https://pikuma.com/blog/origins-of-vim-text-editor?utm_source=chatgpt.com)
-% “VS Code Documentation” – foco em arquitetura de buffer e extensões
-% Emacs manual (conceito de buffer e modo de operação)
-% Notepad++, Sublime Text – documentação técnica sobre buffer e pesquisa
-%
-% PRINCIPAIS BIBLIOTECAS DE MANIPULAÇÃO DE TERMINAL EM LINGUAGEM DE PROGRAMAÇÃO C
-% Ncurses documentação: https://invisible-island.net/ncurses/man/ncurses.3x.html e Tutoriais básicos: “NCURSES Programming HowTo”
-% curses (histórico): livros antigos de C
-% termbox: https://github.com/nsf/termbox
-% conio.h (apenas referência histórica): tutoriais antigos de DOS
-
 
 %DOCUMENTAÇÕES OFICIAIS
 % VT100
-@manual{DEC_VT100_TM_1979,
-  author = {Digital Equipment Corporation},
+@manual{DEC_VT100,
+  author = {{Digital Equipment Corporation}},
   title = {VT100 Series Video Terminal Technical Manual - Chapter 1: Introduction and Specifications},
   year = {1979},
   url = {https://vt100.net/docs/vt100-tm/chapter1.html},
-  urlaccessdate = {Acesso em: 21 agosto 2025}
+  note = {[Acesso em: 21 agosto 2025]}
 }
 
 % UNIX
-@misc{UnixV5Archive2017,
+@misc{UnixArchive,
   title = {Unix Version 5},
   year = {2017},
   url = {https://archive.org/details/unix-v5},
   note = {[Acesso em: 21 agosto 2025]},
-  author = {{Internet Archive}},
-  uploader = {Erica Fischer}
+  author = {{Internet Archive}}
+}
+
+% VI
+@manual{Joy_Vi,
+  author       = {{Bill Joy and Mark Horton}},
+  title        = {An Introduction to Display Editing with Vi},
+  organization = {University of California, Berkeley},
+  year         = {1986},
+  url          = {https://ex-vi.sourceforge.net/viin/paper.pdf},
+  note         = {[Acesso em: 22 agosto 2025]}
 }
 
 % VIM
-@manual{VimDevelopDocs,
-  title = {Vim Documentation: Development of Vim},
+@manual{Vim,
+  title  = {Vim Documentation: Development of Vim},
   author = {{Vim Documentation Project}},
-  year = {2008},
-  url = {https://vimdoc.sourceforge.net/htmldoc/develop.html},
-  note = {[Acesso em: 21 agosto 2025]}
+  year   = {2008},
+  url    = {https://vimdoc.sourceforge.net/htmldoc/develop.html},
+  note   = {[Acesso em: 21 agosto 2025]}
+}
+
+% NEOVIM
+@manual{Neovim_Project,
+  author = {{Neovim Project}},
+  title  = {Neovim: Hyperextensible Vim-based Text Editor},
+  year   = {2014},
+  url    = {https://neovim.io},
+  note   = {[Acesso em: 22 agosto 2025]}
 }
 
 % EMACS
 @article{Stallman1981,
-  author    = {Richard M. Stallman},
-  title     = {{EMACS:} An Extensible Real-Time Display Editor},
-  journal   = {ACM Conference on Text Processing},
-  year      = {1981},
-  url       = {https://www.gnu.org/software/emacs/emacs-paper.html},
-  note      = {[Acesso em: 21 agosto 2025]}
+  author  = {{Richard M. Stallman}},
+  title   = {{EMACS:} An Extensible Real-Time Display Editor},
+  journal = {ACM Conference on Text Processing},
+  year    = {1981},
+  url     = {https://www.gnu.org/software/emacs/emacs-paper.html},
+  note    = {[Acesso em: 21 agosto 2025]}
 }
 
-@book{PetersenMasteringEmacs,
-  author    = {Mickey Petersen},
-  title     = {Mastering Emacs},
-  year      = {2021},
-  url       = {https://www.masteringemacs.org/book},
-  note      = {[Acesso em: 21 agosto 2025]}
+% SPACEMACS
+@manual{Spacemacs,
+  author = {{Sylvain Benner and contributors}},
+  title  = {Spacemacs: The best editor is neither Emacs nor Vim, it's Emacs *and* Vim!},
+  year   = {2014},
+  url    = {https://www.spacemacs.org},
+  note   = {[Acesso em: 22 agosto 2025]}
+}
+
+% DOOM EMACS
+@manual{DoomEmacs,
+  author = {{Henrik Lissner and contributors}},
+  title  = {Doom Emacs: An Emacs configuration for the stubborn martian vimmer},
+  year   = {2016},
+  url    = {https://github.com/doomemacs/doomemacs},
+  note   = {[Acesso em: 22 agosto 2025]}
 }
 
 % EDIT
 @misc{MicrosoftEdit2025,
-  title = {Edit Command Line Text Editor},
-  year = {2025},
-  url = {https://learn.microsoft.com/en-us/windows/edit/},
-  note = {[Acesso em: 21 agosto 2025]},
+  title        = {Edit Command Line Text Editor},
+  year         = {2025},
+  url          = {https://learn.microsoft.com/en-us/windows/edit/},
+  note         = {[Acesso em: 21 agosto 2025]},
   organization = {Microsoft}
 }
 
-
 % NANO
-@misc{NanoDocs2025,
+@misc{Nano2025,
   title = {GNU Nano Documentation},
-  url = {https://www.nano-editor.org/docs.php},
-  year = {2025},
-  note = {Acesso em 21 de agosto de 2025}
+  url   = {https://www.nano-editor.org/docs.php},
+  year  = {2025},
+  note  = {[Acesso em: 21 agosto 2025]}
 }
 
 % NOTEPAD++
-@misc{NotepadPlusPlusDocs2025,
+@misc{NotepadPlusPlus2025,
   title = {Notepad++ User Manual},
-  year = {2025},
-  url = {https://npp-user-manual.org/},
-  note = {[Acesso em: 21 agosto 2025]}
+  year  = {2025},
+  url   = {https://npp-user-manual.org/},
+  note  = {[Acesso em: 21 agosto 2025]}
 }
 
 % VSCODE
-@misc{VSCodeDocs2025,
+@misc{VSCode2025,
   title = {Visual Studio Code Documentation},
-  year = {2025},
-  url = {https://code.visualstudio.com/docs},
-  note = {[Acesso em: 21 agosto 2025]}
+  year  = {2025},
+  url   = {https://code.visualstudio.com/docs},
+  note  = {[Acesso em: 21 agosto 2025]}
 }
 
 % ZED
-@misc{ZedDocs2025,
+@misc{ZedEditor2025,
   title = {Zed Code Editor Documentation},
-  url = {https://zed.dev/docs},
-  year = {2025},
-  urlaccessdate = {Acesso em 21 de agosto de 2025}
+  url   = {https://zed.dev/docs},
+  year  = {2025},
+  note  = {[Acesso em: 21 agosto 2025]}
+}
+
+% HISTÓRIA
+@misc{ComputerHistoryMuseum,
+  title        = {Computer History Museum},
+  year         = {2023},
+  url          = {https://computerhistory.org},
+  note         = {[Acesso em: 21 agosto 2025]},
+  organization = {Computer History Museum}
 }
 
 %OUTROS
 @misc{ColumbiaTeletype2023,
-  author = {Frank da Cruz / Columbia University},
-  title = {Teletype Machines},
-  year = {2023},
-  url = {https://www.columbia.edu/cu/computinghistory/teletype/index.html},
-  note = {[Acesso em: 21 agosto 2025]}
+  author = {{Frank da Cruz / Columbia University}},
+  title  = {Teletype Machines},
+  year   = {2023},
+  url    = {https://www.columbia.edu/cu/computinghistory/teletype/index.html},
+  note   = {[Acesso em: 21 agosto 2025]}
 }
