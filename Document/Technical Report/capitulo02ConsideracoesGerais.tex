@@ -1,7 +1,8 @@
 \chapter{Considerações Gerais}
 \label{cap:02}
 
-Texto das considerações gerais, dividido em subseções. % TODO: Perguntar ao professor
+Texto das considerações gerais, dividido em subseções.
+
 
 % Este é um exemplo de como usar figuras. Referência cruzada: Figura~\ref{fig:exemplo}
 
@@ -19,39 +20,6 @@ Texto das considerações gerais, dividido em subseções. % TODO: Perguntar ao 
 % \end{figure}
 % \FloatBarrier
 
-% Este é um exemplo de como usar tabelas. Referência cruzada: Tabela~\ref{tab:exemplo}
-
-% \FloatBarrier
-% \begin{table}[!htbp]
-% 	\centering
-% 	\caption{Exemplo de tabela de 2 colunas}
-% 	\begin{tabular}{ c | c }
-% 		\hline
-% 		\textbf{Coluna 1} & \textbf{Coluna 2} \\ \hline
-% 		Dado 1a           & Dado 2a           \\ \hline
-% 		Dado 1b           & Dado 2b           \\ \hline
-% 		Dado 1c           & Dado 2c           \\ \hline
-% 		Dado 1d           & Dado 2d           \\ \hline
-% 	\end{tabular}
-% 	\\ \vspace{0.2cm}
-% 	\textbf{Fonte:} Elaborada pelo autor
-% 	\label{tab:exemplo}
-% \end{table}
-% \FloatBarrier
-
-
-% Este é um exemplo de como usar quadros. Referência cruzada: Quadro~\ref{qua:exemplo}
-
-% \FloatBarrier
-% \begin{quadro}[!htbp]
-% 	\centering
-% 	\caption{Exemplo de quadro}
-% 	\includegraphics[scale=.7]{imagens/exemploQuadro}
-% 	\\\textbf{Fonte:} Elaborada pelo autor
-% 	\label{qua:exemplo}
-% \end{quadro}
-% \FloatBarrier
-
 
 % Este é um exemplo de como usar equações. Referência cruzada: Equação~\ref{eq:exemplo}
 
@@ -59,7 +27,8 @@ Texto das considerações gerais, dividido em subseções. % TODO: Perguntar ao 
 % \sum_{i=1}^{n} i = \frac{n(n+1)}{2}
 % \label{eq:exemplo}
 % \end{equation}
-
+%
+%
 
 % Exemplo de inserção de lista de código fonte:
 
@@ -71,36 +40,6 @@ Texto das considerações gerais, dividido em subseções. % TODO: Perguntar ao 
 % \begin{verbatim}
 % Texto sem formatação, como espaçamento igual.
 % \end{verbatim}
-
-
-% Exemplo de lista de itens:
-
-% \begin{itemize}
-% 	\item \textbf{Item 1:} texto...;
-% 	\item \textbf{Item 2:} texto...;
-% 	\begin{itemize}
-% 		\item \textbf{Subitem:} texto...;
-% 		\item \textbf{Subitem:} texto...;
-% 		\item \textbf{Subitem:} texto...;
-% 	\end{itemize}
-% 	\item \textbf{Item 3:} texto...;
-% 	\item \textbf{Item n:} texto....
-% \end{itemize}
-
-
-% Exemplo de lista numerada:
-
-% \begin{enumerate}
-% 	\item \textbf{Item:} texto...;
-% 	\item \textbf{Item:} texto...;
-% 	\begin{enumerate}
-% 		\item \textbf{Subitem:} texto...;
-% 		\item \textbf{Subitem:} texto...;
-% 		\item \textbf{Subitem:} texto...;
-% 	\end{enumerate}
-% 	\item \textbf{Item:} texto...;
-% 	\item \textbf{Item:} texto....
-% \end{enumerate}
 
 
 % Exemplos de comandos para texto e referências:
@@ -162,12 +101,14 @@ Texto das considerações gerais, dividido em subseções. % TODO: Perguntar ao 
 
 % Exemplo de nota de rodapé\footnote{Essa é uma nota de rodapé!}.
 
-
 \section{Trabalhos Correlatos}
 
-Pesquise e descreva no mínimo três trabalhos correlatos ao seu.
+Gophertype: Criação de um editor/aplicativo de treino de digitação em modo texto (TUI) usando Go + Bubble Tea framework. \cite{Lindroos2025}
 
-\subsection{Interface Modo Texto x Modo Gráfico}
+An Empirical Investigation of Command-Line Customization: Analisa mais de 2,2 milhões de aliases no GitHub e identifica padrões de personalização do shell:
+atalhos, modificações e scripts \cite{SchroderCito2022}
+
+\section{Interface Modo Texto x Modo Gráfico}
 
 Como os usuários interagiam com computadores antes das interfaces gráficas? Nos primórdios da computação, programas e dados eram armazenados em cartões
 perfurados, estes que eram pré-processados em lote e com longa espera de resultados. Com a constante evolução das maquinas e a criação dos mainframes,
@@ -247,20 +188,25 @@ Ainda hoje, após décadas de evolução, há usuários que preferem interagir p
 editor NeoVim em sistemas UNIX. Com base nisso, este trabalho propõe a criação de um editor CLI inspirado no Nano, mas com uma interface mais moderna e
 intuitiva, mantendo a essência dos clássicos editores de texto em terminal mencionados anteriormente.
 
-\subsection{Editores, Processadores de Texto e IDEs}
+\section{Editores, Processadores de Texto e IDEs}
 
 MEIA PÁGINA PARA CADA UM (ou mais se julgar necessário)
 
-EDITORES: Vi, Emacs, Nano, NeoVim, Visual Studio Code, Zed, Notepad++, etc. (PASSAR POR CIMA BREVEMENTE, já que já foram citados acima) mas falar um pouco mais
-sobre buffer, como funcionam, etc.
+\subsection{Editores}
 
+EDITORES: Vi, Emacs, Nano, NeoVim, Visual Studio Code, Zed, Notepad++, etc. Falar um pouco mais sobre como eles funcionam (já que já foram citados).
+
+\subsection{Processadores de Texto}
 PROCESSADORES DE TEXTO: Microsoft Word, LibreOffice Writer, Google Docs, etc.
+
+\subsection{IDEs}
 
 IDEs: Visual Studio, CodeBlocks, NetBeans, IntelliJ IDEA, PyCharm, etc.
 
-\subsection{Principais Bibliotecas para Lidar com Terminal em linguagem C}
+\section{Principais Bibliotecas para Controle de Terminal em Linguagem C}
 
 MEIA PÁGINA PARA CADA BIBLIOTECA
+
 Falar um pouco sobre cada uma e por que a escolhida foi a ncurses.
 
 NCURSES e CURSES:
