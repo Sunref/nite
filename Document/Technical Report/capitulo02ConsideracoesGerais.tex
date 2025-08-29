@@ -1,125 +1,53 @@
 \chapter{Considerações Gerais}
 \label{cap:02}
 
-\textbf{Texto das considerações gerais, dividido em subseções}
-
-% Este é um exemplo de como usar figuras. Referência cruzada: Figura~\ref{fig:exemplo}
-
-% \FloatBarrier
-% \begin{figure}[!htbp]
-% 	\centering
-% 	\caption{Exemplo de figura}
-% 	%scale redimensiona a figura.
-% 	%1.5 = 150% do tamanho original
-% 	%1 = 100% do tamanho original
-% 	%0.20 = 20% do tamanho original
-% 	\includegraphics[scale=0.4]{imagens/exemploFigura}
-% 	\\\textbf{Fonte:} Elaborada pelo autor
-% 	\label{fig:exemplo}
-% \end{figure}
-% \FloatBarrier
-
-% Este é um exemplo de como usar equações. Referência cruzada: Equação~\ref{eq:exemplo}
-
-% \begin{equation}
-% \sum_{i=1}^{n} i = \frac{n(n+1)}{2}
-% \label{eq:exemplo}
-% \end{equation}
-%
-%
-
-% Exemplo de inserção de lista de código fonte:
-
-% \lstinputlisting[language=Java]{fontes/ClasseExemplo.java}
-
-% Este é um exemplo de como inserir texto sem formatação (ambiente verbatim):
-
-% \begin{verbatim}
-% Texto sem formatação, como espaçamento igual.
-% \end{verbatim}
-
-% Exemplos de comandos para texto e referências:
-
-% \begin{itemize}
-% 	\item Para iniciar um novo parágrafo, basta deixar uma linha em branco no código fonte;
-% 	\item Não force o compilador a pular mais de uma linha, pois terá influência negativa na composição do documento;
-% 	\item Sempre deixe o \LaTeX\ realizar a formatação de parágrafos e posicionamento de elementos;
-% 	\item Utilização de aspas simples (abertura \verb|`|, fechamento \verb|'|): `Texto entre aspas simples';
-% 	\item Utilização de aspas duplas (abertura \verb|``|, fechamento \verb|''|): ``Texto entre aspas duplas'';
-% 	\item Negrito (comando \verb|\textbf|): \textbf{texto em negrito};
-% 	\item Itálico (comando \verb|\textit|): \textit{texto em itálico};
-% 	\item Sublinhado (comando \verb|\underline|): \underline{texto sublinhado};
-% 	\item Negrito e itálico (usar comandos juntos): \textbf{\textit{texto em negrito e itálico}};
-% 	\item Alterar cor do texto (comando \verb|\textcolor{cor}{texto}|):
-% 	\begin{itemize}
-% 		\item Exemplo \verb|\textcolor{red}{texto}|: \textcolor{red}{texto vermelho};
-% 		\item Exemplo \verb|\textcolor[RGB]{255, 102, 0}|: \textcolor[RGB]{255, 102, 0}{texto laranja};
-% 		\item Exemplo \verb|\textcolor[HTML]{006AD7}|: \textcolor[HTML]{006AD7}{texto azul};
-% 	\end{itemize}
-% 	\item Ambiente matemático inline (comando \verb|$ expressão $|): $s = x^2-2x +1$;
-% 	\item Referência normal (comando \verb|\cite|):
-% 	\begin{itemize}
-% 		\item \cite{Agaisse1995};
-% 		\item \cite{Abedi2014};
-% 		\item \cite{BtNomenclature2016};
-% 	\end{itemize}
-% 	\item Referência normal com mais de uma obra (comando \verb|\cite|):
-% 	\begin{itemize}
-% 		\item \cite{Abedi2014, Agaisse1995};
-%         \item \cite{AgapitoTenfen2014, BtNomenclature2016, Nelson2014};
-% 	\end{itemize}
-% 	\item Referência nome e ano (comando \verb|\citeauthorandyear|):
-% 	\begin{itemize}
-% 		\item \citeauthorandyear{Agaisse1995};
-% 		\item \citeauthorandyear{Abedi2014};
-% 		\item \citeauthorandyear{BtNomenclature2016};
-% 	\end{itemize}
-% \end{itemize}
-
-% Exemplo 1 de citação direta:
-
-% \begin{citacao}
-% 	Os 20 aminoácidos usualmente encontrados como resíduos em proteínas contém um grupo $\alpha$-carboxil, um grupo $\alpha$-amino e um grupo R
-% 	distinto substituído no átomo de carbono $\alpha$. O átomo de carbono $\alpha$ de todos os aminoácidos, com exceção da glicina, é assimétrico e,
-% 	portanto, os aminoácidos podem existir em pelo menos duas formas estereoisoméricas. Somente os estereoisômeros L, com uma configuração relacionada à
-% 	configuração absoluta da molécula de referência L-gliceraldeído, são encontrados em proteínas \cite[p. 81]{Nelson2014}.
-% \end{citacao}
-
-% Exemplo 2 de citação direta:
-
-% \begin{citacao}
-% 	\textit{These various insecticidal proteins are synthesized during the stationary phase and accumulate in the mother cell as a crystal inclusion
-% 	which can account for up to 25\% of the dry weight of the sporulated cells. The amount of crystal protein produced by a B. thuringiensis culture in
-% 	laboratory conditions (about 0.5 mg of protein per ml) and the size of the crystals (24) indicate that each cell has to synthesiz
-% 	e $10^6$ to $2 \times 10^6$ $\delta$-endotoxin molecules during the stationary phase to form a crystal} \cite[p. 1]{Agaisse1995}.
-% \end{citacao}
-
-% Exemplo de nota de rodapé\footnote{Essa é uma nota de rodapé!}.
+Esta seção tem como objetivo apresentar conceitos relacionados a
+edição de texto na programação, destacando aspéctos importantes para
+o desenvolvimento do NITE, o editor de texto proposto. Aqui, serão abordados
+temas como a história das interfaces de linha de comando (CLI) e gráficas (GUI),
+ferramentas de manipulação e edição de texto, bibliotecas para controle de
+terminal em linguagem C, e outros tópicos relevantes.
 
 \section{Trabalhos Correlatos}
 
-\textbf{Gophertype: Criação de um editor/aplicativo de treino de digitação em modo
-texto (TUI) usando Go + Bubble Tea framework. \cite{Lindroos2025}}
+O autor \cite{Rougier2020Editors}, em seu artigo \textit{"On the design of text editors"}, faz uma
+análise minuciosa das características que compõem os editores de texto. Ele observa que,
+por mais funcionalidades que um editor possua, elas não são uma regra universal para todos:
+alguns podem não oferecer recursos como código colorido ou visualização em minimapa, embora
+tais elementos estejam presentes na maioria. O autor também analisa o fato de que a maior
+parte dos editores apresenta apenas dois modos tipográficos: o padrão e o \textit{bold}
+(negrito) e em alguns casos, o itálico,  mas sempre mantendo o princípio do uso de fontes
+monoespaçadas. Por fim, compara a usabilidade do editor Emacs \cite{Stallman1981} com outras
+interfaces de usuário, destacando como a configuração personalizável do Emacs se diferenciou e
+conquistou notoriedade.
 
-\textbf{An Empirical Investigation of Command-Line Customization: Analisa mais de
-2,2 milhões de aliases no GitHub e identifica padrões de personalização do shell:
-atalhos, modificações e scripts \cite{SchroderCito2022}}
+Seguindo essa linha, os autores \cite{SchroderCito2022} analisam as diversas configurações da linha
+de comando (\textit{shells}, seus atalhos, modificações, \textit{scripts}) em \textit{"An Empirical
+Investigation of Command-Line Customization"}. Aqui, os mesmos exploram mais de 2,2 milhões de \textit{aliases}
+(apelidos) encontrados no GitHub, identificando padrões de personalização. Eles destacam que muitos usuários criam
+\textit{aliases} como forma de customizar e otimizar suas interações com a linha de comando e que
+frequentemente estão associados a comandos como controle de versão (Git) e gerenciamento do sistema. Também
+ressaltam que a maioria desses apelidos são apenas abreviações de comandos já existentes (mas pouco lembrados,
+seja pela sua escrita longa ou pelo uso específico), enquanto outros são o que ele chama de
+\textit{bookmarks} (favoritos).
 
-\textbf{On the design of text editors: analisa decisões implícitas em editores de
-texto — como layout, tipografia, colorização e interações — e questiona se elas derivam
-da falta de alternativas ou da repetição de hábitos entre desenvolvedores.
-\cite{Rougier2020Editors}}
+Outro trabalho interessante é o de \cite{Lindroos2025}, que propõe a criação de um editor/aplicativo de
+treino de digitação em modo texto (TUI) usando a linguagem Go e o \textit{framework Bubble Tea}. Neste
+trabalho de conclusão de curso, o finlandês destaca como as interfaces de linha de comando podem ser úteis
+para aplicações voltadas ao aprendizado, como o caso da digitação. O autor também ressalta a importância
+de se criar interfaces intuitivas e agradáveis, que possam ser utilizadas sem a necessidade de \textit{hardwares}
+potentes, conexão com a internet ou o uso de navegadores e aplicações gráficas.
 
 \section{Interface Modo Texto x Modo Gráfico}
 
-Como os usuários interagiam com computadores antes das interfaces gráficas? Nos
-primórdios da computação, programas e dados eram armazenados em cartões perfurados,
+Mas, no início de tudo, como os usuários interagiam com os computadores antes das interfaces gráficas?
+Nos primórdios da computação, programas e dados eram armazenados em cartões perfurados,
 estes que eram pré-processados em lote e com longa espera de resultados. Com a constante
-evolução das maquinas e a criação dos mainframes, grandes e poderosos
-computadores que suportavam diversas interações simultaneamente e com níveis de
+evolução das maquinas e a criação dos \textit{mainframes}, grandes e poderosos
+computadores que suportavam diversas interações simultaneamente com níveis de
 confiabilidade e multitarefa, fez com que a comunicação entre usuário e máquina passasse
 a ser realizada de forma mais iterativa, principalmente por meio de interfaces
-de linha de comando (CLI), como o TTY (Teletypewriter) \cite{ColumbiaTeletype2023}
+de linha de comando (CLI), como o TTY (\textit{Teletypewriter}) \cite{ColumbiaTeletype2023}
 e o terminal VT100 \cite{DEC_VT100}. Nestes sistemas os usuários digitavam
 comandos diretamente em um terminal e recebiam uma saída quase em tempo real
 \cite{ComputerHistoryMuseum}.
@@ -131,13 +59,13 @@ interface gráfica significava que os usuários precisavam memorizar uma série 
 e sintaxes, o que tornava o uso do computador muito mais técnico e menos
 acessível ao público em geral.
 
-O terminal VT100 foi um marco por introduzir códigos de escape ANSI (American National
-Standards Institute) e permitir controle de cursor e formatação de texto, características
+O terminal VT100 foi um marco por introduzir códigos de escape ANSI (\textit{American National
+Standards Institute}) e permitir controle de cursor e formatação de texto, características
 que tornaram a linha de comando mais funcional e eficiente. Apesar disso, o uso da
 CLI continuava exigindo conhecimento técnico avançado, o que ainda limitava
 bastante o acesso ao uso do computador.
 
-Mas os avanços não se limitaram apenas ao hardware, as constantes descobertas na
+Mas os avanços não se limitaram apenas ao \textit{hardware}, as constantes descobertas na
 tecnologia possibilitaram a criação dos primeiros Sistemas Operacionais (OS),
 como o UNIX \cite{UnixArchive} e o MS-DOS \cite{ComputerHistoryMuseum}, popularizando
 o uso de terminais e CLIs e os tornando mais acessíveis ao público. Ainda no
@@ -173,13 +101,13 @@ do original, mas com melhorias na interface e na integração com o Windows.
 \begin{figure}[!htbp]
     \centering
     \caption{EDIT.COM no MS-DOS}
-    \includegraphics[scale=0.8]{imagens/EDIT_MSDOS}
+    \includegraphics[scale=0.8]{imagens/EDIT_MSDOS.png}
     \\\textbf{Fonte: Internet Archive} \label{fig:EDIT_MSDOS}
 \end{figure}
 \FloatBarrier
 
 Mais adiante na história, com o avanço das interfaces gráficas os editores de
-texto passaram a se tornar mais visuais. É possível notar essa evolução em softwares
+texto passaram a se tornar mais visuais. É possível notar essa evolução em \textit{softwares}
 como o Notepad++ \cite{NotepadPlusPlus2025} até editores mais famosos como Visual
 Studio Code \cite{VSCode2025} e o recente Zed \cite{ZedEditor2025}. Esses
 editores de texto modernos oferecem uma ampla gama de recursos, como customização
@@ -190,7 +118,7 @@ mais eficiente e produtiva.
 O Notepad++ é um editor de texto de código aberto que se destaca por sua leveza e
 simplicidade, oferecendo uma interface amigável e recursos avançados para edição
 de código-fonte. Ele suporta várias linguagens de programação e possui recursos como
-realceamento de sintaxe, autocompletar, busca avançada e suporte a plugins,
+realceamento de sintaxe, autocompletar, busca avançada e suporte a \textit{plugins},
 tornando-o uma escolha popular entre usuários que buscam um editor de texto
 simples mas eficiente.
 
@@ -215,7 +143,7 @@ Já o ainda em desenvolvimento Zed Editor se destaca por sua abordagem
 colaborativa e em tempo real, permitindo que vários usuários editem o mesmo arquivo
 simultaneamente. Ele oferece uma interface moderna e intuitiva e que se
 assemelha muito ao Visual Studio Code, com recursos como realceamento de sintaxe,
-autocompletar, integração com sistemas de controle de versão e suporte a plugins,
+autocompletar, integração com sistemas de controle de versão e suporte a \textit{plugins},
 tornando-o uma escolha interessante para equipes de desenvolvimento que buscam
 uma experiência de edição colaborativa e eficiente.
 
@@ -244,28 +172,121 @@ texto usados diariamente até sofisticados e completos ambientes de
 desenvolvimento.
 
 \subsection{Processadores de Texto}
-\textbf{PROCESSADORES DE TEXTO: Microsoft Word, LibreOffice Writer, Google Docs,
-etc.}
+
+Um processador de texto é qualquer \textit{software} comummente utilizados
+para a criação, edição ou formatação e exportação de textos digitais.
+Esses programas oferecem uma ampla gama de ferramentas e funcionalidades que
+facilitam o dia a dia de quem lida com documentos, seja para fins pessoais,
+acadêmicos ou profissionais.
+
+O Microsoft Word \cite{microsoft_word} foi um marco na história dos processadores
+de texto nos anos 80, já que, entre seus diversos concorrentes,
+trouxe um novo paradigma de escrita: da máquina de escrever ao computador
+\cite{inbook}. Atualmente, o ainda consolidado Word oferece uma vasta gama de
+recursos, como verificação ortográfica e gramatical, formatação avançada,
+inserção de imagens e tabelas, além de suporte a diversos formatos de arquivo.
+
+Outro exemplo de processador de texto é o LibreOffice Writer \cite{libreoffice}, parte do
+conjunto de aplicativos LibreOffice, que é uma alternativa de código aberto
+ao Microsoft Word. Também merece destaque o Google Documents \cite{google_docs}, uma ferramenta
+baseada na nuvem que permite a criação e edição de documentos em tempo real,
+ideal para colaboração.
+
+Mas a sua estrutura vai muito além. Tais ferramentas são projetadas usando
+\textit{buffers} de texto. Pense nisso: quando o usuário digita um caractere
+ele é inserido em um \textbf{\textit{buffer} de edição}, uma estrutura em memória
+que mantém o conteúdo do documento em tempo real, permitindo manipulações rápidas,
+como inserções, remoções e formatações, sem acessar diretamente o arquivo no disco.
+Somente quando o usuário salva o documento (ou ocorre um salvamento automático) é que
+o conteúdo de fato é gravado permanentemente no arquivo de armazenamento \cite{Jacobson1989}.
 
 \subsection{Editores}
 
-\textbf{EDITORES: Vi, Emacs, Nano, NeoVim, Visual Studio Code, Zed, Notepad++,
-etc. Falar um pouco mais sobre como eles funcionam (já que já foram citados)}
+Avançando, outras alternativas (e as mais comuns para pessoas da área) são os editores de
+texto voltados a programação. Esses editores são especificamente projetados para lidar
+com código-fonte de linguagem de programação, e oferece uma vasta gama de recursos, como
+os citados anteriormente.
+
+Dentro desse grupo foi visto dois grandes subgrupos: GUI e CLI. A CLI foca em "interfaces"
+de linha de comando, sendo editores de \textit{shell} (ou terminais) como o Vi/Vim/NeoVim e
+Emacs e seus derivados. Ainda podemos ter editores CLI mais simples, porem ainda funcionais,
+como Nano e EDIT. A GUI por sua vez foca em interfaces gráficas, como o Notepad++,
+Visual Studio Code e Zed.
+
+A forma como esses editores funcionam é similar aos processadores de texto, com singelas diferenças
+na forma de lidar com o conteúdo. Eles também utilizam \textit{buffers} de texto para manter o
+conteúdo do documento em memória, no entanto, como esses editores são voltados para programação,
+funcionalidades já descritas antes como realceamento de sintaxe, autocompletar e entre outros estão
+presentes. Além disso, esses editores frequentemente suportam múltiplos \textit{buffers} ou
+abas, permitindo que os desenvolvedores trabalhem em vários arquivos simultaneamente.
+
+Aqui, podemos seguir alguns principios de funcionamento dos \textit{buffers}: Evento de tecla -> fila de eventos;
+Buffer de edição (RAM) -> o editor aplica a operação (inserir/apagar) numa estrutura interna que representa o documento;
+Histórico/\textit{undo} -> a operação é registrada (por \textit{log} de comandos, textit{snapshots} ou ambos);
+Tela -> um \textit{buffer} de renderização recalcula apenas o que mudou (linha, trecho, \textit{layout});
+Persistência -> só vai ao disco quando você manda salvar (ou quando o auto-save dispara). Antes disso, a maior
+parte está em memória, mas mesmo ao salvar, bibliotecas padrão e o SO aplicam textit{line/full buffering} antes
+de gravar no arquivo físico \cite{glibc-buffering-concepts}.
 
 \subsection{IDEs}
 
-\textbf{IDEs: Visual Studio, CodeBlocks, NetBeans, IntelliJ IDEA, PyCharm, etc.}
+Cabe aqui ressaltar os ambientes de desenvolvimento integrados (IDEs), que são
+ferramentas mais completas que os editores de texto, trazendo outras funcionalidades
+essenciais. Essas ferramentas oferecem recursos que auxiliam o ciclo de vida de
+desenvolvimento, e geralmente possuem seu próprio editor de texto embutido, com
+compilador/depurador integrado, ferramentas de build e automação, perfis de projeto,
+entre outras funcionalidades.
+
+As IDEs normalmente são projetadas para suportar uma única linguagem de programação, como
+o Visual Studio \cite{visual_studio} e o CodeBlocks \cite{codeblocks}, voltadas para C\#, C++ e C;
+ou as ferramentas da JetBrains \cite{jetbrains_tools} (IntelliJ IDEA, PyCharm, etc.),
+voltadas para Java e Python, respectivamente. Outras IDEs, como o Eclipse \cite{eclipse_ide}
+e o NetBeans \cite{netbeans_ide}, suportam múltiplas linguagens, mas geralmente com foco em um
+ecossistema específico, como o desenvolvimento Java.
+
+Vale destacar que o Visual Studio Code, apesar de ser um editor de texto, é frequentemente
+utilizado como uma "IDE" graças à sua extensibilidade e integração com diversas
+ferramentas, podendo ser chamado de "canivete suíço" para os desenvolvedores.
 
 \section{Principais Bibliotecas para Controle de Terminal em Linguagem C}
 
-\textbf{MEIA PÁGINA PARA CADA BIBLIOTECA}
+Diversas linguagens de programação, como Go, Python, Rust e Java, oferecem suporte ao desenvolvimento
+de aplicações em interfaces de linha de comando. Nesta seção, são apresentadas as principais bibliotecas
+utilizadas para o controle de terminais em linguagem C. A escolha dessa linguagem para o desenvolvimento
+do NITE justifica-se por sua flexibilidade e alto desempenho.
 
-\textbf{Falar um pouco sobre cada uma e por que a escolhida foi a ncurses.}
+\footnote{testeeeeeeeeeeeeeeeeeeeasbjnasjlfnaljsfnljasjflkasf}
 
-\textbf{NCURSES e CURSES:}
+\subsection{NCURSES e CURSES}
 
-\textbf{TERMBOX:}
+A biblioteca Curses foi desenvolvida por Ken Arnold em 1978, e fornece um conjunto de funções
+para manipulação de telas em modo texto. O nome "Curses" é um trocadilho para "cursor optimization",
+já que a biblioteca foi projetada para otimizar o uso do cursor em terminais de texto. Podemos
+delimitar alguns conceitos importantes para Curses, onde a tela do terminal é manipulada por meio de
+estruturas chamadas \textit{windows} (janelas), que funcionam como arranjos bidimensionais representando
+parte ou toda a exibição. Existem janelas padrão, como a stdscr (tela inteira) e o curscr (estado atual da tela,
+não modificável). Cada janela mantém a posição de um cursor lógico, enquanto o cursor físico é único e aparece
+de fato na tela. Além disso, o curses permite criar \textit{pads}, janelas que não se limitam ao tamanho da tela.
+\cite{ibm_curses_aix}
 
-\textbf{TERMINFO e TERMCAP:}
+Já a Ncurses é um clone da Curses, com suas melhorias. Teve inicio por volta de 1982 com Pavel Curtis com o nome de Pcurses,
+e a partir de 86, várias pessoas começaram a contribuir com o projeto. A \textit{New Curses}
+(Ncurses) em 1993 foi aprimorada e passou a ser mantida por Zeyd Ben-Halim, recebendo
+algumas correções de bugs e até reformatação. Eric S. Raymond assumiu a manutenção em 1996,
+e em 1998, Thomas E. Dickey começou a contribuir com o projeto, tornando-se o mantenedor principal
+em 2001, cargo que ocupa até hoje. Juergen Pfeifer também contribuiu significativamente para o projeto
+adicionando bibliotecas \textbf{\textit{forms} e menus}, e Warren Tucker adicionou a biblioteca \textbf{\textit{panel}}.
+\cite{ncurses_site}
 
-\textbf{S-LANG:}
+Mas o que exatamente a Ncurses oferece? Ela fornece funções para mover o cursor, criar janelas, produzir cores, interagir
+com o mouse etc. Assim, os programas não precisam se preocupar com as capacidades específicas do terminal subjacente.
+Sendo totalmente compatível com as versões anteriores da Curses, não apenas cria uma camada sobre as capacidades do terminal,
+mas também fornece uma estrutura robusta para criar interfaces em modo texto (TUI). Suas bibliotecas associadas (\textit{panel},
+menu e \textit{form}) é possível criar aplicações que contenham múltiplas janelas, menus, painéis e formulários de
+maneira simples e eficiente \cite{ncurses_howto}.
+
+\subsection{TERMBOX}
+
+\subsection{TERMINFO e TERMCAP}
+
+\subsection{S-LANG}
