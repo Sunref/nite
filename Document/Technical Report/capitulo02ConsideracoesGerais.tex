@@ -186,8 +186,8 @@ desenvolvimento.
 
 \subsection{Processadores de Texto}
 
-Um processador de texto é qualquer \textit{software} comummente utilizados para
-a criação, edição ou formatação e exportação de textos digitais. Esses programas
+Um processador de texto é qualquer \textit{software} comummente utilizado para a
+criação, edição ou formatação e exportação de textos digitais. Esses programas
 oferecem uma ampla gama de ferramentas e funcionalidades que facilitam o dia a
 dia de quem lida com documentos, seja para fins pessoais, acadêmicos ou
 profissionais.
@@ -223,9 +223,9 @@ de recursos, como os citados anteriormente.
 
 Dentro desse grupo foi visto dois grandes subgrupos: GUI e CLI. A CLI foca em "interfaces"
 de linha de comando, sendo editores de \textit{shell} (ou terminais) como o Vi/Vim/NeoVim
-e Emacs e seus derivados. Ainda podemos ter editores CLI mais simples, porem
-ainda funcionais, como Nano e EDIT. A GUI por sua vez foca em interfaces
-gráficas, como o Notepad++, Visual Studio Code e Zed.
+e Emacs e seus derivados. Ainda podemos ter editores CLI mais simples, porém
+funcionais, como Nano e EDIT. A GUI por sua vez foca em interfaces gráficas, como
+o Notepad++, Visual Studio Code e Zed.
 
 A forma como esses editores funcionam é similar aos processadores de texto, com singelas
 diferenças na forma de lidar com o conteúdo. Eles também utilizam \textit{buffers}
@@ -236,30 +236,41 @@ disso, esses editores frequentemente suportam múltiplos \textit{buffers} ou aba
 permitindo que os desenvolvedores trabalhem em vários arquivos simultaneamente.
 
 Aqui, podemos seguir alguns principios de funcionamento dos \textit{buffers}:
-Evento de tecla -> fila de eventos; Buffer de edição (RAM) -> o editor aplica a operação
-(inserir/apagar) numa estrutura interna que representa o documento; Histórico/\textit{undo}
--> a operação é registrada (por \textit{log} de comandos, \textit{snapshots} ou
-ambos); Tela -> um \textit{buffer} de renderização recalcula apenas o que mudou
-(linha, trecho, \textit{layout}); Persistência -> só vai ao disco quando você manda
-salvar (ou quando o auto-save dispara). Antes disso, a maior parte está em memória,
-mas mesmo ao salvar, bibliotecas padrão e o SO aplicam \textit{line/full
-buffering} antes de gravar no arquivo físico \cite{glibc-buffering-concepts}.
+
+\begin{itemize}
+    \item Evento de tecla -> fila de eventos;
+
+    \item Buffer de edição (RAM) -> o editor aplica a operação (inserir/apagar)
+        em uma estrutura interna que representa o documento;
+
+    \item Histórico/\textit{undo} -> a operação é registrada (por \textit{log} de
+        comandos, \textit{snapshots} ou ambos);
+
+    \item Tela -> um \textit{buffer} de renderização recalcula apenas o que mudou
+        (linha, trecho, \textit{layout});
+
+    \item Persistência -> só vai ao disco quando você manda salvar (ou quando o auto-save
+        dispara). Antes disso, a maior parte está em memória, mas mesmo ao salvar,
+        bibliotecas padrão e o SO aplicam \textit{line/full buffering} antes de gravar
+        no arquivo físico;
+\end{itemize}
+\cite{glibc-buffering-concepts}.
 
 \subsection{IDEs}
 
-Cabe aqui ressaltar os ambientes de desenvolvimento integrados (IDEs), que são
-ferramentas mais completas que os editores de texto, trazendo outras funcionalidades
-essenciais. Essas ferramentas oferecem recursos que auxiliam o ciclo de vida de
-desenvolvimento, e geralmente possuem seu próprio editor de texto embutido, com
-compilador/depurador integrado, ferramentas de build e automação, perfis de
-projeto, entre outras funcionalidades.
+Cabe aqui ressaltar os ambientes de desenvolvimento integrados (IDEs), que são ferramentas
+mais completas que os editores de texto, trazendo outras funcionalidades
+essenciais. Essas ferramentas oferecem recursos que auxiliam o ciclo de vida de desenvolvimento,
+e geralmente possuem seu próprio editor de texto embutido, com compilador/depurador
+integrado, ferramentas de build e automação, perfis de projeto, entre outras
+funcionalidades.
 
-As IDEs normalmente são projetadas para suportar uma única linguagem de programação,
-como o Visual Studio \cite{visual_studio} e o CodeBlocks \cite{codeblocks}, voltadas
-para C\#, C++ e C; ou as ferramentas da JetBrains \cite{jetbrains_tools} (IntelliJ
-IDEA, PyCharm, etc.), voltadas para Java e Python, respectivamente. Outras IDEs,
-como o Eclipse \cite{eclipse_ide} e o NetBeans \cite{netbeans_ide}, suportam
-múltiplas linguagens, mas geralmente com foco em um ecossistema específico, como
+As IDEs normalmente são projetadas para suportar uma única linguagem de
+programação, como o CodeBlocks \cite{codeblocks}, voltadas para a fámilia C (C++
+e C); ou as ferramentas da JetBrains \cite{jetbrains_tools} (IntelliJ IDEA, PyCharm,
+etc.), voltadas para Java e Python, respectivamente. Outras IDEs, como o Visual
+Studio \cite{visual_studio} suporta várias linguagens, igualmente o Eclipse \cite{eclipse_ide}
+e o NetBeans \cite{netbeans_ide}, mas com foco em um ecossistema específico, como
 o desenvolvimento Java.
 
 \FloatBarrier
@@ -271,9 +282,10 @@ o desenvolvimento Java.
 \end{figure}
 \FloatBarrier
 
-Vale destacar que o Visual Studio Code, apesar de ser um editor de texto, é frequentemente
-utilizado como uma "IDE" graças à sua extensibilidade e integração com diversas ferramentas,
-podendo ser chamado de "canivete suíço" para os desenvolvedores.
+Vale destacar que o Visual Studio Code, apesar de ser um editor de texto, é
+frequentemente utilizado como uma "IDE" graças à sua extensibilidade e
+integração com diversas ferramentas, podendo ser chamado de "canivete suíço" para
+os desenvolvedores.
 
 \section{Principais Bibliotecas para Controle de Terminal em Linguagem C}
 
@@ -281,48 +293,48 @@ Diversas linguagens de programação, como Go, Python\footnote{Linguagem de
 programação. Disponível em: https://www.python.org/}, Rust\footnote{Linguagem de
 programação. Disponível em: https://www.rust-lang.org/pt-BR} e Java\footnote{Linguagem
 de programação. Disponível em: https://www.java.com/pt-BR/}, oferecem suporte ao
-desenvolvimento de aplicações em interfaces de linha de comando. Nesta seção,
-são apresentadas as principais bibliotecas utilizadas para o controle de
-terminais em linguagem C. A escolha dessa linguagem para o desenvolvimento do NITE
-justifica-se por sua flexibilidade e alto desempenho.
+desenvolvimento de aplicações em interfaces de linha de comando. Nesta seção, são
+apresentadas as principais bibliotecas utilizadas para o controle de terminais em
+linguagem C. A escolha dessa linguagem para o desenvolvimento do NITE justifica-se
+por sua flexibilidade e alto desempenho.
 
 \subsection{NCURSES e CURSES}
 
-A biblioteca Curses foi desenvolvida por Ken Arnold em 1978, e fornece um conjunto
-de funções para manipulação de telas em modo texto. O nome "Curses" é um
-trocadilho para "\textit{cursor optimization}", já que a biblioteca foi
-projetada para otimizar o uso do cursor em terminais de texto. Podemos delimitar
-alguns conceitos importantes para Curses, onde a tela do terminal é manipulada
-por meio de estruturas chamadas \textit{windows} (janelas), que funcionam como
-arranjos bidimensionais representando parte ou toda a exibição. Existem janelas padrão,
-como a \textbf{stdscr} (tela inteira) e o \textbf{curscr} (estado atual da tela,
-não modificável). Cada janela mantém a posição de um cursor lógico, enquanto o cursor
-físico é único e aparece de fato na tela. Além disso, o curses permite criar \textit{pads},
+A biblioteca Curses foi desenvolvida por Ken Arnold em 1978, e fornece um
+conjunto de funções para manipulação de telas em modo texto. O nome "Curses" é um
+trocadilho para "\textit{cursor optimization}", já que a biblioteca foi projetada
+para otimizar o uso do cursor em terminais de texto. Podemos delimitar alguns
+conceitos importantes para Curses, onde a tela do terminal é manipulada por meio
+de estruturas chamadas \textit{windows} (janelas), que funcionam como arranjos bidimensionais
+representando parte ou toda a exibição. Existem janelas padrão, como a \textbf{stdscr}
+(tela inteira) e o \textbf{curscr} (estado atual da tela, não modificável). Cada
+janela mantém a posição de um cursor lógico, enquanto o cursor físico é único e
+aparece de fato na tela. Além disso, o curses permite criar \textit{pads},
 janelas que não se limitam ao tamanho da tela. \cite{ibm_curses_aix}
 
-Já a Ncurses é um clone da Curses, com suas melhorias. Teve inicio por volta de 1982
-com Pavel Curtis com o nome de Pcurses, e a partir de 86, várias pessoas começaram
-a contribuir com o projeto. A \textit{New Curses} (Ncurses) em 1993 foi aprimorada
-e passou a ser mantida por Zeyd Ben-Halim, recebendo algumas correções de bugs e
-até reformatação. Eric S. Raymond assumiu a manutenção em 1996, e em 1998,
-Thomas E. Dickey começou a contribuir com o projeto, tornando-se o mantenedor
-principal em 2001, cargo que ocupa até hoje. Juergen Pfeifer também contribuiu
-significativamente para o projeto adicionando bibliotecas \textbf{\textit{forms}
-e menus}, e Warren Tucker adicionou a biblioteca \textbf{\textit{panel}}.
-\cite{ncurses_site}
+Já a Ncurses é um clone da Curses, com suas melhorias. Teve inicio por volta de
+1982 com Pavel Curtis com o nome de Pcurses, e a partir de 86, várias pessoas
+começaram a contribuir com o projeto. A \textit{New Curses} (Ncurses) em 1993
+foi aprimorada e passou a ser mantida por Zeyd Ben-Halim, recebendo algumas correções
+de bugs e até reformatação. Eric S. Raymond assumiu a manutenção em 1996, e em
+1998, Thomas E. Dickey começou a contribuir com o projeto, tornando-se o mantenedor
+principal em 2001, cargo que ocupa até hoje. Juergen Pfeifer também contribuiu significativamente
+para o projeto adicionando bibliotecas \textbf{\textit{forms} e menus}, e Warren
+Tucker adicionou a biblioteca \textbf{\textit{panel}}. \cite{ncurses_site}
 
 \vspace{0.4cm}
 \lstinputlisting[language=c]{fontes/NcursesExemplo.c}
 \vspace{0.4cm}
 
 Mas o que exatamente a Ncurses oferece? Ela fornece funções para mover o cursor,
-criar janelas, produzir cores, interagir com o mouse etc. Assim, os programas
-não precisam se preocupar com as capacidades específicas do terminal subjacente.
+criar janelas, produzir cores, interagir com o mouse etc. Assim, os programas não
+precisam se preocupar com as capacidades específicas do terminal subjacente.
 Sendo totalmente compatível com as versões anteriores da Curses, não apenas cria
-uma camada sobre as capacidades do terminal, mas também fornece uma estrutura robusta
-para criar interfaces em modo texto (TUI). Com suas bibliotecas associadas (\textit{panel},
-menu e \textit{form}) é possível criar aplicações que contenham múltiplas janelas,
-menus, painéis e formulários de maneira simples e eficiente \cite{ncurses_howto}.
+uma camada sobre as capacidades do terminal, mas também fornece uma estrutura
+robusta para criar interfaces em modo texto (TUI). Com suas bibliotecas associadas
+(\textit{panel}, menu e \textit{form}) é possível criar aplicações que contenham
+múltiplas janelas, menus, painéis e formulários de maneira simples e eficiente
+\cite{ncurses_howto}.
 
 \FloatBarrier
 \begin{figure}[!htbp]
@@ -332,27 +344,26 @@ menus, painéis e formulários de maneira simples e eficiente \cite{ncurses_howt
 \end{figure}
 \FloatBarrier
 
-A biblioteca ncurses foi escolhida como principal ferramenta para o
-desenvolvimento do NITE devido à sua maturidade, estabilidade e ampla utilização
-na comunidade. Além disso, é considerada o padrão para a criação de editores de terminal
-complexos, embora apresente uma curva de aprendizado mais acentuada.
+A biblioteca ncurses foi escolhida como principal ferramenta para o desenvolvimento
+do NITE devido à sua maturidade, estabilidade e ampla utilização na comunidade. Além
+disso, é considerada o padrão para a criação de editores de terminal complexos, embora
+apresente uma curva de aprendizado mais acentuada.
 
 \subsection{TERMBOX e TERMBOX2}
 
-Mas não apenas de bibliotecas complexas a linguagem C vive. Existem também
-bibliotecas mais simples, e esse é o objetivo da Termbox. Desenvolvida em 2010\footnote{Disponível
-em: https://github.com/termbox/termbox}, a ideia da mesma é, além de simples,
-ser eficiente e portátil.
+Mas não apenas de bibliotecas complexas a linguagem C vive. Existem também bibliotecas
+mais simples, e esse é o objetivo da Termbox. Desenvolvida em 2010\footnote{Disponível
+em: https://github.com/termbox/termbox}, a ideia da mesma é, além de simples, ser
+eficiente e portátil.
 
-A Terbox tem como ideia uma abstração simples ao enxergar o terminal como uma
-grade de células fixas com fluxo de mensagens estruturadas e foi inspirada na
-API\footnote{Sigla para Application Programming Interface, é um conjunto de regras
-e ferramentas que permite que diferentes softwares “conversem” entre si,
-definindo como um programa pode usar funcionalidades de outros sem precisar
-conhecer todos os detalhes internos de como ele foi implementado.} de console do
-Windows. Mas a execução não é perfeita, visto que caracteres mais largos (como
-caracteres do alfabeto chines, japonês ou coreano) não são compatíveis com a
-ideia de uma TUI simples \cite{termbox_googlecode}.
+A Terbox tem como ideia uma abstração simples ao enxergar o terminal como uma grade
+de células fixas com fluxo de mensagens estruturadas e foi inspirada na API\footnote{Sigla
+para Application Programming Interface, é um conjunto de regras e ferramentas que
+permite que diferentes softwares “conversem” entre si, definindo como um
+programa pode usar funcionalidades de outros sem precisar conhecer todos os
+detalhes internos de como ele foi implementado.} de console do Windows. Mas a execução
+não é perfeita, visto que caracteres mais largos (como caracteres do alfabeto chines,
+japonês ou coreano) não são compatíveis com a ideia de uma TUI simples \cite{termbox_googlecode}.
 
 \vspace{0.4cm}
 \lstinputlisting[language=c]{fontes/TermboxExemplo.c}
@@ -360,10 +371,10 @@ ideia de uma TUI simples \cite{termbox_googlecode}.
 
 Sendo descontinuada em 2020, o projeto da Termbox2\footnote{Disponível em: https://github.com/termbox/termbox2}
 se iniciou em 2021 e é um \textit{fork}\footnote{"Bifurcação"; O projeto original
-é copiado e modificado livremente} da Termbox original que visa corrigir bugs e adicionar
-novos recursos, mantendo a simplicidade e eficiência da biblioteca padrão. Também
-busca ser uma alternativa direta a Ncurses, com uma API mais fácil de se usar e
-entender \cite{termbox2_github}.
+é copiado e modificado livremente} da Termbox original que visa corrigir bugs e
+adicionar novos recursos, mantendo a simplicidade e eficiência da biblioteca padrão.
+Também busca ser uma alternativa direta a Ncurses, com uma API mais fácil de se usar
+e entender \cite{termbox2_github}.
 
 \vspace{0.4cm}
 \lstinputlisting[language=c]{fontes/Termbox2Exemplo.c}
@@ -371,17 +382,17 @@ entender \cite{termbox2_github}.
 
 \subsection{TERMCAP e TERMINFO}
 
-Já o Termcap é uma biblioteca e banco de dados mais antigo, que fornece uma interface
-para acessar as capacidades dos terminais de texto. Desenvolvido pelo criador do
-Vi, Bill Joy, o Termcap foi amplamente utilizado em sistemas UNIX durante os
-anos 80 e 90, principalmente após a implementação do Termcap por Richard M.
-Stallman, criador do Emacs.
+Já o Termcap é uma biblioteca e banco de dados mais antigo, que fornece uma
+interface para acessar as capacidades dos terminais de texto. Desenvolvido pelo criador
+do Vi, Bill Joy, o Termcap foi amplamente utilizado em sistemas UNIX durante os anos
+80 e 90, principalmente após a implementação do Termcap por Richard M. Stallman,
+criador do Emacs.
 
-Segundo a documentação do GNU Termcap \cite{stallman_termcap}, a biblioteca foi
-desenvolvida para permitir que programas realizem saída de caracteres sem
-depender diretamente das particularidades de cada terminal. Os programas podem ler
-o Termcap para encontrar os códigos de escape (ANSI) específicos cujo são necessários
-para controlar o terminal \cite{kerrisk_termcap_man7}.
+Segundo a documentação do GNU Termcap \cite{stallman_termcap}, a biblioteca foi desenvolvida
+para permitir que programas realizem saída de caracteres sem depender diretamente
+das particularidades de cada terminal. Os programas podem ler o Termcap para
+encontrar os códigos de escape (ANSI) específicos cujo são necessários para
+controlar o terminal \cite{kerrisk_termcap_man7}.
 
 \vspace{0.4cm}
 \lstinputlisting[language=c]{fontes/TermcapExemplo.c}
@@ -389,12 +400,12 @@ para controlar o terminal \cite{kerrisk_termcap_man7}.
 
 Atualmente é mantido apenas por questões de compatibilidade, já que o Terminfo é
 a alternativa mais moderna e flexível. O Terminfo segue a mesma linha do Termcap,
-mas com um banco de dados mais estruturado e eficiente em terminais que possam não
-utilizar as Curses. Ele foi desenvolvido para superar as limitações do Termcap e
-especifica quais sequências de escape ou caracteres de controle devem ser
-enviadas ao terminal para realização de tarefas específicas, como mover o cursor,
-limpar a tela ou alterar cores. O Terminfo também é mais simples de se usar, com
-uma API mais direta e fácil de entender. \cite{man7_terminfo, tldp_text_terminal_howto}
+mas com um banco de dados mais estruturado e eficiente em terminais que possam
+não utilizar as Curses. Ele foi desenvolvido para superar as limitações do Termcap
+e especifica quais sequências de escape ou caracteres de controle devem ser enviadas
+ao terminal para realização de tarefas específicas, como mover o cursor, limpar a
+tela ou alterar cores. O Terminfo também é mais simples de se usar, com uma API mais
+direta e fácil de entender. \cite{man7_terminfo, tldp_text_terminal_howto}
 
 \vspace{0.4cm}
 \lstinputlisting[language=c]{fontes/TerminfoExemplo.c}
@@ -402,18 +413,18 @@ uma API mais direta e fácil de entender. \cite{man7_terminfo, tldp_text_termina
 
 \subsection{S-LANG}
 
-Voltando para as bibliotecas mais completas, a S-Lang é uma biblioteca de programação
-que oferece uma ampla gama de funcionalidades, permitindo a criaçao de \textit{softwares}
-multiplataformas de forma robusta. O recurso mais interessante é seu
-interpletador, que pode facilmente tornar um programa extensível e suporta todos
-os tipos de inteiros da linguagem C (\textit{char, short, int, long e long long}),
-além de um suporte notável ao usar estruturas como \textit{arrays}.
+Voltando para as bibliotecas mais completas, a S-Lang é uma biblioteca de
+programação que oferece uma ampla gama de funcionalidades, permitindo a criaçao de
+\textit{softwares} multiplataformas de forma robusta. O recurso mais interessante
+é seu interpletador, que pode facilmente tornar um programa extensível e suporta
+todos os tipos de inteiros da linguagem C (\textit{char, short, int, long e long
+long}), além de um suporte notável ao usar estruturas como \textit{arrays}.
 
-A biblioteca possui ferramentas para recursos como gerenciamento de tela, mapa para
-teclas, entrada/saída de terminal, entre outros. A S-Lang também possui
-aplicativo independente chamado \textbf{slsh} (S-lang \textit{shell}), que pode ser
-usado em aplicações baseadas na S-Lang, podendo acessar de forma iterativa todos
-os componentes de seu interpletador \cite{Davis2022S_Lang}.
+A biblioteca possui ferramentas para recursos como gerenciamento de tela, mapa
+para teclas, entrada/saída de terminal, entre outros. A S-Lang também possui aplicativo
+independente chamado \textbf{slsh} (S-lang \textit{shell}), que pode ser usado
+em aplicações baseadas na S-Lang, podendo acessar de forma iterativa todos os componentes
+de seu interpletador \cite{Davis2022S_Lang}.
 
 \vspace{0.4cm}
 \lstinputlisting[language=c]{fontes/SlangExemplo.c}
