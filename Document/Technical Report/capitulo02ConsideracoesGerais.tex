@@ -11,22 +11,21 @@ e outros tópicos relevantes.
 
 \section{Trabalhos Correlatos}
 
-O autor \cite{Rougier2020Editors}, em seu artigo \textit{"On the design of text editors"},
-faz uma análise minuciosa das características que compõem os editores de texto.
-Ele observa que, por mais funcionalidades que um editor possua, elas não são uma
+As principais características que compõem um editor de texto podem ser verificadas no
+trabalho de \citeauthorandyear{Rougier2020Editors}. O mesmo observa que, por mais
+funcionalidades que um editor possua, elas não são uma
 regra universal para todos: alguns podem não oferecer recursos como código colorido
 ou visualização em minimapa, embora tais elementos estejam presentes na maioria.
 O autor também analisa o fato de que a maior parte dos editores apresenta apenas
 dois modos tipográficos: o padrão e o \textit{bold} (negrito) e em alguns casos,
 o itálico, mas sempre mantendo o princípio do uso de fontes monoespaçadas. Por
-fim, compara a usabilidade do editor Emacs\footnote{Linguagem de programação. Disponível
+fim, compara a usabilidade do editor Emacs\footnote{Editor CLI. Disponível
 em: https://www.gnu.org/software/emacs/} com outras interfaces de usuário, destacando
 como a configuração personalizável do Emacs se diferenciou e conquistou notoriedade.
 
-Seguindo essa linha, os autores \cite{SchroderCito2022} analisam as diversas
+Nessa mesma perspectiva, os autores \citeauthorandyear{SchroderCito2022} analisam as diversas
 configurações da linha de comando (\textit{shells}\footnote{Interface entre o
-usuário e o sistema operacional}, seus atalhos, modificações, \textit{scripts})
-em \textit{"An Empirical Investigation of Command-Line Customization"}. Aqui, os
+usuário e o sistema operacional}, seus atalhos, modificações e \textit{scripts}). Aqui, os
 mesmos exploram mais de 2,2 milhões de \textit{aliases} (apelidos) encontrados
 no GitHub\footnote{Plataforma online baseada em Git que permite armazenar, gerenciar
 e compartilhar repositórios Git na nuvem. Disponível em: https://github.com/},
@@ -39,47 +38,45 @@ apenas abreviações de comandos já existentes (mas pouco lembrados, seja pela 
 escrita longa ou pelo uso específico), enquanto outros são o que ele chama de
 \textit{bookmarks} (favoritos).
 
-Outro trabalho interessante é o de \cite{Lindroos2025}, que propõe a criação de
-um editor/aplicativo de treino de digitação em modo texto (TUI) usando a
+Outro estudo significativo é o de \citeauthorandyear{Lindroos2025}. Em seu trabalho, o mesmo cria
+um editor/aplicativo de treino de digitação em modo TUI usando a
 linguagem Go\footnote{Linguagem de programação. Disponível em: https://go.dev/} e
 o \textit{framework}\footnote{Conjunto estruturado de ferramentas, bibliotecas e
 boas práticas que fornece uma base pronta para desenvolver um tipo específico de
-\textit{software}, evitando a construção do zero.} \textit{Bubble Tea}. Neste trabalho
+software, evitando a construção do zero.} \textit{Bubble Tea}. Neste trabalho
 de conclusão de curso, o finlandês destaca como as interfaces de linha de
 comando podem ser úteis para aplicações voltadas ao aprendizado, como o caso da digitação.
 O autor também ressalta a importância de se criar interfaces intuitivas e
-agradáveis, que possam ser utilizadas sem a necessidade de \textit{hardwares}
+agradáveis, que possam ser utilizadas sem a necessidade de hardwares
 potentes, conexão com a internet ou o uso de navegadores e aplicações gráficas.
 
 \section{Interface Modo Texto x Modo Gráfico}
 
-Mas, no início de tudo, como os usuários interagiam com os computadores antes
-das interfaces gráficas? Nos primórdios da computação, programas e dados eram
-armazenados em cartões perfurados, estes que eram pré-processados em lote e com longa
+Inicialmente, a interação dos usuários com os computadores ocorria antes mesmo do surgimento das interfaces GUI;
+programas e dados eram armazenados em cartões perfurados, estes que eram pré-processados em lote e com longa
 espera de resultados. Com a constante evolução das maquinas e a criação dos
 \textit{mainframes}\footnote{Grandes e poderosos computadores que suportavam
 diversas interações simultaneamente com níveis de confiabilidade e multitarefa},
 fez com que a comunicação entre usuário e máquina passasse a ser realizada de forma
-mais iterativa, principalmente por meio de interfaces de linha de comando (CLI),
-como o TTY (\textit{Teletypewriter}) \cite{ColumbiaTeletype2023} e o terminal
+mais iterativa, principalmente por meio de interfaces CLI,
+como o \textit{Teletypewriter} (TTY) \cite{ColumbiaTeletype2023} e o terminal
 VT100 \cite{DEC_VT100}. Nestes sistemas os usuários digitavam comandos diretamente
 em um terminal e recebiam uma saída quase em tempo real \cite{ComputerHistoryMuseum}.
 
-Diferente da atualidade dominada pelas interfaces gráficas (GUI), as interfaces
-de linha de comando exigiam que os usuários conhecessem os comandos exatos para
+Em contraste com as GUI’s que hoje são maioria nas interfaces, as CLI's
+exigiam que os usuários conhecessem os comandos exatos para
 realizar tarefas simples, como copiar arquivos ou executar programas. Essa
 ausência de uma interface gráfica significava que os usuários precisavam
 memorizar uma série de comandos e sintaxes, o que tornava o uso do computador muito
 mais técnico e menos acessível ao público em geral.
 
-O terminal VT100 foi um marco por introduzir códigos de escape ANSI\footnote{Cria
-normas e padrões que garantam compatibilidade, segurança e qualidade entre produtos
-e serviços.} (\textit{American National Standards Institute}) e permitir controle
-de cursor e formatação de texto, características que tornaram a linha de comando
+O terminal VT100 foi um marco por introduzir códigos de escape \textit{American National Standards Institute}
+(ANSI)\footnote{Cria normas e padrões que garantam compatibilidade, segurança e qualidade entre produtos
+e serviços.} e permitir controle de cursor e formatação de texto, características que tornaram a linha de comando
 mais funcional e eficiente. Apesar disso, o uso da CLI continuava exigindo
 conhecimento técnico avançado, o que ainda limitava bastante o acesso ao uso do computador.
 
-Mas os avanços não se limitaram apenas ao \textit{hardware}, as constantes descobertas
+Entretanto os avanços não se limitaram apenas ao hardware, as constantes descobertas
 na tecnologia possibilitaram a criação dos primeiros Sistemas Operacionais (OS),
 como o UNIX \cite{UnixArchive} e o MS-DOS \cite{ComputerHistoryMuseum}, popularizando
 o uso de terminais e CLIs e os tornando mais acessíveis ao público. Ainda no
@@ -94,12 +91,12 @@ abordagem modal para edição de texto, onde os usuários podiam alternar entre 
 de inserção e comando, permitindo uma edição mais eficiente. O Emacs, por outro
 lado se destacou por sua extensibilidade e personalização, permitindo que os usuários
 criassem seus próprios comandos e macros. Atualmente existem diversas variações
-desses editores, como o Vim (Vi Improved) \cite{Vim} e o NeoVim,
+desses editores, como o Vim (Vi \textit{Improved}) \cite{Vim} e o NeoVim,
 \cite{Neovim_Project} versões aprimoradas do Vi, e também com o Emacs, possuindo
 diversas variações e extensões, como o Spacemacs \cite{Spacemacs} e o Doom Emacs
 \cite{DoomEmacs}, todos seguindo a mesma filosofia de edição de texto em CLI.
 
-Já na linha do MS-DOS, o editor de texto mais conhecido é o EDIT.COM \cite{MicrosoftEdit2025},
+Em relação ao MS-DOS, o editor de texto mais conhecido é o EDIT.COM \cite{MicrosoftEdit2025},
 que foi introduzido no MS-DOS 2.0 em 1983. O EDIT.COM era um editor de texto
 simples, mas permitia aos usuários criar e editar arquivos de texto diretamente no
 terminal. Com o tempo, outros editores de texto CLI surgiram, como o Nano
@@ -116,12 +113,13 @@ do original, mas com melhorias na interface e na integração com o Windows.
     \centering
     \caption{EDIT.COM no MS-DOS}
     \includegraphics[scale=0.8]{imagens/EDIT_MSDOS.png}
-    \\\textbf{Fonte: Internet Archive} \label{fig:EDIT_MSDOS}
+    %\\\textbf{Fonte: \cite{MicrosoftEdit2025}}
+    \\\textbf{Fonte: \href{https://de.wikipedia.org/wiki/MS-DOS_Editor}{Wikipedia}} \label{fig:EDIT_MSDOS}
 \end{figure}
 \FloatBarrier
 
-Mais adiante na história, com o avanço das interfaces gráficas os editores de
-texto passaram a se tornar mais visuais. É possível notar essa evolução em \textit{softwares}
+Adiante, com o avanço das interfaces gráficas os editores de
+texto passaram a se tornar mais visuais. É possível notar essa evolução em softwares
 como o Notepad++ \cite{NotepadPlusPlus2025} até editores mais famosos como
 Visual Studio Code \cite{VSCode2025} e o recente Zed \cite{ZedEditor2025}. Esses
 editores de texto modernos oferecem uma ampla gama de recursos, como
@@ -148,11 +146,11 @@ personalizem sua experiência de edição de texto de acordo com suas necessidad
     \centering
     \caption{Visual Studio Code}
     \includegraphics[scale=0.3]{imagens/VSCode.png}
-    \\\textbf{Fonte: Github Microsoft - Visual Studio Code} \label{fig:VSCode}
+    \\\textbf{Fonte: \href{https://github.com/microsoft/vscode}{Github Microsoft}} \label{fig:VSCode}
 \end{figure}
 \FloatBarrier
 
-Já o ainda em desenvolvimento Zed Editor se destaca por sua abordagem colaborativa
+O ainda em desenvolvimento Zed Editor se destaca por sua abordagem colaborativa
 e em tempo real, permitindo que vários usuários editem o mesmo arquivo
 simultaneamente. Ele oferece uma interface moderna e intuitiva e que se assemelha
 muito ao Visual Studio Code, com recursos como realceamento de sintaxe, autocompletar,
@@ -170,7 +168,7 @@ intuitivas por oferecerem elementos visuais como menus e ícones, facilitando o 
 e oferecendo experiência \textit{plug-and-play} (experiência de uso imediato), e
 popularizando o computador como ferramenta pessoal.
 
-Ainda hoje, após décadas de evolução, há usuários que preferem interagir por meio
+Atualmente, após décadas de evolução, há usuários que preferem interagir por meio
 de CLIs, como ao utilizar o editor NeoVim em sistemas UNIX. Com base nisso, este
 trabalho propõe a criação de um editor CLI com uma interface mais moderna e
 intuitiva, buscando unir o poder e a eficiência das CLIs à facilidade de uso presente
@@ -186,7 +184,7 @@ desenvolvimento.
 
 \subsection{Processadores de Texto}
 
-Um processador de texto é qualquer \textit{software} comumente utilizado para a
+Um processador de texto é qualquer software comumente utilizado para a
 criação, edição ou formatação e exportação de textos digitais. Esses programas
 oferecem uma ampla gama de ferramentas e funcionalidades que facilitam o dia a
 dia de quem lida com documentos, seja para fins pessoais, acadêmicos ou
@@ -206,7 +204,7 @@ o Google Documents\footnote{Disponível em: https://docs.google.com/}, uma ferra
 baseada na nuvem que permite a criação e edição de documentos em tempo real,
 ideal para colaboração.
 
-Mas a sua estrutura vai muito além. Tais ferramentas são projetadas usando \textit{buffers}
+No entanto, sua estrutura ultrapassa esse aspecto. Tais ferramentas são projetadas usando \textit{buffers}
 de texto. Pense nisso: quando o usuário digita um caractere ele é inserido em um
 \textbf{\textit{buffer} de edição}, uma estrutura em memória que mantém o
 conteúdo do documento em tempo real, permitindo manipulações rápidas, como
@@ -216,12 +214,12 @@ de fato é gravado permanentemente no arquivo de armazenamento \cite{Jacobson198
 
 \subsection{Editores}
 
-Avançando, outras alternativas (e as mais comuns para pessoas da área) são os editores
+Outras alternativas (e as mais comuns para pessoas da área) são os editores
 de texto voltados a programação. Esses editores são especificamente projetados
 para lidar com código-fonte de linguagem de programação, e oferece uma vasta gama
 de recursos, como os citados anteriormente.
 
-Dentro desse grupo foi visto dois grandes subgrupos: GUI e CLI. A CLI foca em "interfaces"
+Dentro desse grupo foi visto dois grandes subgrupos: GUI e CLI. A CLI foca em ``interfaces''
 de linha de comando, sendo editores de \textit{shell} (ou terminais) como o Vi/Vim/NeoVim
 e Emacs e seus derivados. Ainda podemos ter editores CLI mais simples, porém
 funcionais, como Nano e EDIT. A GUI por sua vez foca em interfaces gráficas, como
@@ -235,7 +233,7 @@ realceamento de sintaxe, autocompletar e entre outros estão presentes. Além
 disso, esses editores frequentemente suportam múltiplos \textit{buffers} ou abas,
 permitindo que os desenvolvedores trabalhem em vários arquivos simultaneamente.
 
-Aqui, podemos seguir alguns principios de funcionamento dos \textit{buffers}:
+Podemos destacar, neste ponto, alguns princípios de funcionamento dos \textit{buffers}:
 
 \begin{itemize}
     \item Evento de tecla -> fila de eventos;
@@ -258,7 +256,7 @@ Aqui, podemos seguir alguns principios de funcionamento dos \textit{buffers}:
 
 \subsection{IDEs}
 
-Cabe aqui ressaltar os ambientes de desenvolvimento integrados (IDEs), que são ferramentas
+Cabe ressaltar também os ambientes de desenvolvimento integrados (IDEs), que são ferramentas
 mais completas que os editores de texto, trazendo outras funcionalidades
 essenciais. Essas ferramentas oferecem recursos que auxiliam o ciclo de vida de desenvolvimento,
 e geralmente possuem seu próprio editor de texto embutido, com compilador/depurador
@@ -278,14 +276,13 @@ o desenvolvimento Java.
     \centering
     \caption{Visual Studio 2022}
     \includegraphics[scale=0.4]{imagens/VisualStudio.png}
-    \\\textbf{Fonte: Microsoft - Visual Studio} \label{fig:VisualStudio}
+    \\\textbf{Fonte: \href{https://learn.microsoft.com/pt-br/visualstudio/ide/go-to-and-peek-definition?view=vs-2022}{Microsoft}} \label{fig:VisualStudio}
 \end{figure}
 \FloatBarrier
 
 Vale destacar que o Visual Studio Code, apesar de ser um editor de texto, é
-frequentemente utilizado como uma "IDE" graças à sua extensibilidade e
-integração com diversas ferramentas, podendo ser chamado de "canivete suíço" para
-os desenvolvedores.
+frequentemente utilizado como uma ``IDE'' graças à sua extensibilidade e
+integração com diversas ferramentas, podendo ser a ferramenta multi-uso dos desenvolvedores.
 
 \section{Principais Bibliotecas para Controle de Terminal em Linguagem C}
 
@@ -301,8 +298,8 @@ por sua flexibilidade e alto desempenho.
 \subsection{NCURSES e CURSES}
 
 A biblioteca Curses foi desenvolvida por Ken Arnold em 1978, e fornece um
-conjunto de funções para manipulação de telas em modo texto. O nome "Curses" é um
-trocadilho para "\textit{cursor optimization}", já que a biblioteca foi projetada
+conjunto de funções para manipulação de telas em modo texto. O nome ``Curses'' é um
+trocadilho para ``\textit{cursor optimization}'', já que a biblioteca foi projetada
 para otimizar o uso do cursor em terminais de texto. Podemos delimitar alguns
 conceitos importantes para Curses, onde a tela do terminal é manipulada por meio
 de estruturas chamadas \textit{windows} (janelas), que funcionam como arranjos bidimensionais
@@ -310,7 +307,7 @@ representando parte ou toda a exibição. Existem janelas padrão, como a \textb
 (tela inteira) e o \textbf{curscr} (estado atual da tela, não modificável). Cada
 janela mantém a posição de um cursor lógico, enquanto o cursor físico é único e
 aparece de fato na tela. Além disso, o curses permite criar \textit{pads},
-janelas que não se limitam ao tamanho da tela. \cite{ibm_curses_aix}
+janelas que não se limitam ao tamanho da tela \cite{ibm_curses_aix}.
 
 Já a Ncurses é um clone da Curses, com suas melhorias. Teve inicio por volta de
 1982 com Pavel Curtis com o nome de Pcurses, e a partir de 86, várias pessoas
@@ -320,39 +317,26 @@ de bugs e até reformatação. Eric S. Raymond assumiu a manutenção em 1996, e
 1998, Thomas E. Dickey começou a contribuir com o projeto, tornando-se o mantenedor
 principal em 2001, cargo que ocupa até hoje. Juergen Pfeifer também contribuiu significativamente
 para o projeto adicionando bibliotecas \textbf{\textit{forms} e menus}, e Warren
-Tucker adicionou a biblioteca \textbf{\textit{panel}}. \cite{ncurses_site}
+Tucker adicionou a biblioteca \textbf{\textit{panel}} \cite{ncurses_site}.
 
-\vspace{0.4cm}
-\lstinputlisting[language=c]{fontes/NcursesExemplo.c}
-\vspace{0.4cm}
-
-Mas o que exatamente a Ncurses oferece? Ela fornece funções para mover o cursor,
+Esse conjunto é capaz de fornecer funções para mover o cursor,
 criar janelas, produzir cores, interagir com o mouse etc. Assim, os programas não
 precisam se preocupar com as capacidades específicas do terminal subjacente.
 Sendo totalmente compatível com as versões anteriores da Curses, não apenas cria
 uma camada sobre as capacidades do terminal, mas também fornece uma estrutura
-robusta para criar interfaces em modo texto (TUI). Com suas bibliotecas associadas
+robusta para criar interfaces TUI. Com suas bibliotecas associadas
 (\textit{panel}, menu e \textit{form}) é possível criar aplicações que contenham
 múltiplas janelas, menus, painéis e formulários de maneira simples e eficiente
 \cite{ncurses_howto}.
 
-\FloatBarrier
-\begin{figure}[!htbp]
-    \centering
-    \caption{Protótipo do NITE em execução no terminal utilizando Ncurses}
-    \includegraphics[scale=0.3]{imagens/NITE.png}
-    \\\textbf{Fonte: Fernanda Martins da Silva} \label{fig:NITE}
-\end{figure}
-\FloatBarrier
-
-A biblioteca ncurses foi escolhida como principal ferramenta para o desenvolvimento
+A ncurses foi escolhida como principal ferramenta para o desenvolvimento
 do NITE devido à sua maturidade, estabilidade e ampla utilização na comunidade. Além
 disso, é considerada o padrão para a criação de editores de terminal complexos, embora
 apresente uma curva de aprendizado mais acentuada.
 
 \subsection{TERMBOX e TERMBOX2}
 
-Mas não apenas de bibliotecas complexas a linguagem C vive. Existem também bibliotecas
+Contudo, a linguagem C vai além do uso de bibliotecas complexas. Existem também bibliotecas
 mais simples, e esse é o objetivo da Termbox. Desenvolvida em 2010\footnote{Disponível
 em: https://github.com/termbox/termbox}, a ideia da mesma é, além de simples, ser
 eficiente e portátil.
@@ -366,20 +350,12 @@ detalhes internos de como ele foi implementado.} de console do Windows. Mas a ex
 não é perfeita, visto que caracteres mais largos (como caracteres do alfabeto chines,
 japonês ou coreano) não são compatíveis com a ideia de uma TUI simples \cite{termbox_googlecode}.
 
-\vspace{0.4cm}
-\lstinputlisting[language=c]{fontes/TermboxExemplo.c}
-\vspace{0.4cm}
-
 Sendo descontinuada em 2020, o projeto da Termbox2\footnote{Disponível em: https://github.com/termbox/termbox2}
-se iniciou em 2021 e é um \textit{fork}\footnote{"Bifurcação"; O projeto original
+se iniciou em 2021 e é um \textit{fork}\footnote{``Bifurcação''; O projeto original
 é copiado e modificado livremente} da Termbox original que visa corrigir bugs e
 adicionar novos recursos, mantendo a simplicidade e eficiência da biblioteca padrão.
 Também busca ser uma alternativa direta a Ncurses, com uma API mais fácil de se usar
 e entender \cite{termbox2_github}.
-
-\vspace{0.4cm}
-\lstinputlisting[language=c]{fontes/Termbox2Exemplo.c}
-\vspace{0.4cm}
 
 \subsection{TERMCAP e TERMINFO}
 
@@ -395,10 +371,6 @@ das particularidades de cada terminal. Os programas podem ler o Termcap para
 encontrar os códigos de escape (ANSI) específicos cujo são necessários para
 controlar o terminal \cite{kerrisk_termcap_man7}.
 
-\vspace{0.4cm}
-\lstinputlisting[language=c]{fontes/TermcapExemplo.c}
-\vspace{0.4cm}
-
 Atualmente é mantido apenas por questões de compatibilidade, já que o Terminfo é
 a alternativa mais moderna e flexível. O Terminfo segue a mesma linha do Termcap,
 mas com um banco de dados mais estruturado e eficiente em terminais que possam
@@ -406,17 +378,13 @@ não utilizar as Curses. Ele foi desenvolvido para superar as limitações do Te
 e especifica quais sequências de escape ou caracteres de controle devem ser enviadas
 ao terminal para realização de tarefas específicas, como mover o cursor, limpar a
 tela ou alterar cores. O Terminfo também é mais simples de se usar, com uma API mais
-direta e fácil de entender. \cite{man7_terminfo, tldp_text_terminal_howto}
-
-\vspace{0.4cm}
-\lstinputlisting[language=c]{fontes/TerminfoExemplo.c}
-\vspace{0.4cm}
+direta e fácil de entender \cite{man7_terminfo}, \cite{tldp_text_terminal_howto}.
 
 \subsection{S-LANG}
 
-Voltando para as bibliotecas mais completas, a S-Lang é uma biblioteca de
-programação que oferece uma ampla gama de funcionalidades, permitindo a criaçao de
-\textit{softwares} multiplataformas de forma robusta. O recurso mais interessante
+Complementando, a S-Lang é uma biblioteca mais ampla e completa para
+programação, oferecendo uma ampla gama de funcionalidades, permitindo a criaçao de
+softwares multiplataformas de forma robusta. O recurso mais interessante
 é seu interpletador, que pode facilmente tornar um programa extensível e suporta
 todos os tipos de inteiros da linguagem C (\textit{char, short, int, long e long
 long}), além de um suporte notável ao usar estruturas como \textit{arrays}.
@@ -426,7 +394,3 @@ para teclas, entrada/saída de terminal, entre outros. A S-Lang também possui a
 independente chamado \textbf{slsh} (S-lang \textit{shell}), que pode ser usado
 em aplicações baseadas na S-Lang, podendo acessar de forma iterativa todos os componentes
 de seu interpletador \cite{Davis2022S_Lang}.
-
-\vspace{0.4cm}
-\lstinputlisting[language=c]{fontes/SlangExemplo.c}
-\vspace{0.4cm}

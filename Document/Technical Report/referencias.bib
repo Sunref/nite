@@ -1,7 +1,7 @@
 % REFERÊNCIAS CORRELATAS
 % APRENDIZADO DE ESCRITA COM TERMINAL
-@online{Lindroos2025,
-  author       = {{Oskari Lindroos}},
+@misc{Lindroos2025,
+  author       = {Lindroos, Oskari},
   title        = {Gophertype : tekstipohjaisen käyttöliittymän toteuttaminen Go:lla},
   school       = {Tampereen ammattikorkeakoulu},
   year         = {2025},
@@ -11,7 +11,7 @@
 
 % CUSTOMIZAÇÃO DE AMBIENTES DE TERMINAL
 @article{SchroderCito2022,
-  author       = {{Michael Schröder and Jürgen Cito}},
+  author       = {Schröder, Michael and Cito, Jürgen},
   title        = {An Empirical Investigation of Command-Line Customization},
   journal      = {Empirical Software Engineering},
   year         = {2022},
@@ -25,7 +25,7 @@
 % DESIGN DE EDITORES DE TEXTO
 @article{Rougier2020Editors,
   title     = {On the design of text editors},
-  author    = {{Nicolas P. Rougier}},
+  author    = {Rougier, Nicolas P.},
   journal   = {arXiv preprint arXiv:2008.06030},
   year      = {2020},
   url       = {https://arxiv.org/abs/2008.06030}
@@ -41,7 +41,7 @@
 }
 
 @article{Jacobson1989,
-  author    = {George Jacobson},
+  author    = {Jacobson, George},
   title     = {Buffers for Text Editors},
   journal   = {ACM SIGPLAN Notices},
   volume    = {24},
@@ -54,7 +54,7 @@
 
 %DOCUMENTAÇÕES OFICIAIS
 % VT100
-@manual{DEC_VT100,
+@misc{DEC_VT100,
   author = {{Digital Equipment Corporation}},
   title = {VT100 Series Video Terminal Technical Manual - Chapter 1: Introduction and Specifications},
   year = {1979},
@@ -73,7 +73,7 @@
 
 % VI
 @manual{Joy_Vi,
-  author       = {{Bill Joy and Mark Horton}},
+  author       = {Joy, Bill and Horton, Mark},
   title        = {An Introduction to Display Editing with Vi},
   organization = {University of California, Berkeley},
   year         = {1986},
@@ -84,7 +84,7 @@
 % VIM
 @manual{Vim,
   title  = {Vim Documentation: Development of Vim},
-  author = {{Vim Documentation Project}},
+  author = {Vim, Documentation Project},
   year   = {2008},
   url    = {https://vimdoc.sourceforge.net/htmldoc/develop.html},
   note   = {[Acesso em: 21 agosto 2025]}
@@ -92,8 +92,8 @@
 
 % NEOVIM
 @manual{Neovim_Project,
-  author = {{Neovim Project}},
-  title  = {Neovim: Hyperextensible Vim-based Text Editor},
+  author = {Project Neovim},
+  title  = {Hyperextensible Vim-based Text Editor, Neovim},
   year   = {2014},
   url    = {https://neovim.io},
   note   = {[Acesso em: 22 agosto 2025]}
@@ -101,7 +101,7 @@
 
 % EMACS
 @article{Stallman1981,
-  author  = {{Richard M. Stallman}},
+  author  = {Stallman, Richard M.},
   title   = {{EMACS:} An Extensible Real-Time Display Editor},
   journal = {ACM Conference on Text Processing},
   year    = {1981},
@@ -111,7 +111,7 @@
 
 % SPACEMACS
 @manual{Spacemacs,
-  author = {{Sylvain Benner and contributors}},
+  author = {Benner, Sylvain and contributors},
   title  = {Spacemacs: The best editor is neither Emacs nor Vim, it's Emacs *and* Vim!},
   year   = {2014},
   url    = {https://www.spacemacs.org},
@@ -120,7 +120,7 @@
 
 % DOOM EMACS
 @manual{DoomEmacs,
-  author = {{Henrik Lissner and contributors}},
+  author = {Lissner, Henrik and contributors},
   title  = {Doom Emacs: An Emacs configuration for the stubborn martian vimmer},
   year   = {2016},
   url    = {https://github.com/doomemacs/doomemacs},
@@ -133,7 +133,7 @@
   year         = {2025},
   url          = {https://learn.microsoft.com/en-us/windows/edit/},
   note         = {[Acesso em: 21 agosto 2025]},
-  organization = {Microsoft}
+  author       = {Microsoft}
 }
 
 % NANO
@@ -141,7 +141,8 @@
   title = {GNU Nano Documentation},
   url   = {https://www.nano-editor.org/docs.php},
   year  = {2025},
-  note  = {[Acesso em: 21 agosto 2025]}
+  note  = {[Acesso em: 21 agosto 2025]},
+  author = {GNU}
 }
 
 % NOTEPAD++
@@ -149,7 +150,8 @@
   title = {Notepad++ User Manual},
   year  = {2025},
   url   = {https://npp-user-manual.org/},
-  note  = {[Acesso em: 21 agosto 2025]}
+  note  = {[Acesso em: 21 agosto 2025]},
+  author = {Notepad++}
 }
 
 % VSCODE
@@ -157,7 +159,8 @@
   title = {Visual Studio Code Documentation},
   year  = {2025},
   url   = {https://code.visualstudio.com/docs},
-  note  = {[Acesso em: 21 agosto 2025]}
+  note  = {[Acesso em: 21 agosto 2025]},
+  author = {Microsoft}
 }
 
 % ZED
@@ -165,7 +168,8 @@
   title = {Zed Code Editor Documentation},
   url   = {https://zed.dev/docs},
   year  = {2025},
-  note  = {[Acesso em: 21 agosto 2025]}
+  note  = {[Acesso em: 21 agosto 2025]},
+  author = {Zed}
 }
 
 % PROCESSADORES DE TEXTO
@@ -182,46 +186,16 @@
 
 % BUFFER / EDITORES DE TEXTO
 @incollection{glibc-buffering-concepts,
-  author       = {{Free Software Foundation}},
-  title        = {Buffering Concepts},
-  booktitle    = {The GNU C Library Reference Manual},
-  editor       = {Free Software Foundation},
-  publisher    = {Free Software Foundation},
-  year         = {2023},
-  note         = {Seção 12.20.1},
-  url          = {https://www.gnu.org/software/libc/manual/html_node/Buffering-Concepts.html},
-  urldate      = {2025-08-28},
+    author       = {GNU, Free Software Foundation},
+    title        = {Buffering Concepts},
+    booktitle    = {The GNU C Library Reference Manual},
+    editor       = {Free Software Foundation},
+    publisher    = {Free Software Foundation},
+    year         = {2023},
+    note         = {Seção 12.20.1},
+    url          = {https://www.gnu.org/software/libc/manual/html_node/Buffering-Concepts.html},
+    urldate      = {2025-08-28}
 }
-
-% MS WORD
-% misc{microsoft_word,
-%   title        = {Microsoft Word},
-%   howpublished = {Página oficial da Microsoft (\textit{Microsoft 365})},
-%   year         = {2025},
-%   note         = {Disponível online – processador de texto com colaboração em tempo real},
-%   url          = {https://www.microsoft.com/en-us/microsoft-365/word},
-%   urldate      = {2025-08-28},
-% }
-
-% LIBREOFFICE
-% misc{libreoffice,
-%   title        = {LibreOffice: Free and private office suite},
-%   howpublished = {Página oficial do LibreOffice},
-%   year         = {2025},
-%   note         = {Suíte de escritório grátis e de código aberto, compatível com Microsoft Office},
-%   url          = {https://www.libreoffice.org/},
-%   urldate      = {2025-08-28},
-% }
-
-% % GOOGLE DOCS
-% misc{google_docs,
-%   title        = {Google Docs: Online Document \& PDF Editor},
-%   howpublished = {Página oficial do Google Workspace},
-%   year         = {2025},
-%   note         = {Processador de texto online com colaboração em tempo real e compatibilidade com PDFs},
-%   url          = {https://workspace.google.com/products/docs/},
-%   urldate      = {2025-08-28},
-% }
 
 % IDEs
 % VISUAL STUDIO
@@ -232,6 +206,7 @@
   note         = {IDE completo para desenvolvimento de aplicações multiplataforma},
   url          = {https://visualstudio.microsoft.com/products/},
   urldate      = {2025-08-28},
+  author       = {Microsoft}
 }
 
 % CODEBLOCKS
@@ -242,6 +217,7 @@
   note         = {IDE gratuito e extensível para C/C++ e Fortran},
   url          = {https://www.codeblocks.org/},
   urldate      = {2025-08-28},
+  author       = {Code::Blocks}
 }
 
 % ECLIPSE
@@ -252,6 +228,7 @@
   note         = {Plataforma open source para desenvolvimento profissional (Java e mais)},
   url          = {https://eclipseide.org/},
   urldate      = {2025-08-28},
+  author       = {Eclipse}
 }
 
 % JETBRAINS TOOLS
@@ -262,6 +239,7 @@
   note         = {Coleção de IDEs e ferramentas (IntelliJ IDEA, PyCharm, WebStorm, etc.)},
   url          = {https://www.jetbrains.com/products/},
   urldate      = {2025-08-28},
+  author       = {JetBrains}
 }
 
 % NETBEANS
@@ -272,6 +250,7 @@
   note         = {IDE open source com suporte a Java, PHP, JavaScript, C/C++, entre outros},
   url          = {https://netbeans.apache.org/},
   urldate      = {2025-08-28},
+  author       = {Apache}
 }
 
 % BIBLIOTECAS
@@ -283,11 +262,12 @@
   note         = {Seção "Curses library" na documentação do AIX},
   url          = {https://www.ibm.com/docs/en/aix/7.2.0?topic=concepts-curses-library},
   urldate      = {2025-08-28},
+  author       = {IBM}
 }
 
 % NCURSES
 @misc{ncurses_site,
-  author       = {{Thomas E. Dickey}},
+  author       = {Dickey, Thomas E.},
   title        = {NCURSES – New Curses},
   year         = {2023},
   url          = {https://invisible-island.net/ncurses/},
@@ -295,7 +275,7 @@
 }
 
 @misc{ncurses_howto,
-  author       = {{Pradeep Padala}},
+  author       = {Padala, Pradeep},
   title        = {NCURSES Programming HOWTO},
   howpublished = {The Linux Documentation Project (LDP)},
   year         = {2005},
@@ -306,14 +286,14 @@
 
 % TERMBOX
 @misc{termbox_github,
-  author       = {{Termbox}},
+  author       = {Termbox},
   title        = {termbox/termbox},
   howpublished = {\url{https://github.com/termbox/termbox}},
   note         = {Acesso em: 29 ago. 2025}
 }
 
 @misc{termbox_googlecode,
-  author       = {{Termbox}},
+  author       = {Termbox},
   title        = {termbox},
   year         = {2020},
   howpublished = {\url{https://code.google.com/archive/p/termbox/}},
@@ -322,7 +302,7 @@
 
 % TERMBOX2
 @misc{termbox2_github,
-  author       = {{Termbox}},
+  author       = {Termbox2},
   title        = {termbox2},
   year         = {2025},
   url          = {https://github.com/termbox/termbox2},
@@ -331,7 +311,7 @@
 
 % TERMCAP
 @manual{stallman_termcap,
-  author       = {{Stallman, Richard M.}},
+  author       = {Stallman, Richard M.},
   title        = {The Termcap Library},
   year         = {1992},
   howpublished = {Manual da versão GNU do Termcap—Disponível online},
@@ -340,7 +320,7 @@
 }
 
 @manual{kerrisk_termcap_man7,
-  author       = {{Kerrisk, Michael}},
+  author       = {Kerrisk, Michael},
   title        = {termcap(5) — terminal capability database},
   year         = {2025},
   howpublished = {Man page on man7.org},
@@ -350,7 +330,7 @@
 
 % TERMINFO
 @manual{man7_terminfo,
-  author       = {{Michael Kerrisk}},
+  author       = {Kerrisk, Michael},
   title        = {terminfo(5) - Manual de páginas do Linux},
   year         = {2025},
   howpublished = {Disponível em: \url{https://www.man7.org/linux/man-pages/man5/terminfo.5.html}},
@@ -358,7 +338,7 @@
 }
 
 @manual{tldp_text_terminal_howto,
-  author       = {{The Linux Documentation Project}},
+  author       = {The Linux Documentation Project},
   title        = {Text-Terminal-HOWTO},
   year         = {2013},
   howpublished = {Disponível em: \url{https://www.tldp.org/HOWTO/Text-Terminal-HOWTO.html}},
@@ -367,7 +347,7 @@
 
 % S-LANG
 @misc{Davis2022S_Lang,
-  author = {{John E. Davis}},
+  author = {Davis, John E.},
   title = {S-Lang Programmer's Library},
   year = {2022},
   url = {https://www.jedsoft.org/slang/},
@@ -376,7 +356,7 @@
 
 %OUTROS
 @misc{ColumbiaTeletype2023,
-  author = {{Frank da Cruz / Columbia University}},
+  author = {Cruz, Frank},
   title  = {Teletype Machines},
   year   = {2023},
   url    = {https://www.columbia.edu/cu/computinghistory/teletype/index.html},
