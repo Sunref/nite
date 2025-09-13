@@ -1,5 +1,40 @@
 \chapter{Metodologia}
 \label{cap:03}
 
-Descrever metodologia, materiais e métodos utilizados no estudo, bem como os procedimentos experimentais realizados (equipamentos,
-técnicas e processos utilizados).
+%Descrever metodologia, materiais e métodos utilizados no estudo, bem como os procedimentos experimentais realizados (equipamentos, técnicas e processos utilizados).
+
+Idealmente planejado como um projeto incremental, o NITE segue a linha de ``entregas'' em bloco,
+implementações lentas e funcionais seguindo a ordem descrita na tabela abaixo.
+
+\FloatBarrier
+\begin{table}[!htbp]
+	\centering
+	\begin{tabular}{ c | c }
+		\hline
+		\textbf{Ordem} & \textbf{Implementação}                                     \\ \hline
+		1  & Criar protótipo inicial                                                \\ \hline
+		2  & Implementar criação e abertura de arquivos                             \\ \hline
+		3  & Implementar edição e salvamento de arquivos                            \\ \hline
+		4  & Implementar suporte a múltiplos arquivos                               \\ \hline
+		5  & Realizar ajustes visuais e de interface                                \\ \hline
+		6  & Implementar atalhos de teclado / \textit{shortcuts}                    \\ \hline
+		7  & Implementar \textit{syntax highlight}\footnotemark                     \\ \hline
+		8  & Buscar novas funcionalidades                                           \\ \hline
+	\end{tabular}
+	\\ \vspace{0.2cm}
+	\textbf{Fonte:} Elaborada pelo autor
+	\label{tab:implementacoes}
+\end{table}
+\footnotetext{Destaque de sintaxe}
+\FloatBarrier
+
+Isso permite testar as funcionalidades implementadas cuidadosamente, e realizar ajustes
+sempre que necessário de forma ágil e controlada.
+
+Descrito na sessão anterior, a linguagem de desenvolvimento que mais se adequa a proposta do projeto
+foi a linguagem C, por sua confiabilidade e utilização continua em projetos semelhantes. Nessa lógica
+a biblioteca utilizada para manipulação de terminal foi a Ncurses, muito bem fundamentada e completa
+de funcionaidades que serão aproveitadas ao máximo. Como ferramentas auxiliares, o uso do Git para
+versionamento de arquivos, o editor Zed como IDE principal de desenvolvimento e o ambiente Linux para
+testes. Vale ressaltar aqui o uso do GCC\footnote{Coleção de compiladores do projeto GNU} como compilador.
+
