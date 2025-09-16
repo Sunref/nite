@@ -1,40 +1,54 @@
 \chapter{Metodologia}
 \label{cap:03}
 
-%Descrever metodologia, materiais e métodos utilizados no estudo, bem como os procedimentos experimentais realizados (equipamentos, técnicas e processos utilizados).
+Idealmente planejado como um projeto incremental, o NITE segue a linha de ``entregas''
+por partes, com implementações lentas e funcionais, mostrado pelo diagrama abaixo:
 
-Idealmente planejado como um projeto incremental, o NITE segue a linha de ``entregas'' em bloco,
-implementações lentas e funcionais seguindo a ordem descrita na tabela abaixo.
+\begin{center}
+    \begin{tikzpicture}[scale=1.1, transform shape]
+        \path[
+            mindmap,
+            concept color=blue!30,
+            text=black,
+            level 1/.append style={sibling angle=45, level distance=4.5cm},
+            every node/.style={align=center}
+        ]
+            node[concept, font=\Large\bfseries, minimum size=2.5cm] {NITE}
+            [clockwise from=0]
+            child[concept color=green!40, grow=0]
+            { node[concept, font=\footnotesize, minimum size=2.8cm] {1. Criar\\protótipo\\inicial} }
+            child[concept color=orange!40, grow=45]
+            { node[concept, font=\footnotesize, minimum size=3.2cm] {2. Implementar\\criação e\\abertura de\\arquivos} }
+            child[concept color=yellow!50, grow=90]
+            { node[concept, font=\footnotesize, minimum size=3.2cm] {3. Implementar\\edição e\\salvamento\\de arquivos} }
+            child[concept color=purple!40, grow=135]
+            { node[concept, font=\footnotesize, minimum size=3cm] {4. Implementar\\suporte a\\múltiplos\\arquivos} }
+            child[concept color=pink!40, grow=180]
+            { node[concept, font=\footnotesize, minimum size=3.2cm] {5. Realizar\\ajustes visuais\\e de interface} }
+            child[concept color=teal!40, grow=225]
+            { node[concept, font=\footnotesize, minimum size=3.5cm] {6. Implementar\\atalhos de\\teclado /\\\textit{shortcuts}} }
+            child[concept color=red!40, grow=270]
+            { node[concept, font=\footnotesize, minimum size=3cm] {7. Implementar\\\textit{syntax}\\\textit{highlight}\footnotemark[1]} }
+            child[concept color=cyan!60, grow=315]
+            { node[concept, font=\footnotesize, minimum size=3cm] {8. Buscar\\novas\\funcionalidades} };
+    \end{tikzpicture}
+    \footnotetext[1]{Destaque de sintaxe}
+\end{center}
 
-\FloatBarrier
-\begin{table}[!htbp]
-	\centering
-	\begin{tabular}{ c | c }
-		\hline
-		\textbf{Ordem} & \textbf{Implementação}                                     \\ \hline
-		1  & Criar protótipo inicial                                                \\ \hline
-		2  & Implementar criação e abertura de arquivos                             \\ \hline
-		3  & Implementar edição e salvamento de arquivos                            \\ \hline
-		4  & Implementar suporte a múltiplos arquivos                               \\ \hline
-		5  & Realizar ajustes visuais e de interface                                \\ \hline
-		6  & Implementar atalhos de teclado / \textit{shortcuts}                    \\ \hline
-		7  & Implementar \textit{syntax highlight}\footnotemark                     \\ \hline
-		8  & Buscar novas funcionalidades                                           \\ \hline
-	\end{tabular}
-	\\ \vspace{0.2cm}
-	\textbf{Fonte:} Elaborada pelo autor
-	\label{tab:implementacoes}
-\end{table}
-\footnotetext{Destaque de sintaxe}
-\FloatBarrier
+Consequentemente, isso permite testes cuidadosos das funcionalidades implementadas,
+além de possibilitar ajustes sempre que necessário de forma ágil e controlada.
 
-Isso permite testar as funcionalidades implementadas cuidadosamente, e realizar ajustes
-sempre que necessário de forma ágil e controlada.
+Descrito na sessão anterior, a linguagem de desenvolvimento que mais se adequa a
+proposta do projeto foi a linguagem C, por sua confiabilidade e utilização
+continua em projetos semelhantes. Nessa lógica a biblioteca utilizada para manipulação
+de terminal foi a Ncurses, muito bem fundamentada e completa de funcionaidades
+que serão aproveitadas ao máximo. Como ferramentas auxiliares, o uso do Git para
+versionamento de arquivos, o editor Zed como IDE principal de desenvolvimento e o
+ambiente Linux com o terminal BlackBox para testes. Vale ressaltar aqui o uso do
+GCC\footnote{Coleção de compiladores do projeto GNU} como compilador.
 
-Descrito na sessão anterior, a linguagem de desenvolvimento que mais se adequa a proposta do projeto
-foi a linguagem C, por sua confiabilidade e utilização continua em projetos semelhantes. Nessa lógica
-a biblioteca utilizada para manipulação de terminal foi a Ncurses, muito bem fundamentada e completa
-de funcionaidades que serão aproveitadas ao máximo. Como ferramentas auxiliares, o uso do Git para
-versionamento de arquivos, o editor Zed como IDE principal de desenvolvimento e o ambiente Linux para
-testes. Vale ressaltar aqui o uso do GCC\footnote{Coleção de compiladores do projeto GNU} como compilador.
-
+Cada etapa do desenvolvimento é realizada em paralelo a análises e estudos do código-fonte
+de outros editores, como o NeoVim, com ênfase no código do Nano, editor que
+serviu de base para o NITE. Já na implementação de destaque de sintaxe, a
+biblioteca Tree-Sitter será estudada e utilizada, gerando árvores de sintaxe abstratas
+que ajudarão na implementação de destaque de sintaxe para o projeto \cite{tree-sitter}.
