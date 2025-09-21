@@ -25,25 +25,25 @@ void draw_centered_screen(WINDOW *win) {
     int cmd_y = row/2 + 4; // Linha onde os comandos serão exibidos
 
     // Digite !o para abrir um arquivo
-    mvwprintw(win, cmd_y, (col - 50) / 2, "Digite ");
+    mvwprintw(win, cmd_y, (col - 50) / 2, "Enter ");
     wattron(win, COLOR_PAIR(1)); // azul
     wprintw(win, "!o");
     wattroff(win, COLOR_PAIR(1));
-    wprintw(win, " para abrir um arquivo");
+    wprintw(win, " to open a file");
 
     // Digite !n para criar novo arquivo
-    mvwprintw(win, cmd_y + 1, (col - 50) / 2, "Digite ");
+    mvwprintw(win, cmd_y + 1, (col - 50) / 2, "Enter ");
     wattron(win, COLOR_PAIR(2)); // amarelo
     wprintw(win, "!n");
     wattroff(win, COLOR_PAIR(2));
-    wprintw(win, " para criar novo arquivo");
+    wprintw(win, " to create a new file");
 
     // Digite !q para sair do editor
-    mvwprintw(win, cmd_y + 2, (col - 50) / 2, "Digite ");
+    mvwprintw(win, cmd_y + 2, (col - 50) / 2, "Enter ");
     wattron(win, COLOR_PAIR(3)); // vermelho
     wprintw(win, "!q");
     wattroff(win, COLOR_PAIR(3));
-    wprintw(win, " para sair do editor");
+    wprintw(win, " to exit the editor");
 
     wrefresh(win);      // Atualiza a janela para mostrar as mudanças
 

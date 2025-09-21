@@ -11,7 +11,7 @@ int process_command(const char *cmd, char *status_msg, size_t msg_size, WINDOW *
     if (strcmp(cmd, CMD_HELP) == 0) {
 
         // Texto padrão
-        mvwprintw(win, row - 2, 0, "Comandos disponíveis: ");
+        mvwprintw(win, row - 2, 0, "Available commands: ");
 
         // !o em azul
         wattron(win, COLOR_PAIR(3));
@@ -43,29 +43,29 @@ int process_command(const char *cmd, char *status_msg, size_t msg_size, WINDOW *
 
     // Comando de saída
     if (strcmp(cmd, CMD_EXIT) == 0) {
-        snprintf(status_msg, msg_size, "Saindo do editor...");
+        snprintf(status_msg, msg_size, "Exiting the editor...");
         return 1;
     }
 
     // Comando de abrir arquivo
     if (strcmp(cmd, CMD_OPEN) == 0) {
-        snprintf(status_msg, msg_size, "Abrir arquivo ainda não implementado!");
+        snprintf(status_msg, msg_size, "Open file not yet implemented!");
         return 0;
     }
 
     // Comando de criar novo arquivo
     if (strcmp(cmd, CMD_NEW) == 0) {
-        snprintf(status_msg, msg_size, "Criar novo arquivo ainda não implementado!");
+        snprintf(status_msg, msg_size, "Create new file not yet implemented!");
         return 0;
     }
 
     // Comando de ajuda
     if(strcmp(cmd, CMD_HELP) == 0){
-        snprintf(status_msg, msg_size, "Mapa de comandos ainda não implementado!");
+        snprintf(status_msg, msg_size, "Command map not yet implemented!");
         return 0;
     }
 
     // Qualquer outro comando inválido
-    snprintf(status_msg, msg_size, "Comando inválido: %s", cmd);
+    snprintf(status_msg, msg_size, "Invalid command: %s", cmd);
     return 0;
 }
