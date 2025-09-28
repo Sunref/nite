@@ -6,6 +6,7 @@
 #include "../include/status.h"
 #include "../include/menu.h"
 #include <ncurses.h>
+#include <panel.h>
 
 int main() {
 

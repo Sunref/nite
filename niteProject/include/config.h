@@ -17,6 +17,7 @@
 #define CMD_OPEN  "!o"      // Open
 #define CMD_NEW   "!n"      // New
 #define CMD_EXIT  "!q"      // Quit
+#define CMD_SAVE  "!s"      // Save
 #define CMD_HELP  "!help"   // Help
 
 #endif

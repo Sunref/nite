@@ -1,10 +1,14 @@
 // Processa comandos digitados pelo usuário
 // Recebe o comando, um buffer para mensagem de status, janela e posição para saída
 
+#include "../include/file_validation.h"
 #include "../include/command.h"
 #include "../include/config.h"
+#include "../include/editor.h"
+#include <ncurses.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 int process_command(const char *cmd, char *status_msg, size_t msg_size, WINDOW *win, int row, int col) {
 
@@ -55,13 +59,36 @@ int process_command(const char *cmd, char *status_msg, size_t msg_size, WINDOW *
 
     // Comando de criar novo arquivo
     if (strcmp(cmd, CMD_NEW) == 0) {
-        snprintf(status_msg, msg_size, "Create new file not yet implemented!");
-        return 0;
-    }
+        // Solicitando nome do arquivo
+        char filename[256];
+        mvwprintw(win, row - 2, 0, "Enter filename: ");
+        wclrtoeol(win);
+        wrefresh(win);
 
-    // Comando de ajuda
-    if(strcmp(cmd, CMD_HELP) == 0){
-        snprintf(status_msg, msg_size, "Command map not yet implemented!");
+        echo();
+        wmove(win, row - 2, 16);
+        wgetnstr(win, filename, sizeof(filename) - 1);
+        noecho();
+
+        // Validar usando o novo sistema de validação
+        char *processed_filename = process_filename(filename);
+        if (!processed_filename) {
+            if (is_forbidden_extension(filename)) {
+                snprintf(status_msg, msg_size, "Error: File extension '%s' is not supported!", filename);
+            } else {
+                snprintf(status_msg, msg_size, "Error: Invalid filename!");
+            }
+            return 0;
+        }
+
+        // Criar buffer do editor e entrar no modo de edição
+        EditorBuffer *buffer = create_new_file();
+        buffer->filename = processed_filename; // já é malloc'ed pelo process_filename
+
+        enter_editor_mode(buffer, win, row, col);
+
+        free_editor_buffer(buffer);
+        snprintf(status_msg, msg_size, "File created and saved successfully!");
         return 0;
     }
 
