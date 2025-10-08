@@ -34,9 +34,10 @@ implementados para navegação e funcionamento do NITE, além de explicar os mod
 \subsection{Criação e abertura de arquivo}
 
 Passando para o proximo nó do diagrama e essencial para funcionamento de qualquer editor de texto, o próximo passo foi a implementação
-de criação de arquivo. Com um ``\textit{extends}'', a implementação dessa funcionalidade também conta com a edição de arquivo.
+de criação de arquivo. Com um ``\textit{extends}''\footnote{Extende outra funcionalidade}, a implementação dessa funcionalidade
+também conta com a edição de arquivo.
 
-Ao criar um arquivo no NITE, o mesmo pergunta o nome que o usuário pretende dar ao \textit{file} (posteriormente poderá ser editado),
+Ao criar um arquivo no NITE, o mesmo pergunta o nome que o usuário pretende dar ao \textit{file}\footnote{Arquivo em inglês} (posteriormente poderá ser editado),
 podendo ou não conter uma extensão válida. As extenções aceitas e não aceitas podem ser vistas na tabela abaixo:
 
 \begin{table}[h]
@@ -63,6 +64,10 @@ podendo ou não conter uma extensão válida. As extenções aceitas e não acei
         .ini, .conf, .properties, .toml &
         – \\
 
+        \textbf{Scripts executáveis} &
+        .sh, .bat, .ps1, .cmd &
+        – \\
+
         \textbf{Executáveis / Binários} &
         – &
         .exe, .dll, .so, .bin, .out, .app \\
@@ -82,21 +87,14 @@ podendo ou não conter uma extensão válida. As extenções aceitas e não acei
         \textbf{Imagens de disco} &
         – &
         .iso, .img \\
-
-        \textbf{Scripts executáveis*} &
-        – &
-        .sh, .bat, .ps1, .cmd \\
         \bottomrule
     \end{tabular}
-
-    \footnotesize\\[0.5em]
-    *Podem ser aceitos futuramente.
 \end{table}
 
 Caso uma das extensão não aceitas for chamada, o editor irá mostrar um erro e solicitar que o usuário crie um arquivo válido. Em caso do usuário
 não fornecer uma extensão, o editor continuará o processo normalmente passando para a página de edição.
 
-Inicialmente, o protótipo conta com as seguintes informações no topo do arquivo: Nome do arquivo sendo editado, F1 para salvar e F2 para sair
+Inicialmente, o protótipo conta com as seguintes informações no topo do arquivo: nome do arquivo sendo editado, F1 para salvar e F2 para sair
 do editor. Ambas as funcionalidades abrirão uma nova janela, que confirma a saída ou o salvamento do arquivo.
 
 \FloatBarrier
