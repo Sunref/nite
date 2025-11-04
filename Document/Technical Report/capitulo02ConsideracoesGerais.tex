@@ -86,11 +86,8 @@ de comandos em tempo real, automatização de tarefas e o principal, a manipula�
 de texto.
 
 Baseado no editor EX, o Vi foi criado e rapidamente se tornou um dos editores de
-texto mais icônicos e amplamente utilizados no mundo UNIX. O Vi introduziu uma
-abordagem modal para edição de texto, onde os usuários podiam alternar entre modos
-de inserção e comando, permitindo uma edição mais eficiente. O Emacs, por outro
-lado se destacou por sua extensibilidade e personalização, permitindo que os usuários
-criassem seus próprios comandos e macros. Atualmente existem diversas variações
+texto mais icônicos e amplamente utilizados no mundo UNIX. Já o Emacs
+se destacou por sua extensibilidade e personalização. Atualmente existem diversas variações
 desses editores, como o Vim (Vi \textit{Improved}) \cite{Vim} e o NeoVim,
 \cite{Neovim_Project} versões aprimoradas do Vi, e também com o Emacs, possuindo
 diversas variações e extensões, como o Spacemacs \cite{Spacemacs} e o Doom Emacs
@@ -102,11 +99,9 @@ simples, mas permitia aos usuários criar e editar arquivos de texto diretamente
 terminal. Com o tempo, outros editores de texto CLI surgiram, como o Nano
 \cite{Nano2025}, que se destacou por sua simplicidade e facilidade de uso,
 tornando-se uma escolha popular para usuários que preferiam uma interface mais
-amigável em comparação com o Vi e o Emacs. O Nano foi projetado para ser um editor
-de texto fácil de usar, com uma interface intuitiva e comandos simples, tornando-o
-acessível para usuários menos experientes. Recentemente a Microsoft relançou o
-editor EDIT como parte do Windows Terminal, mantendo a mesma simplicidade e funcionalidade
-do original, mas com melhorias na interface e na integração com o Windows.
+amigável em comparação com o Vi e o Emacs.  Recentemente a Microsoft relançou o
+editor EDIT como parte do Windows Terminal, mantendo a simplicidade
+do original, aplicando melhorias na interface e na integração com o Windows.
 
 \FloatBarrier
 \begin{figure}[!htbp]
@@ -128,17 +123,12 @@ tornando a edição de texto mais eficiente e produtiva.
 
 O Notepad++ é um editor de texto de código aberto que se destaca por sua leveza
 e simplicidade, oferecendo uma interface amigável e recursos avançados para edição
-de código-fonte. Ele suporta várias linguagens de programação e possui recursos
-como realce de sintaxe, autocompletar, busca avançada e suporte a \textit{plugins},
-tornando-o uma escolha popular entre usuários que buscam um editor de texto
-simples, mas eficiente.
+de código-fonte, além de suporte à várias linguagens de programação.
 
 Por outro lado o, Visual Studio Code é um editor de código-fonte desenvolvido
 pela Microsoft que se tornou extremamente popular devido à sua extensibilidade e
 integração com diversas ferramentas de desenvolvimento, além de oferecer uma ampla
-gama de recursos como depuração integrada, controle de versão, suporte a várias linguagens
-de programação e uma vasta biblioteca de extensões, permitindo que os usuários
-personalizem sua experiência de edição de texto de acordo com suas necessidades.
+gama de recursos como depuração integrada, controle de versão e uma vasta biblioteca de extensões.
 
 \FloatBarrier
 \begin{figure}[!htbp]
@@ -149,13 +139,11 @@ personalizem sua experiência de edição de texto de acordo com suas necessidad
 \end{figure}
 \FloatBarrier
 
-Ainda em desenvolvimento, o Zed Editor se destaca por sua abordagem colaborativa
+Já o recém lançado Zed Editor se destaca por sua abordagem colaborativa
 e em tempo real, permitindo que vários usuários editem o mesmo arquivo
-simultaneamente. Ele oferece uma interface moderna e intuitiva, que se assemelha
-muito ao Visual Studio Code, com recursos como realce de sintaxe, autocompletar,
-integração com sistemas de controle de versão e suporte a \textit{plugins},
-tornando-o uma escolha interessante para equipes de desenvolvimento que buscam
-uma experiência de edição colaborativa e eficiente.
+simultaneamente. Ele oferece uma interface moderna que se assemelha
+muito ao Visual Studio Code, tornando-se uma escolha interessante para equipes de
+desenvolvimento que buscam uma experiência de edição colaborativa e eficiente.
 
 De modo geral, as interfaces podem ser divididas em dois grandes grupos: CLI e
 GUI. Como apontados, as CLIs exigem um conhecimento técnico mais avançado, já que
@@ -283,8 +271,47 @@ Vale destacar que o Visual Studio Code, apesar de ser um editor de texto, é
 frequentemente utilizado como uma ``IDE'' graças à sua extensibilidade e
 integração com diversas ferramentas, podendo tornar-se a ferramenta multi-uso preferida dos desenvolvedores.
 
-\section{Principais Bibliotecas para Controle de Terminal em Linguagem C}
+\section{Vim e Emacs}
+Muitos programadores que não possuem máquinas potentes ou preferem trabalhar com desenvolvimento em sistemas
+UNIX acabam se deparando com o Vim e até mesmo com o Emacs como uma solução.
 
+Porém, apesar de serem editores CLI, possuem diversas diferenças e alcançam um público-alvo diferente.
+
+\subsection{Emacs}
+O Emacs surge como uma opção de extrema extensibilidade, onde tudo pode ser programável via Lisp\footnote{Lisp é uma família de linguagens de programação, e foi projetada primariamente para o processamento de dados simbólicos. Ela é uma linguagem formal matemática.},
+e tem como ideia principal ser um "sistema operacional dentro de um editor"\footnote{Brincadeira comum entre a comunidade do Emacs.}. Porém, isso o torna
+um editor complexo; por não ser um editor modal (ou seja, possuir vários modos) o mesmo
+utiliza de diversas combinações de teclas como atalhos, e isso pode ser complexo para iniciantes
+ou desenvolvedores em migração.
+
+Pela sua ideologia, o Emacs passa longe de ser um editor leve, mas isso lhe garante estabilidade. Parte da
+sua comunidade é tradicional, sendo também muito utilizado por acadêmicos. É uma ótima escolha para
+desenvolvedores que buscam uma IDE minimalista e completa.
+
+\subsection{Vim}
+Diferente da ideia do Emacs, o Vim surge como uma solução rápida e eficiente para edição de texto.
+Focado em velocidade e fluidez, traz consigo uma implementação modal, sendo o diferencial do editor, mas
+podendo ser confuso e difícil no início. Outro diferencial é seus comandos rápidos, tornando o fluxo de
+uso muito mais natural.
+
+É customizado através de \textit{scripts} (vimscript) ou Lua\footnote{Linguagem de programação. Disponível em: https://www.lua.org/portugues.html} no Neovim/Lazyvim, e graças à sua comunidade
+ativa e juvenil, possui um ecossistema ativo e diversos \textit{plugins} disponíveis e de fácil manipulação.
+
+O Vim surge como uma opção leve, rápida e intuitiva, extensível, e um meio-termo entre
+poder e simplicidade.
+
+\section{A escolha do Nano}
+O Nano, em contrapartida, tem como propósito ser um editor muito amigável. Disponível nativamente em várias
+distribuições Linux, vem como "editor padrão" de terminais, o que o torna muito utilizado para edições
+rápidas em configurações ou criação rápida de \textit{scripts}, como os \textit{scripts} \textbf{.sh}.
+
+Em sua "interface", tudo que o usuário precisa está disponível e explicado, como salvar um arquivo, copiar e colar texto, até buscar por palavras, tendo uma mínima curva de aprendizado. Por ser simples, não é modal ou possui suporte a plugins, mas é rápida e leve.
+
+Essa filosofia de simplicidade e \textit{user-friendly}\footnote{amigável ao usuário} é a filosofia que
+deu origem ao desenvolvimento do projeto NITE, que juntando elementos de outros editores, busca desenvolver
+uma relação amigável com o usuário final.
+
+\section{Principais Bibliotecas para Controle de Terminal em Linguagem C}
 Diversas linguagens de programação, como Go, Python\footnote{Linguagem de
 programação. Disponível em: https://www.python.org/}, Rust\footnote{Linguagem de
 programação. Disponível em: https://www.rust-lang.org/pt-BR} e Java\footnote{Linguagem
