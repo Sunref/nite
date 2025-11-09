@@ -39,7 +39,7 @@ escrita longa ou pelo uso específico), enquanto outros são o que ele chama de
 \textit{bookmarks} (favoritos).
 
 Outro estudo significativo é o de \citeauthorandyear{Lindroos2025}. Em seu trabalho, o autor
-um editor/aplicativo de treino de digitação em modo TUI usando a
+implementa um editor/aplicativo de treino de digitação em modo TUI usando a
 linguagem Go\footnote{Linguagem de programação. Disponível em: https://go.dev/} e
 o \textit{framework}\footnote{Conjunto estruturado de ferramentas, bibliotecas e
 boas práticas que fornece uma base pronta para desenvolver um tipo específico de
@@ -79,14 +79,15 @@ conhecimento técnico avançado, o que ainda limitava bastante o acesso ao uso d
 Entretanto os avanços não se limitaram apenas ao hardware, as constantes descobertas
 na tecnologia possibilitaram a criação dos primeiros Sistemas Operacionais (OS),
 como o UNIX \cite{UnixArchive} e o MS-DOS \cite{ComputerHistoryMuseum}, popularizando
-o uso de terminais e CLIs e os tornando mais acessíveis ao público. Ainda no
+o uso de terminais e CLIs, os tornando mais acessíveis ao público. Ainda no
 início do UNIX surgiram os primeiros editores, como o Vi \cite{Joy_Vi} e o Emacs
 \cite{Stallman1981}, possibilitando um uso mais robusto da máquina com execução
 de comandos em tempo real, automatização de tarefas e o principal, a manipulação
 de texto.
 
-Baseado no editor EX, o Vi foi criado e rapidamente se tornou um dos editores de
-texto mais icônicos e amplamente utilizados no mundo UNIX. Já o Emacs
+Baseado no editor EX\footnote{Editor original dos sistemas UNIX e originalmente
+escrito por Bill Joy. Fonte: https://en.wikipedia.org/wiki/Ex\_(text\_editor)}, o Vi foi criado e rapidamente se
+tornou um dos editores detexto mais icônicos e amplamente utilizados no mundo UNIX. Já o Emacs
 se destacou por sua extensibilidade e personalização. Atualmente existem diversas variações
 desses editores, como o Vim (Vi \textit{Improved}) \cite{Vim} e o NeoVim,
 \cite{Neovim_Project} versões aprimoradas do Vi, e também com o Emacs, possuindo
@@ -278,8 +279,8 @@ UNIX acabam se deparando com o Vim e até mesmo com o Emacs como uma solução.
 Porém, apesar de serem editores CLI, possuem diversas diferenças e alcançam um público-alvo diferente.
 
 \subsection{Emacs}
-O Emacs surge como uma opção de extrema extensibilidade, onde tudo pode ser programável via Lisp\footnote{Lisp é uma família de linguagens de programação, e foi projetada primariamente para o processamento de dados simbólicos. Ela é uma linguagem formal matemática.},
-e tem como ideia principal ser um "sistema operacional dentro de um editor"\footnote{Brincadeira comum entre a comunidade do Emacs.}. Porém, isso o torna
+O Emacs surge como uma opção de extrema extensibilidade, onde tudo pode ser programável via Lisp\footnote{Lisp é uma família de linguagens de programação, e foi projetada primariamente para o processamento de dados simbólicos. Ela é uma linguagem formal matemática. Fonte: https://pt.wikipedia.org/wiki/Lisp},
+e tem como ideia principal ser um ''sistema operacional dentro de um editor``\footnote{Brincadeira comum entre a comunidade do Emacs.}. Porém, isso o torna
 um editor complexo; por não ser um editor modal (ou seja, possuir vários modos) o mesmo
 utiliza de diversas combinações de teclas como atalhos, e isso pode ser complexo para iniciantes
 ou desenvolvedores em migração.
@@ -302,10 +303,10 @@ poder e simplicidade.
 
 \section{A escolha do Nano}
 O Nano, em contrapartida, tem como propósito ser um editor muito amigável. Disponível nativamente em várias
-distribuições Linux, vem como "editor padrão" de terminais, o que o torna muito utilizado para edições
+distribuições Linux, vem como ''editor padrão`` de terminais, o que o torna muito utilizado para edições
 rápidas em configurações ou criação rápida de \textit{scripts}, como os \textit{scripts} \textbf{.sh}.
 
-Em sua "interface", tudo que o usuário precisa está disponível e explicado, como salvar um arquivo, copiar e colar texto, até buscar por palavras, tendo uma mínima curva de aprendizado. Por ser simples, não é modal ou possui suporte a plugins, mas é rápida e leve.
+Em sua ''interface``, tudo que o usuário precisa está disponível e explicado, como salvar um arquivo, copiar e colar texto, até buscar por palavras, tendo uma mínima curva de aprendizado. Por ser simples, não é modal ou possui suporte a plugins, mas é rápida e leve.
 
 Essa filosofia de simplicidade e \textit{user-friendly}\footnote{amigável ao usuário} é a filosofia que
 deu origem ao desenvolvimento do projeto NITE, que juntando elementos de outros editores, busca desenvolver
