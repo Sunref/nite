@@ -20,14 +20,22 @@
 
 \usepackage{estrutura}
 
+\usepackage{todonotes}
+\definecolor{corComentario}{RGB}{12, 138, 68}
+\newcounter{cdavid}
+\newcommand{\david}[2][noinline]{%
+    \refstepcounter{cdavid}%
+    \todo[color=corComentario!80,size=\tiny,shadow,#1]{\textbf{David (\thecdavid):}~#2}%
+}%
+
 % ---
 % Dados do documento
 % ---
 
 \tipotrabalho{Relatório Técnico}
 
-\titulo{NITE: Nano-Inspired Text Editor}
-\subtitulo{Editor de texto inspirado em nano utilizando ncurses em linguagem C}
+\titulo{NITE -- Nano-Inspired Text Editor}
+\subtitulo{Editor de texto inspirado em nano utilizando\\ncurses em linguagem C}
 
 \autor{Fernanda Martins da Silva}
 \orientador{Prof. Dr. David Buzatto}
@@ -39,7 +47,7 @@
 \area{Engenharia de Software.}
 
 \local{São João da Boa Vista}
-\mes{OUTUBRO}
+\mes{DEZEMBRO}
 \ano{2025}
 
 \instituicao{%
