@@ -31,3 +31,5 @@
 /*.synctex(busy)
 /*.toc
 /*.xwm
+/*.fdb_latexmk
+/*.fls
