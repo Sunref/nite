@@ -4,8 +4,21 @@
 % Data: 04/12/2023
 \documentclass[aspectratio=169]{beamer}
 
-% a opção hideSubsectionTitle esconde o título das subseções
 \usepackage{estruturaApresentacao}
+\usepackage{tikz}
+\usetikzlibrary{
+    shapes.geometric,
+    shapes.symbols,
+    arrows.meta,
+    positioning,
+    shadows,
+    shadows.blur,
+    calc,
+    automata
+}
+\usepackage{graphicx}
+
+%--------------------------------------------------------------------------------
 
 \begin{document}
 
@@ -18,10 +31,11 @@
 \curso{Bacharelado em Ciência da Computação}
 
 \local{São João da Boa Vista}
-\dia{DIA}
+\dia{27}
 \mes{Dezembro}
 \ano{2025}
 
+%--------------------------------------------------------------------------------
 
 \input{01Capa}
 \input{02Introducao}
@@ -29,11 +43,6 @@
 \input{04Metodologia}
 \input{05Resultados}
 \input{06Conclusao}
-
-% exemplos de construções em LaTeX
-% comente a linha abaixo para gerar a versão final
-\input{07Exemplos}
-
 \input{00Referencias}
 
 \end{document}
