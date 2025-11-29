@@ -3,7 +3,6 @@
 #include "../include/dialog.h"
 #include <stdlib.h>
 #include <string.h>
-#include <ncurses.h>
 #include <stdio.h>
 
 #define INITIAL_CAPACITY 100

@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <dirent.h>
+#include <dirent.h> // Manipula diretórios
 
 Dialog* create_dialog(int height, int width, const char *title) {
     Dialog *dialog = malloc(sizeof(Dialog));

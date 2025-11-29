@@ -12,7 +12,7 @@
 
     \begin{figure}[!htbp]
        	\centering
-       	\includegraphics[scale=0.17]{imagens/TerminaisPC.png}
+       	\includegraphics[scale=0.2]{imagens/TerminaisPC.png}
      \end{figure}
 
 \end{frame}
@@ -43,7 +43,7 @@
 
     \begin{figure}[!htbp]
        	\centering
-       	\includegraphics[scale=0.15]{imagens/Editores.png}
+       	\includegraphics[scale=0.22]{imagens/Editores.png}
     \end{figure}
 
 \end{frame}
@@ -171,27 +171,26 @@
     \frametitle{Vim e Emacs}
 
     \begin{itemize}
-    	\item{Como funcionam? Quais suas diferenças?}
-    	\item{Ambos são editores de texto de linha de comando, mas com diferentes abordagens. Aos programadores que possuem máquina fraca, ou usuários de sistemas UNIX, ambos surgem como alternativas.}
+    	\item{Ambos são editores de texto de linha de comando, mas com diferentes abordagens.}
     \end{itemize}
 
     \begin{figure}[!htbp]
        	\centering
-       	\includegraphics[scale=0.15]{imagens/VimEmacs.png}
+       	\includegraphics[scale=0.23]{imagens/VimEmacs.png}
     \end{figure}
 
 \end{frame}
 
 %--------------------------------------------------------------
 
-\subsection{A escolha do Nano}
+\subsection{Nano}
 
 \begin{frame}
 
-    \frametitle{Nano}
+    \frametitle{A escolha do Nano}
 
     \begin{itemize}
-    	\item{Disponível nativamente em várias distribuições Linux, vem como ”editor padrão“ de terminais, o que o torna muito utilizado. A simplicidade e o ecossistema \textit{user-friendly} foi a filosofia que deu origem ao desenvolvimento do projeto NITE}
+    	\item{A simplicidade e o ecossistema \textit{user-friendly} foi a filosofia que deu origem ao desenvolvimento do projeto NITE}
     \end{itemize}
 
     \begin{figure}[!htbp]
@@ -203,22 +202,22 @@
 
 %--------------------------------------------------------------
 
-\subsection{Principais Bibliotecas para Controle de Terminal em Linguagem C}
+\subsection{Principal Biblioteca em Linguagem C}
 
 
 \begin{frame}
 
-    \frametitle{Principal Biblioteca}
+    \frametitle{\textit{Curses} e Ncurses}
 
-    Diversas linguagens de programação como Go, Python, Rust e Java, oferecem suporte ao desenvolvimento de aplicações em interface de linha de comando.
+    Diversas linguagens de programação oferecem suporte ao desenvolvimento de aplicações TUI/CLI. A linguagem C foi escolhida por ser poderosa e flexível, permitindo a criação de aplicações com alta performance e customização.
 
     \begin{itemize}
 	   	\item{NCURSES e CURSES}
 			\begin{itemize}
-				\item{A biblioteca \textit{curses} oferece um conjunto de funções para manipulação de texto em terminal visando otimizar o uso do cursor. Existem janelas padrão, como a stdscr (tela inteira) e o curscr (estado atual da tela)}
-				\item{A ncurses é o sucessor da \textit{curses}. Com suas bibliotecas associadas (\textit{panel}, menu e \textit{form}) é possível criar aplicações que contenham múltiplas janelas, menus, painéis e formulários}
+				\item{A biblioteca \textit{curses} oferece diversos conjuntos de funções para manipulação de texto em terminal. Funções como a \textbf{stdscr} (tela inteira) e o \textbf{curscr} (estado atual da tela) são os principais elementos fornecidos pela \textit{curses}.}
+				\item{A ncurses é o sucessor da \textit{curses}. Oferece bibliotecas associadas (\textit{panel}, menu e \textit{form}) que permitem criar aplicações que contenham múltiplas janelas, menus e painéis}
 			\end{itemize}
-		\item{Outras bibliotecas}
+		\item{Existem ainda outras bibliotecas, mas não são tão populares quanto as mencionadas.}
     \end{itemize}
 
 \end{frame}

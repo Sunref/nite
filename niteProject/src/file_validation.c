@@ -1,8 +1,6 @@
 #include "../include/file_validation.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <strings.h>
+#include <string.h>
 
 bool is_forbidden_extension(const char *filename) {
     // Lista de extensões proibidas
