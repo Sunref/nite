@@ -1,6 +1,11 @@
 // Processa comandos digitados pelo usuário
 // Recebe o comando, um buffer para mensagem de status, janela e posição para saída
 
+// Explicação geral:
+// - A função `process_command` compara a string `cmd` com comandos conhecidos (definidos em `command.h`).
+// - Dependendo do comando, atualiza a janela ncurses (`win`) e/ou `status_msg`.
+// - Retorno: 0 significa "comando tratado; continuar execução", 1 significa "sinalizar saída".
+
 #include "../include/file_validation.h"
 #include "../include/command.h"
 #include "../include/config.h"
@@ -14,7 +19,7 @@ int process_command(const char *cmd, char *status_msg, size_t msg_size, WINDOW *
 
     if (strcmp(cmd, CMD_HELP) == 0) {
 
-        // Texto padrão
+        // Texto padrão (inicia na linha `row - 2`, coluna 0)
         mvwprintw(win, row - 2, 0, "Available commands: ");
 
         // !o em azul
@@ -35,8 +40,9 @@ int process_command(const char *cmd, char *status_msg, size_t msg_size, WINDOW *
         // !help sem cor (padrão do terminal)
         wprintw(win, "%s", CMD_HELP);
 
-        // Limpa a linha e atualiza a janela
+        // Limpa o resto da linha atual na janela (útil se havia texto sobrando)
         wclrtoeol(win);
+        // Força atualização da janela para mostrar o texto ao usuário
         wrefresh(win);
 
         // Limpa a mensagem de status
@@ -61,16 +67,24 @@ int process_command(const char *cmd, char *status_msg, size_t msg_size, WINDOW *
     if (strcmp(cmd, CMD_NEW) == 0) {
         // Solicitando nome do arquivo
         char filename[256];
+
+        // Texto (inicia na linha `row - 2`, coluna 0)
         mvwprintw(win, row - 2, 0, "Enter filename: ");
+
+        // Limpa o resto da linha atual na janela (útil se havia texto sobrando)
         wclrtoeol(win);
+        // Força atualização da janela para mostrar o texto ao usuário
         wrefresh(win);
 
-        echo();
+        echo(); // Essencial para o usuário conseguir ver o que está sendo digitado
+
+        // Move o cursor para depois do texto "Enter filename: " (col 16)
         wmove(win, row - 2, 16);
+        // Lê a string do usuário na janela `win`, com tamanho máximo (sizeof-1)
         wgetnstr(win, filename, sizeof(filename) - 1);
         noecho();
 
-        // Validar usando o novo sistema de validação
+        // Valida/normaliza o nome do arquivo usando o módulo de validação `process_filename` deve retornar um `char*` alocado (malloc) contendo o nome processado ou NULL se inválido.
         char *processed_filename = process_filename(filename);
         if (!processed_filename) {
             if (is_forbidden_extension(filename)) {
@@ -81,9 +95,9 @@ int process_command(const char *cmd, char *status_msg, size_t msg_size, WINDOW *
             return 0;
         }
 
-        // Criar buffer do editor e entrar no modo de edição
+        // `create_new_file()` cria um `EditorBuffer` (detalhes na implementacao de editor.h)
         EditorBuffer *buffer = create_new_file();
-        buffer->filename = processed_filename; // já é malloc'ed pelo process_filename
+        buffer->filename = processed_filename; // Atribui o nome do arquivo ao buffer.
 
         enter_editor_mode(buffer, win, row, col);
 
