@@ -13,11 +13,14 @@
 #define COLOR_Q COLOR_RED
 #define COLOR_H COLOR_WHITE
 
-// Comandos
+// Comandos iniciais
 #define CMD_OPEN  "!o"      // Open
 #define CMD_NEW   "!n"      // New
 #define CMD_EXIT  "!q"      // Quit
-#define CMD_SAVE  "!s"      // Save
 #define CMD_HELP  "!help"   // Help
 
+// Comandos de edição
+#define CMD_COMMAND_MODE  "\x1Bc"	 // Representa Alt+C (Meta+C)
+#define CMD_SAVE  "!s"      		// Save
+//#define CMD_EXIT  "!q" funciona aqui também
 #endif

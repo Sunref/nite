@@ -3,7 +3,7 @@
 #include <string.h>
 
 bool is_forbidden_extension(const char *filename) {
-    // Lista de extensões proibidas
+    // Lista de extensões proibidas (necessita verificação)
     const char *blocked_exts[] = {
         ".exe", ".dll", ".so", ".bin", ".out", ".app",
         ".png", ".jpg", ".jpeg", ".gif", ".bmp", ".tiff", ".webp",
@@ -17,11 +17,11 @@ bool is_forbidden_extension(const char *filename) {
     };
 
     const char *dot = strrchr(filename, '.');
-    if (!dot) return false; // sem extensão, não bloqueia
+    if (!dot) return false; // Sem extensão, não bloqueia
 
     for (int i = 0; blocked_exts[i] != NULL; i++) {
         if (strcasecmp(dot, blocked_exts[i]) == 0) {
-            return true; // bloqueado
+            return true; // Bloqueado
         }
     }
     return false;
@@ -32,7 +32,7 @@ char* process_filename(const char *input_filename) {
 
     // Verificar se é uma extensão proibida
     if (is_forbidden_extension(input_filename)) {
-        return NULL; // retorna NULL para indicar erro
+        return NULL; // Retorna NULL para indicar erro
     }
 
     // Se passou na validação, apenas duplica o nome sem modificar

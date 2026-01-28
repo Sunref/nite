@@ -9,12 +9,12 @@ void draw_centered_screen(WINDOW *win) {
 
     int row;
     int col;
-    getmaxyx(win, row, col);    // Obtém o tamanho atual da janela (linhas e colunas)
+    getmaxyx(win, row, col); // Obtém o tamanho atual da janela (linhas e colunas)
 
-    wclear(win);    // Limpa a janela antes de desenhar
+    wclear(win); // Limpa a janela antes de desenhar
     use_default_colors(); // Usa as cores padrão do terminal
 
-    // Título e subtítulo, versão e autor  centralizados
+    // Título e subtítulo, versão e autor centralizados
     wattron(win, COLOR_PAIR(4));
     mvwprintw(win, row/2 - 4, (col - strlen(TITLE)) / 2, "%s", TITLE);
     mvwprintw(win, row/2 - 2, (col - strlen(SUBTITLE)) / 2, "%s", SUBTITLE);
@@ -45,6 +45,6 @@ void draw_centered_screen(WINDOW *win) {
     wattroff(win, COLOR_PAIR(3));
     wprintw(win, " to exit the editor");
 
-    wrefresh(win);      // Atualiza a janela para mostrar as mudanças
+    wrefresh(win); // Atualiza a janela para mostrar as mudanças
 
 }
