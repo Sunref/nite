@@ -21,4 +21,3 @@ I chose nano as a reference because it represents the balance between simplicity
 
 ## *Note*
 This project was developed as the final requirement for my Computer Science degree.
-Feel free to contribute, use it as a reference, or reach out for future collaborations!
