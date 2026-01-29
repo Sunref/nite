@@ -1,6 +1,10 @@
-// Projeto: nite
-// Autor: Fernanda Martins da Silva
-// Programa principal do editor de texto nite.
+/*
+ *
+ * Projeto nite
+ * Autor: Fernanda Martins da Silva
+ * Loop principal do programa.
+ *
+ */
 
 #include "../include/command.h"
 #include "../include/status.h"

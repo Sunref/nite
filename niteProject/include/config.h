@@ -4,7 +4,7 @@
 // Informações do editor
 #define TITLE "NITE"
 #define SUBTITLE "NANO-INSPIRED TEXT EDITOR"
-#define VERSION "ver. 0.2.0"
+#define VERSION "ver. 1.0.0"
 #define AUTHOR "by Fernanda M."
 
 // Cores

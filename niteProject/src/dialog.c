@@ -1,8 +1,6 @@
 /*
  *
- * Rotinas responsáveis pela criação e gerenciamento de diálogos (janelas
- * modal) usados para entrada de nome de arquivo, navegação de diretórios
- * e confirmaçõese.
+ * Rotinas responsáveis pela criação e gerenciamento de diálogos (janelas).
  *
  */
 

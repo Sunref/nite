@@ -1,3 +1,9 @@
+/*
+ *
+ * Trata das extenções invalidas no editor.
+ *
+ */
+
 #include "../include/file_validation.h"
 #include <strings.h>
 #include <string.h>

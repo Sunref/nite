@@ -1,4 +1,8 @@
-// Desenha a tela principal centralizada na janela fornecida
+/*
+ *
+ * Desenha a tela principal centralizada na janela fornecida.
+ *
+ */
 
 #include "../include/menu.h"
 #include "../include/config.h"

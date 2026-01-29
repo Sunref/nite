@@ -5,7 +5,7 @@
  *
  */
 
-#include "../include/config.h"  // define CMD_HELP
+#include "../include/config.h"
 #include <ncurses.h>
 #include <string.h>
 #include <stddef.h>
@@ -40,13 +40,13 @@ void get_user_input(WINDOW *win, int row, int col, char *input, size_t input_siz
     // Calcula posição segura para colocar a dica de ajuda à direita
     size_t help_len = strlen(CMD_HELP);
     int help_x = col - (int)help_len;
-    if (help_x < 0) help_x = 0; // evita coordenada negativa se a tela for muito estreita
+    if (help_x < 0) help_x = 0; // evita coordenada negativa
 
     // Desenha o prompt na última linha (row - 1) e limpa o resto da linha
     mvwprintw(win, row - 1, 0, ">_ ");
     wclrtoeol(win);
 
-    // Exibe a dica de ajuda no final da linha (pode sobrescrever se espaço insuficiente)
+    // Exibe a dica de ajuda no final da linha (pode sobrescrever se espaço insuficiente, ajustar)
     mvwprintw(win, row - 1, help_x, CMD_HELP);
 
     // Atualiza a janela para que o prompt e a dica apareçam antes da leitura

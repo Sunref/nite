@@ -1,3 +1,9 @@
+/*
+ *
+ * Arquivo principal; funcionalidades relacionadas ao editor são tratadas aqui.
+ *
+ */
+
 #include "../include/file_validation.h"
 #include "../include/editor.h"
 #include "../include/dialog.h"
@@ -17,7 +23,7 @@ EditorBuffer* create_new_file() {
     buffer->filename = NULL;
     buffer->modified = 0;
     buffer->current_line = 0;
-    buffer->current_col = 0;
+    buffer->current_col = 0;  // Linha inicia vazia
     return buffer;
 }
 
@@ -123,7 +129,20 @@ void enter_editor_mode(EditorBuffer *buffer, WINDOW *win, int row, int col) {
                         destroy_dialog(confirm);
 
                         if (save_choice) {
-                            // Se escolheu salvar, fazer o mesmo processo do !s
+                            // Verificar se já tem filename (arquivo aberto existente)
+                            if (buffer->filename != NULL) {
+                                // Arquivo já existe, apenas salvar
+                                if (save_file(buffer, buffer->filename)) {
+                                    endwin();
+                                    printf("File saved successfully: %s\nNite editor closed.\n", buffer->filename);
+                                } else {
+                                    endwin();
+                                    printf("Error saving file. Nite editor closed.\n");
+                                }
+                                exit(0);
+                            }
+
+                            // Arquivo novo: perguntar onde salvar
                             char *final_filename = NULL;
                             char *final_path = NULL;
 
@@ -140,7 +159,7 @@ void enter_editor_mode(EditorBuffer *buffer, WINDOW *win, int row, int col) {
                                     exit(0);
                                 }
 
-                                // Validar usando o novo sistema de validação
+                                // Validar extenção
                                 final_filename = process_filename(filename);
                                 free(filename);
 
@@ -148,7 +167,6 @@ void enter_editor_mode(EditorBuffer *buffer, WINDOW *win, int row, int col) {
                                     // Se falhou na validação, mostra erro e tenta novamente
                                     Dialog *error_dialog = create_dialog(8, 60, "Error");
                                     mvwprintw(error_dialog->win, 3, 2, "Unsupported file type!");
-                                    mvwprintw(error_dialog->win, 4, 2, "Press any key to try again...");
                                     wrefresh(error_dialog->win);
                                     wgetch(error_dialog->win);
                                     destroy_dialog(error_dialog);
@@ -163,12 +181,32 @@ void enter_editor_mode(EditorBuffer *buffer, WINDOW *win, int row, int col) {
                             if (final_path) {
                                 char full_path[512];
                                 snprintf(full_path, sizeof(full_path), "%s/%s", final_path, final_filename);
-                                if (save_file(buffer, full_path)) {
-                                    endwin();
-                                    printf("File saved successfully: %s\nNite editor closed.\n", full_path);
+
+                                // Verificar se arquivo já existe
+                                FILE *check_file = fopen(full_path, "r");
+                                int file_exists = (check_file != NULL);
+                                if (check_file) fclose(check_file);
+
+                                int should_save = 1;
+                                if (file_exists) {
+                                    // Arquivo existe, perguntar se quer sobrescrever
+                                    Dialog *overwrite_dialog = create_dialog(8, 50, "File Exists");
+                                    int overwrite = confirm_dialog(overwrite_dialog, "File exists. Overwrite?");
+                                    destroy_dialog(overwrite_dialog);
+                                    should_save = overwrite;
+                                }
+
+                                if (should_save) {
+                                    if (save_file(buffer, full_path)) {
+                                        endwin();
+                                        printf("File saved successfully: %s\nNite editor closed.\n", full_path);
+                                    } else {
+                                        endwin();
+                                        printf("Error saving file. Nite editor closed.\n");
+                                    }
                                 } else {
                                     endwin();
-                                    printf("Error saving file. Nite editor closed.\n");
+                                    printf("Save cancelled. Nite editor closed.\n");
                                 }
                                 free(final_path);
                             } else {
@@ -269,20 +307,42 @@ void enter_editor_mode(EditorBuffer *buffer, WINDOW *win, int row, int col) {
                         char full_path[512];
                         snprintf(full_path, sizeof(full_path), "%s/%s", final_path, final_filename);
 
-                        // Salvar arquivo
-                        if (save_file(buffer, full_path)) {
-                            if (buffer->filename) free(buffer->filename);
-                            buffer->filename = strdup(full_path);
+                        // Verificar se arquivo já existe
+                        FILE *check_file = fopen(full_path, "r");
+                        int file_exists = (check_file != NULL);
+                        if (check_file) fclose(check_file);
 
-                            // Mostrar mensagem de sucesso
-                            mvwhline(win, row - 1, 0, ' ', col);
-                            mvwprintw(win, row - 1, 0, "File saved: %s", full_path);
-                            wrefresh(win);
-                            napms(1500); // Mostrar por 1s e meio
+                        int should_save = 1;
+                        if (file_exists) {
+                            // Arquivo existe, perguntar se quer sobrescrever
+                            Dialog *overwrite_dialog = create_dialog(8, 50, "File Exists");
+                            int overwrite = confirm_dialog(overwrite_dialog, "File exists. Overwrite?");
+                            destroy_dialog(overwrite_dialog);
+                            should_save = overwrite;
+                        }
+
+                        // Salvar arquivo se confirmado
+                        if (should_save) {
+                            if (save_file(buffer, full_path)) {
+                                if (buffer->filename) free(buffer->filename);
+                                buffer->filename = strdup(full_path);
+
+                                // Mostrar mensagem de sucesso
+                                mvwhline(win, row - 1, 0, ' ', col);
+                                mvwprintw(win, row - 1, 0, "File saved: %s", full_path);
+                                wrefresh(win);
+                                napms(1500); // Mostrar por 1s e meio
+                            } else {
+                                // Mostrar mensagem de erro
+                                mvwhline(win, row - 1, 0, ' ', col);
+                                mvwprintw(win, row - 1, 0, "Error saving file!");
+                                wrefresh(win);
+                                napms(1500);
+                            }
                         } else {
-                            // Mostrar mensagem de erro
+                            // Salvamento cancelado
                             mvwhline(win, row - 1, 0, ' ', col);
-                            mvwprintw(win, row - 1, 0, "Error saving file!");
+                            mvwprintw(win, row - 1, 0, "Save cancelled.");
                             wrefresh(win);
                             napms(1500);
                         }
@@ -322,53 +382,94 @@ void enter_editor_mode(EditorBuffer *buffer, WINDOW *win, int row, int col) {
         mvwprintw(win, 0, 0, "Editing: %s", buffer->filename ? buffer->filename : "New File");
         mvwprintw(win, 1, 0, "ALT+C: Command Mode | !s: Save | !q: Quit");
 
-        // Mostrar linhas do arquivo numeradas
+        // Mostrar linhas do arquivo numeradas e com quebra de linha
         int display_start = (buffer->current_line > row - 10) ? buffer->current_line - (row - 10) : 0;
 
         // Calcular largura necessária para números de linha (max 4 dígitos)
         int line_num_width = 4;
 
-        for (int i = 0; i < row - 5 && (display_start + i) < buffer->num_lines; i++) {
-            int line_number = display_start + i + 1; // Linhas começam em 1
-            int screen_line = i + 3;
+        // Calcular largura disponível para o conteúdo
+        int content_width = col - line_num_width - 2;
 
-            // Verificar se é a linha atual
-            int is_current_line = (display_start + i == buffer->current_line);
+        int screen_line = 3;  // Linha inicial
+        int max_screen_line = row - 5;  // Linha máxima disponível
 
-            // Desenhar número da linha com destaque se for a linha atual
-            if (has_colors()) {
-                if (is_current_line) {
-                    wattron(win, COLOR_PAIR(2) | A_BOLD); // Amarelo + negrito
+        for (int i = display_start; i < buffer->num_lines && screen_line < max_screen_line; i++) {
+            int line_number = i + 1;
+            int is_current_line = (i == buffer->current_line);
+
+            char *line_content = buffer->lines[i];
+            int line_len = strlen(line_content);
+
+            // Calcular quantas linhas visuais esta linha vai ocupar
+            int visual_lines = (line_len + content_width - 1) / content_width;
+            if (visual_lines == 0) visual_lines = 1;  // Linhas vazias ocupam 1 linha visual
+
+            // Desenha cada pedaço da linha (quebra)
+            for (int wrap_line = 0; wrap_line < visual_lines && screen_line < max_screen_line; wrap_line++) {
+                // Desenhar número da linha apenas na primeira linha visual em caso de quebra
+                if (wrap_line == 0) {
+                    if (has_colors()) {
+                        if (is_current_line) {
+                            wattron(win, COLOR_PAIR(2) | A_BOLD); // Amarelo + negrito
+                        } else {
+                            wattron(win, COLOR_PAIR(3)); // Branco normal
+                        }
+                    } else if (is_current_line) {
+                        wattron(win, A_BOLD);
+                    }
+
+                    mvwprintw(win, screen_line, 0, "%3d ", line_number);
+
+                    if (has_colors()) {
+                        if (is_current_line) {
+                            wattroff(win, COLOR_PAIR(2) | A_BOLD);
+                        } else {
+                            wattroff(win, COLOR_PAIR(3));
+                        }
+                    } else if (is_current_line) {
+                        wattroff(win, A_BOLD);
+                    }
                 } else {
-                    wattron(win, COLOR_PAIR(3)); // Branco normal
+                    // Linhas de continuação: mostrar espaços ao invés do número
+                    mvwprintw(win, screen_line, 0, "    ");
                 }
-            } else if (is_current_line) {
-                wattron(win, A_BOLD); // Apenas negrito se não tiver cores
-            }
 
-            mvwprintw(win, screen_line, 0, "%3d ", line_number);
+                // Calcular qual parte da linha mostrar
+                int start_pos = wrap_line * content_width;
+                int chars_to_show = (line_len - start_pos > content_width) ? content_width : (line_len - start_pos);
 
-            if (has_colors()) {
-                if (is_current_line) {
-                    wattroff(win, COLOR_PAIR(2) | A_BOLD);
-                } else {
-                    wattroff(win, COLOR_PAIR(3));
+                if (chars_to_show > 0) {
+                    char segment[content_width + 1];
+                    strncpy(segment, line_content + start_pos, chars_to_show);
+                    segment[chars_to_show] = '\0';
+                    mvwprintw(win, screen_line, line_num_width + 1, "%s", segment);
                 }
-            } else if (is_current_line) {
-                wattroff(win, A_BOLD);
-            }
 
-            // Desenhar conteúdo da linha (deslocado para dar espaço aos números)
-            mvwprintw(win, screen_line, line_num_width + 1, "%s", buffer->lines[display_start + i]);
+                screen_line++;
+            }
         }
 
-        // Posicionar cursor e garantir que está visível
-        // Ajustar posição X do cursor para considerar os números de linha
-        int display_line = buffer->current_line - display_start + 3;
-        int cursor_x_on_screen = buffer->current_col + line_num_width + 1;
+        // Posicionar cursor calculando linha inicial e considerando linhas com quebras;
+        int cursor_visual_line = 3;  // Começar na linha 3
 
-        wmove(win, display_line, cursor_x_on_screen);
-        curs_set(1);  // Garantir cursor visível sempre
+        for (int i = display_start; i < buffer->current_line && cursor_visual_line < max_screen_line; i++) {
+            int line_len = strlen(buffer->lines[i]);
+            int visual_lines = (line_len + content_width - 1) / content_width;
+            if (visual_lines == 0) visual_lines = 1;
+            cursor_visual_line += visual_lines;
+        }
+
+        // Adicionar as linhas de quebra da linha atual até a posição do cursor
+        int wrap_offset = buffer->current_col / content_width;
+        cursor_visual_line += wrap_offset;
+
+        // Posição X do cursor dentro da linha visual
+        int cursor_x_in_wrap = buffer->current_col % content_width;
+        int cursor_x_on_screen = cursor_x_in_wrap + line_num_width + 1;
+
+        wmove(win, cursor_visual_line, cursor_x_on_screen);
+        curs_set(1);
         wrefresh(win);
 
         ch = wgetch(win);
@@ -402,18 +503,16 @@ void enter_editor_mode(EditorBuffer *buffer, WINDOW *win, int row, int col) {
             case 259: // KEY_UP (seta para cima)
                 if (buffer->current_line > 0) {
                     buffer->current_line--;
-                    if (buffer->current_col > strlen(buffer->lines[buffer->current_line])) {
-                        buffer->current_col = strlen(buffer->lines[buffer->current_line]);
-                    }
+                    // Sempre posicionar cursor no final da linha de destino
+                    buffer->current_col = strlen(buffer->lines[buffer->current_line]);
                 }
                 break;
 
             case 258: // KEY_DOWN (seta para baixo)
                 if (buffer->current_line < buffer->num_lines - 1) {
                     buffer->current_line++;
-                    if (buffer->current_col > strlen(buffer->lines[buffer->current_line])) {
-                        buffer->current_col = strlen(buffer->lines[buffer->current_line]);
-                    }
+                    // Sempre posicionar cursor no final da linha de destino
+                    buffer->current_col = strlen(buffer->lines[buffer->current_line]);
                 }
                 break;
 
@@ -439,12 +538,11 @@ void enter_editor_mode(EditorBuffer *buffer, WINDOW *win, int row, int col) {
                 if (ch >= 32 && ch <= 126) { // Caracteres imprimíveis
                     insert_character(buffer, ch);
                 } else {
-                    // Debug: mostrar códigos de tecla não reconhecidos (alterar posteriormente para não mostrar o código da tecla)
+                    // Debug: mostrar códigos de tecla não reconhecidos (remover depois)
                     mvwprintw(win, row - 1, 0, "Unknown key code: %d", ch);
                     wrefresh(win);
                     napms(1500);
                 }
-                // Garantir que cursor permanece visível após qualquer operação
                 curs_set(1);
                 break;
         }
@@ -490,7 +588,7 @@ void insert_new_line(EditorBuffer *buffer) {
     buffer->lines[buffer->current_line + 1] = new_line;
     buffer->num_lines++;
     buffer->current_line++;
-    buffer->current_col = 0;
+    buffer->current_col = 0;  // Cursor vai para o início da nova linha (como é vazia, seria o "final" dela)
     buffer->modified = 1;
 }
 

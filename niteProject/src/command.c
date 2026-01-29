@@ -1,8 +1,9 @@
 /*
  *
- * Processa comandos digitados pelo usuário. Recebe o comando, um buffer para mensagem de status, janela e posição para saída
+ * Processa comandos digitados pelo usuário.
  *
  */
+
 #include "../include/file_validation.h"
 #include "../include/command.h"
 #include "../include/config.h"
@@ -56,6 +57,10 @@ EditorBuffer* load_file(const char *filepath) {
         buffer->lines[0] = malloc(256);
         buffer->lines[0][0] = '\0';
         buffer->num_lines = 1;
+        buffer->current_col = 0;  // Linha vazia, cursor no início
+    } else {
+        // Cursor vai para o final da primeira linha
+        buffer->current_col = strlen(buffer->lines[0]);
     }
 
     return buffer;
