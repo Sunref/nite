@@ -4,6 +4,8 @@
  *
  */
 
+#define _POSIX_C_SOURCE 200809L // Para strdup no Linux
+
 #include "../include/file_validation.h"
 #include "../include/command.h"
 #include "../include/config.h"

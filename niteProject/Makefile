@@ -1,4 +1,4 @@
-# Makefile for nite (nano-inspired text editor)
+# Makefile for nite
 # Targets:
 #   make          -> build the project (default)
 #   make build    -> build the project
@@ -6,21 +6,16 @@
 #   make uninstall-> remove installed `nite` binary
 #   make clean    -> remove build artifacts
 #   make distclean-> remove builds/debug directories as well
-#
-# Usage examples:
-#   make
-#   make PREFIX=/usr/local install
-#   make DESTDIR=/tmp/package install
 
 NAME := nite
 
 CC := cc
-CFLAGS := -std=c11 -Wall -Wextra -Iinclude -g
+CFLAGS := -std=gnu11 -Wall -Wextra -Iinclude -g
 LDLIBS := -lncurses -lpanel
 
 PREFIX ?= /usr/local
 BINDIR ?= $(PREFIX)/bin
-DESTDIR ?= 
+DESTDIR ?=
 
 SRC := $(wildcard src/*.c)
 OBJDIR := build/obj
