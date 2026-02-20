@@ -7,6 +7,7 @@
 #include "../include/file_validation.h"
 #include "../include/editor.h"
 #include "../include/dialog.h"
+#include "../include/syntax.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -34,6 +35,12 @@ void free_editor_buffer(EditorBuffer *buffer) {
         }
         free(buffer->lines);
         free(buffer->filename);
+
+        //Liberar syntax
+        if (buffer->syntax) {
+            syntax_destroy(buffer->syntax);
+        }
+
         free(buffer);
     }
 }
@@ -69,6 +76,22 @@ void enter_editor_mode(EditorBuffer *buffer, WINDOW *win, int row, int col) {
         init_pair(1, COLOR_RED, -1);     // Vermelho
         init_pair(2, COLOR_YELLOW, -1);  // Amarelo
         init_pair(3, COLOR_WHITE, -1);   // Branco
+    }
+
+    // Inicializar cores para syntax highlighting
+    if (has_colors()) {
+        init_pair(5, COLOR_MAGENTA, -1);   // Keywords
+        init_pair(6, COLOR_CYAN, -1);      // Functions
+        init_pair(7, COLOR_GREEN, -1);     // Strings
+        init_pair(8, COLOR_YELLOW, -1);    // Numbers
+        init_pair(9, COLOR_BLUE, -1);      // Comments
+        init_pair(10, COLOR_CYAN, -1);     // Types
+    }
+
+    // Criar contexto de syntax
+    buffer->syntax = syntax_create(buffer->filename);
+    if (buffer->syntax) {
+        syntax_update(buffer->syntax, buffer->lines, buffer->num_lines);
     }
 
     while (editor_active) {
@@ -443,7 +466,37 @@ void enter_editor_mode(EditorBuffer *buffer, WINDOW *win, int row, int col) {
                     char segment[content_width + 1];
                     strncpy(segment, line_content + start_pos, chars_to_show);
                     segment[chars_to_show] = '\0';
-                    mvwprintw(win, screen_line, line_num_width + 1, "%s", segment);
+
+                    // Renderizar com syntax highlighting
+                    for (int char_idx = 0; char_idx < chars_to_show; char_idx++) {
+                        char ch = segment[char_idx];
+
+                        if (buffer->syntax && buffer->syntax->enabled) {
+                            int col_in_line = start_pos + char_idx;
+                            HighlightType hl = syntax_get_highlight(buffer->syntax, i, col_in_line);
+
+                            int color_pair = 0;
+                            switch (hl) {
+                            	case HIGHLIGHT_KEYWORD:  color_pair = 5; break;
+                                case HIGHLIGHT_FUNCTION: color_pair = 6; break;
+                                case HIGHLIGHT_STRING:   color_pair = 7; break;
+                                case HIGHLIGHT_NUMBER:   color_pair = 8; break;
+                                case HIGHLIGHT_COMMENT:  color_pair = 9; break;
+                                case HIGHLIGHT_TYPE:     color_pair = 10; break;
+                                default: color_pair = 0;
+                            }
+
+                            if (color_pair > 0 && has_colors()) {
+                                wattron(win, COLOR_PAIR(color_pair));
+                            }
+                            mvwaddch(win, screen_line, line_num_width + 1 + char_idx, ch);
+                            if (color_pair > 0 && has_colors()) {
+                                wattroff(win, COLOR_PAIR(color_pair));
+                            }
+                        } else {
+                            mvwaddch(win, screen_line, line_num_width + 1 + char_idx, ch);
+                        }
+                    }
                 }
 
                 screen_line++;
@@ -562,6 +615,11 @@ void insert_character(EditorBuffer *buffer, char ch) {
         line[i] = line[i-1];
     }
 
+    // Atualizar syntax
+    if (buffer->syntax) {
+    	syntax_update(buffer->syntax, buffer->lines, buffer->num_lines);
+    }
+
     line[buffer->current_col] = ch;
     line[line_len + 1] = '\0';
 
@@ -585,6 +643,11 @@ void insert_new_line(EditorBuffer *buffer) {
         buffer->lines[i] = buffer->lines[i-1];
     }
 
+    // Atualizar syntax
+    if (buffer->syntax) {
+    	syntax_update(buffer->syntax, buffer->lines, buffer->num_lines);
+    }
+
     buffer->lines[buffer->current_line + 1] = new_line;
     buffer->num_lines++;
     buffer->current_line++;
@@ -600,6 +663,11 @@ void handle_backspace(EditorBuffer *buffer) {
 
         for (int i = buffer->current_col - 1; i < line_len; i++) {
             line[i] = line[i + 1];
+        }
+
+        // Atualizar syntax
+        if (buffer->syntax) {
+        	syntax_update(buffer->syntax, buffer->lines, buffer->num_lines);
         }
 
         buffer->current_col--;
@@ -619,6 +687,11 @@ void handle_backspace(EditorBuffer *buffer) {
         // Mover linhas para cima
         for (int i = buffer->current_line; i < buffer->num_lines - 1; i++) {
             buffer->lines[i] = buffer->lines[i + 1];
+        }
+
+        // Atualizar syntax
+        if (buffer->syntax) {
+            syntax_update(buffer->syntax, buffer->lines, buffer->num_lines);
         }
 
         buffer->num_lines--;

@@ -4,13 +4,14 @@
 #include <ncurses.h>
 
 typedef struct {
-    char **lines;           // Array de strings (linhas do arquivo)
-    int num_lines;          // Número de linhas atual
-    int capacity;           // Capacidade máxima de linhas alocadas
-    char *filename;         // Nome do arquivo
-    int modified;           // Flag se o arquivo foi modificado
-    int current_line;       // Linha atual do cursor
-    int current_col;        // Coluna atual do cursor
+    char **lines;           		// Array de strings (linhas do arquivo)
+    int num_lines;          		// Número de linhas atual
+    int capacity;           		// Capacidade máxima de linhas alocadas
+    char *filename;         		// Nome do arquivo
+    int modified;           		// Flag se o arquivo foi modificado
+    int current_line;       		// Linha atual do cursor
+    int current_col;       			// Coluna atual do cursor
+    struct SyntaxContext *syntax;  	// Contexto de syntax para o buffer
 } EditorBuffer;
 
 // Funções principais do editor
