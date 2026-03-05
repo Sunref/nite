@@ -22,8 +22,7 @@ static void log_debug(const char *format, ...) {
 }
 
 // Forward declarations
-static void apply_highlights_recursive(SyntaxContext *ctx, TSNode node,
-                                       char **lines, const char *source);
+static void apply_highlights_recursive(SyntaxContext *ctx, TSNode node, char **lines, const char *source);
 
 // Detectar linguagem pela extensão
 const char* detect_language_from_extension(const char *filename) {
@@ -34,10 +33,6 @@ const char* detect_language_from_extension(const char *filename) {
 
     if (strcmp(dot, ".py") == 0) return "python";
     if (strcmp(dot, ".c") == 0 || strcmp(dot, ".h") == 0) return "c";
-    if (strcmp(dot, ".go") == 0) return "go";
-    if (strcmp(dot, ".rs") == 0) return "rust";
-    if (strcmp(dot, ".cpp") == 0 || strcmp(dot, ".hpp") == 0) return "cpp";
-    if (strcmp(dot, ".js") == 0) return "javascript";
 
     return NULL;
 }
@@ -347,8 +342,7 @@ static HighlightType node_type_to_highlight(const char *type) {
 }
 
 // Aplicar highlights recursivamente
-static void apply_highlights_recursive(SyntaxContext *ctx, TSNode node,
-                                       char **lines, const char *source) {
+static void apply_highlights_recursive(SyntaxContext *ctx, TSNode node, char **lines, const char *source) {
     const char *node_type = ts_node_type(node);
 
     // DEBUG: Log todos os node types encontrados

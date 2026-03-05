@@ -83,9 +83,9 @@ void enter_editor_mode(EditorBuffer *buffer, WINDOW *win, int row, int col) {
         init_pair(5, COLOR_MAGENTA, -1);   // Keywords
         init_pair(6, COLOR_CYAN, -1);      // Functions
         init_pair(7, COLOR_GREEN, -1);     // Strings
-        init_pair(8, COLOR_YELLOW, -1);    // Numbers
+        init_pair(8, COLOR_RED, -1);    // Numbers
         init_pair(9, COLOR_BLUE, -1);      // Comments
-        init_pair(10, COLOR_CYAN, -1);     // Types
+        init_pair(10, COLOR_BLUE, -1);     // Types
     }
 
     // Criar contexto de syntax
