@@ -1,20 +1,15 @@
-\chapter{Resultados Parciais}
+\chapter{Resultados}
 \label{cap:04}
 
 Baseado no cronograma proposto, esta sessão tem como objetivo discutir os resultados parciais de cada nó do diagrama anteriormente apresentado.
 
 \section{Desenvolvimento}
 
-Idealizando o projeto como um todo e utilizando a ferramenta Obsidian\footnote{Disponível em: https://obsidian.md/} como notas, foi possível
-compreender melhor o projeto e planejar novas implementações no NITE. Com a ideia geral do editor finalizada, como deverá se comportar e a forma
-como os comandos do editor irão funcionar (além de seus dois modos) entre outras funcionalidades descritas, a criação de protótipos se fez necessário
-para a complementação do projeto final.
+Idealizando o projeto como um todo e utilizando a ferramenta Obsidian\footnote{Disponível em: https://obsidian.md/} como notas, foi possível compreender melhor o projeto e planejar novas implementações no NITE. Com a ideia geral do editor finalizada, como deverá se comportar e a forma como os comandos do editor irão funcionar (além de seus dois modos) entre outras funcionalidades descritas, a criação de protótipos se fez necessário para a complementação do projeto final.
 
 \subsection{Interface Inicial}
 
-Diferente do editor NANO, que ao ser chamado sozinho\footnote{Quando nenhum arquivo é aberto ou criado ao ser chamado via terminal}
-abre diretamente na tela de edição, com informações de versão no topo e comandos abaixo, foi idealizado criar uma ``tela inicial'' para o NITE,
-como as vistas no Vim e seus derivados, a diferença é que os mesmos são altamente personalizáveis, funcionalidade que não será implementada.
+Diferente do editor NANO, que ao ser chamado sozinho\footnote{Quando nenhum arquivo é aberto ou criado ao ser chamado via terminal} abre diretamente na tela de edição, com informações de versão no topo e comandos abaixo, foi idealizado criar uma ``tela inicial'' para o NITE, como as vistas no Vim e seus derivados, a diferença é que os mesmos são altamente personalizáveis, funcionalidade que não será implementada.
 
 \FloatBarrier
 \begin{figure}[!htbp]
@@ -25,19 +20,13 @@ como as vistas no Vim e seus derivados, a diferença é que os mesmos são altam
 \end{figure}
 \FloatBarrier
 
-Como mostra a Figura \ref{fig:NITE}, as ideias anteriormente descritas no Obsidian ganharam forma, obtendo inicialmente esta tela de apresentação,
-onde o usuário tem acesso a comandos rápidos (e essenciais) para o funcionamento de qualquer editor: criar ou abrir arquivo.
-Ainda, além do comando de saída do editor, o protótipo possui o comando de ajuda, que deverá abrir um guia de comandos que serão
-implementados para navegação e funcionamento do NITE, além de explicar os modos leitura e edição.
+Com as ideias anteriormente descritas no Obsidian foram desenvolvidas, e a tela incial do projeto foi implementada como mostra a Figura \ref{fig:NITE}, onde o usuário tem acesso a comandos rápidos (e essenciais) para o funcionamento de qualquer editor: criar ou abrir arquivo. Ainda, além do comando de saída do editor, o protótipo possui o comando de ajuda, que abre um guia de comandos e suas descrições, permitindo o usuário se familiarizar com a ferramenta antes de a utilizar.
 
 \subsection{Criação e abertura de arquivo}
 
-Passando para o proximo nó do diagrama e essencial para funcionamento de qualquer editor de texto, o próximo passo foi a implementação
-de criação de arquivo. Com um ``\textit{extends}''\footnote{Extende outra funcionalidade}, a implementação dessa funcionalidade
-também conta com a edição de arquivo.
+Passando para o proximo nó do diagrama e essencial para funcionamento de qualquer editor de texto, o próximo passo foi a implementação de criação de arquivo. Com um ``\textit{extends}''\footnote{Extende outra funcionalidade}, a implementação dessa funcionalidade também conta com a edição de arquivo.
 
-Ao criar um arquivo no NITE, o mesmo pergunta o nome que o usuário pretende dar ao \textit{file}\footnote{Arquivo em inglês} (posteriormente poderá ser editado),
-podendo ou não conter uma extensão válida. As extenções aceitas e não aceitas podem ser vistas na tabela abaixo:
+Ao criar um arquivo no NITE, o mesmo inicia o modo edição em um arquivo limpo e sem conteúdo. A tela contem dados do arquivo (que após ser salvo deve mostrar o caminho do arquivo e seu nome) e como inicar o modo comando do editor, junto de atalhos utilizados dentro do mesmo, como salvar o arquivo e sair do editor. Quando o usuário solicita salvar o arquivo, o editor disponibiliza uma subjanela solicitando um nome e a extensão do arquivo, depois, parte para os diretórios do computador do usuário, permitindo a escrita em disco do novo documento. A tabela abaixo disponibiliza informações sobre quais extensões são ou não aceitas pela ferramento.
 
 \begin{table}[h]
     \centering
@@ -90,11 +79,7 @@ podendo ou não conter uma extensão válida. As extenções aceitas e não acei
     \end{tabular}
 \end{table}
 
-Caso uma das extensão não aceitas seja chamada, o editor exibirá um erro e solicitará que o usuário crie um arquivo válido. Em caso do usuário
-não fornecer uma extensão, o editor continuará o processo normalmente passando para a página de edição.
-
-Inicialmente, o protótipo apresenta as seguintes informações no topo do arquivo: nome do arquivo sendo editado, F1 para salvar e F2 para sair
-do editor. Ambas as funcionalidades abrirão uma nova janela que confirma a saída ou o salvamento do arquivo.
+Caso uma das extensão não aceitas seja chamada, o editor exibirá um erro e solicitará que o usuário crie um arquivo válido. Em caso do usuário não fornecer uma extensão, o editor continuará o processo normalmente.
 
 \FloatBarrier
 \begin{figure}[!htbp]
@@ -106,6 +91,23 @@ do editor. Ambas as funcionalidades abrirão uma nova janela que confirma a saí
 \FloatBarrier
 
 Caso o usuário resolva sair do editor sem salvar o arquivo, uma mensagem é exibida no terminal após a saída. Caso o arquivo foi salvo, após a saída do editor, outra mensagem é exibida. Para essa funcionalidade, a biblioteca \textit{panel}\footnote{Faz parte do conjunto de bibliotecas \textit{ncurses}, usada para criar interfaces de texto como janelas, menus e painéis sobrepostos} foi utilizada.
+
+\subsection{Tree-Sitter}
+
+Utilizando a ferramenta \textit{Tree-Sitter\footnote{Disponível em: https://tree-sitter.github.io/tree-sitter/}} foi possível implementar o destaque de sintaxe para determinadas linguagens. No momento de finalização do editor, o mesmo suporta destaque para as linguagens de programação C e Python.
+
+A ferramenta é um gerador de \textit{parser\footnote{É um analisador sintático. Sua função é ler uma entrada de dados que possuem certas regras específicas e montar sua estrutura.}} possuindo sua própria biblioteca. É conhecida por ser uma opção robusta e rápida, e que pode ser implementada em qualquer aplicação. Em seu site, a mesma disponibiliza uma série de linguagens que foram implementadas de forma oficial e/ou colaborativa.
+
+\FloatBarrier
+\begin{figure}[!htbp]
+    \centering
+    \caption{Código em C com destaque de sintaxe}
+    \includegraphics[scale=0.3]{imagens/TreeSitter.png}
+    \\\textbf{Fonte: O autor} \label{fig:TreeSitter}
+\end{figure}
+\FloatBarrier
+
+\subsection{Modo leitura e edição}
 
 \section{Repositório do Github}
 
