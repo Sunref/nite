@@ -8,6 +8,7 @@
 #include "../include/editor.h"
 #include "../include/dialog.h"
 #include "../include/syntax.h"
+#include <ncurses.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -699,4 +700,119 @@ void handle_backspace(EditorBuffer *buffer) {
         buffer->current_col = prev_len;
         buffer->modified = 1;
     }
+}
+
+void read_only(EditorBuffer *buffer,  WINDOW *win, int row, int col){
+
+	int ch;
+	int display_start = 0;
+	int line_num_width = 4;
+	int content_width = col - line_num_width - 2;
+	int max_screen_line = row - 3;
+	int command_line_active = 0;
+	char cmdbuf[512];
+	int cmdlen = 0;
+
+	render:
+		wclear(win);
+		mvwprintw(win, 0, 0, "Reading %s [READ ONLY]", buffer->filename ? buffer->filename : "No file");
+		mvwprintw(win, 1, 0, "Arrows: Scroll | ALT + C: Command line | !q: quit");
+
+		int screen_line = 3;
+
+		for(int i = display_start; i < buffer->num_lines && screen_line < max_screen_line; i++){
+			char *line_content = buffer->lines[i];
+			int line_len = strlen(line_content);
+			int visual_lines = (line_len + content_width - 1) / content_width;
+			if(visual_lines == 0) visual_lines = 1;
+
+			for(int wrap = 0; wrap < visual_lines && screen_line < max_screen_line; wrap++){
+				if(wrap == 0){
+					mvwprintw(win, screen_line, 0, "%3d ", i + 1);
+				}else{
+					mvwprintw(win, screen_line, 0, "    ");
+				}
+
+				int start_pos = wrap * content_width;
+				int chars_to_show = line_len - start_pos;
+				if(chars_to_show > content_width) chars_to_show = content_width;
+
+				if(chars_to_show > 0){
+					char segment[content_width + 1];
+					strncpy(segment, line_content + start_pos, chars_to_show);
+					segment[chars_to_show] = '\0';
+					mvwprintw(win, screen_line, line_num_width + 1, "%s", segment);
+				}
+
+				screen_line++;
+			}
+		}
+
+		mvwprintw(win, row - 1, 0, "Line %d/%d", display_start + 1, buffer->num_lines);
+
+		if(command_line_active){
+			mvwhline(win, row - 1, 0, ' ', col);
+	        wattron(win, COLOR_PAIR(1) | A_BOLD);
+	        mvwprintw(win, row - 1, 0, ">_ ");
+	        wattroff(win, COLOR_PAIR(1) | A_BOLD);
+	        mvwprintw(win, row - 1, 2, "%s", cmdbuf);
+	        wmove(win, row - 1, 2 + cmdlen);
+	        curs_set(1);
+	    }else{
+	        curs_set(0);
+	    }
+
+		wrefresh(win);
+		ch = wgetch(win);
+
+		// Ativar/desativar modo comando
+		if (ch == 27) {
+	        nodelay(win, TRUE);
+	        int next = wgetch(win);
+	        nodelay(win, FALSE);
+	        if (next == 'c' || next == 'C') {
+	            command_line_active = !command_line_active;
+	            cmdlen = 0;
+	            cmdbuf[0] = '\0';
+	        }
+	        goto render;
+	    }
+
+	    // Modo comando ativo
+	    if (command_line_active) {
+	        if (ch == KEY_BACKSPACE || ch == 127 || ch == 8) {
+	            if (cmdlen > 0) cmdbuf[--cmdlen] = '\0';
+	        } else if (ch == 10) { // Enter
+	            if (strcmp(cmdbuf, "!q") == 0) {
+	                return; // Sair
+	            }
+	            // Comando desconhecido: limpa
+	            cmdlen = 0;
+	            cmdbuf[0] = '\0';
+	        } else if (ch >= 32 && ch <= 126) {
+	            if (cmdlen < (int)sizeof(cmdbuf) - 1)
+	                cmdbuf[cmdlen++] = (char)ch;
+	            cmdbuf[cmdlen] = '\0';
+	        }
+	        goto render;
+	    }
+
+	    // Navegação normal
+	    switch (ch) {
+	        case 259:
+				if (display_start > 0) display_start--;
+				goto render;
+	        case 258:
+				 if (display_start < buffer->num_lines - (max_screen_line - 3)) display_start++;
+				goto render;
+	        case 339:
+				 display_start -= (max_screen_line - 3); if (display_start < 0) display_start = 0;
+				goto render;
+	        case 338:
+				 display_start += (max_screen_line - 3); if (display_start >= buffer->num_lines) display_start = buffer->num_lines - 1;
+				 goto render;
+	        default:
+				 goto render;
+	    }
+
 }

@@ -33,6 +33,7 @@ EditorBuffer* load_file(const char *filepath) {
     buffer->modified = 0;
     buffer->current_line = 0;
     buffer->current_col = 0;
+    buffer->syntax = NULL;
 
     char line_buf[1024];
     while (fgets(line_buf, sizeof(line_buf), file)) {
@@ -143,10 +144,20 @@ int process_command(const char *cmd, char *status_msg, size_t msg_size, WINDOW *
             return 0;
         }
 
-        // Entrar no modo de edição
-        enter_editor_mode(buffer, win, row, col);
-        free_editor_buffer(buffer);
+        Dialog *mode_dlg = create_dialog(8, 45, "Open File");
+        bool edit = mode_dialog(mode_dlg, "Open in edit mode?");
+        destroy_dialog(mode_dlg);
 
+        if (edit) {
+            enter_editor_mode(buffer, win, row, col);
+        } else {
+            read_only(buffer, win, row, col);
+        }
+
+        clear();
+        refresh();
+
+        free_editor_buffer(buffer);
         free(final_path);
         snprintf(status_msg, msg_size, "File closed.");
         return 0;
@@ -158,6 +169,8 @@ int process_command(const char *cmd, char *status_msg, size_t msg_size, WINDOW *
         // Define nome do arquivo somente na hora de salvar
         buffer->filename = NULL;
         enter_editor_mode(buffer, win, row, col);
+        clear();
+        refresh();
         free_editor_buffer(buffer);
         snprintf(status_msg, msg_size, "File closed.");
         return 0;

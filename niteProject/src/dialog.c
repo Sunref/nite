@@ -372,7 +372,7 @@ int confirm_dialog(Dialog *dialog, const char *message) {
 
     // Mostra a mensagem e as opções (Enter também confirma)
     mvwprintw(dialog->win, 3, 2, "%s", message);
-    mvwprintw(dialog->win, dialog->height - 3, 2, "[Y/Enter] Yes  [N] No");
+    mvwprintw(dialog->win, dialog->height - 3, 2, "[Y/Enter] Yes  [N/n] No");
 
     wrefresh(dialog->win);
 
@@ -387,4 +387,28 @@ int confirm_dialog(Dialog *dialog, const char *message) {
 
     // Se pressionou ESC, considera como No
     return 0;
+}
+
+bool mode_dialog(Dialog *dialog, const char *message) {
+    // Limpa área interna (igual às outras funções)
+    for (int i = 1; i < dialog->height - 1; i++) {
+        mvwhline(dialog->win, i, 1, ' ', dialog->width - 2);
+    }
+
+    mvwprintw(dialog->win, 3, 2, "%s", message);
+    mvwprintw(dialog->win, dialog->height - 3, 2, "[Y/Enter] Enable  [N/n] Disable");
+
+    wrefresh(dialog->win);
+
+    int ch;
+    while ((ch = wgetch(dialog->win)) != 27) {
+        if (ch == 'y' || ch == 'Y' || ch == 10 || ch == KEY_ENTER){
+            return true;
+        }
+        if (ch == 'n' || ch == 'N'){
+            return false;
+        }
+    }
+
+    return false; // ESC = desativa
 }

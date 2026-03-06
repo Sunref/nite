@@ -19,5 +19,6 @@ char* file_browser_dialog(Dialog *dialog, const char *start_path);
 char* filename_dialog(Dialog *dialog, const char *current_name);
 char* directory_dialog(Dialog *dialog, const char *current_path);
 int confirm_dialog(Dialog *dialog, const char *message);
+bool mode_dialog(Dialog *dialog, const char *message);
 
 #endif
