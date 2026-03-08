@@ -15,7 +15,7 @@
 int main() {
 
     initscr(); // Inicializa a tela ncurses
-    cbreak(); // Desativa o buffer da linha (modo raw)
+    raw(); // Desativa o buffer da linha (modo raw)
     noecho();  // Não ecoa os caracteres digitados pelo usuário
     keypad(stdscr, TRUE); // Habilita captura de teclas especiais (setas, F1, etc.)
     start_color(); // Inicia o uso de cores no terminal

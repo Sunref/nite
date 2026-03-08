@@ -4,7 +4,7 @@
 // Informações do editor
 #define TITLE "NITE"
 #define SUBTITLE "NANO-INSPIRED TEXT EDITOR"
-#define VERSION "ver. 1.1.0"
+#define VERSION "ver. 1.2.1"
 #define AUTHOR "by Fernanda M."
 
 // Cores
@@ -20,7 +20,6 @@
 #define CMD_HELP  "!help"   // Help
 
 // Comandos de edição
-#define CMD_COMMAND_MODE  "\x1Bc"	 // Representa Alt+C (Meta+C)
-#define CMD_SAVE  "!s"      		// Save
+#define CMD_SAVE  "!s"      // Save
 //#define CMD_EXIT  "!q" funciona aqui também
 #endif
