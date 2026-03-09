@@ -1,0 +1,48 @@
+Welcome to NITE -- the enhanced NANO-like editor!
+
+Based on GNU Nano, NITE was designed with a clear goal: to remain simple for users while providing powerful functionality.
+With intuitive shortcuts and a clean workflow, NITE aims to improve the overall editing experience - a core principle of the project.
+
+NITE provides two operating modes: Reading Mode and Editing Mode.
+When opening a file, the user can choose to simply read an existing file or open it normally in editing mode.
+
+NITE also includes an integrated command line, allowing users to execute commands such as saving a file or exiting the editor directly from within the interface.
+
+--------------------------------------------------
+
+EDITING SHORTCUTS
+
+CTRL + C  - Copy
+CTRL + V  - Paste
+CTRL + Z  - Undo
+CTRL + Y  - Redo
+CTRL + A  - Select All
+SHIFT + Arrow Keys - Select text using the arrow keys
+
+--------------------------------------------------
+
+INTEGRATED COMMAND LINE
+
+!q  - Quit the editor
+!s  - Save the current file
+
+--------------------------------------------------
+
+START MENU COMMANDS
+
+!o  - Open a file
+!n  - Create a new file
+!q  - Quit
+
+--------------------------------------------------
+
+FILE TYPE LIMITATIONS
+
+NITE does not support opening certain binary file types such as:
+.exe, .iso, and similar formats.
+
+--------------------------------------------------
+
+SUPPORT
+
+If you have questions or need assistance, please contact

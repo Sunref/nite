@@ -9,7 +9,9 @@
 
 NAME := nite
 CC := cc
-CFLAGS := -std=gnu11 -Wall -Wextra -Iinclude -g -MMD -MP
+# Caminho absoluto para help.txt no build (para !help funcionar de qualquer cwd)
+HELPFILE := $(shell realpath help.txt 2>/dev/null || true)
+CFLAGS := -std=gnu11 -Wall -Wextra -Iinclude -g -MMD -MP $(if $(HELPFILE),-DHELP_FILE=\"$(HELPFILE)\")
 DEPS   := $(OBJS:.o=.d)
 LDLIBS := -lncurses -lpanel -ltree-sitter -ldl
 

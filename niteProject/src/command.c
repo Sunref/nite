@@ -4,7 +4,7 @@
  *
  */
 
-#define _POSIX_C_SOURCE 200809L // Para strdup no Linux
+#define _POSIX_C_SOURCE 200809L
 
 #include "../include/file_validation.h"
 #include "../include/command.h"
@@ -17,6 +17,43 @@
 #include <stdlib.h>
 #include <dirent.h>
 #include <sys/stat.h>
+#include <libgen.h>
+#include <unistd.h>
+#include <limits.h>
+
+EditorBuffer *load_file(const char *filepath);
+
+// Retorna o buffer do help.txt: caminho do make, cwd, ../ e relativo ao executável (Linux).
+static EditorBuffer *load_help_file(void) {
+    EditorBuffer *buf;
+#ifdef HELP_FILE
+    if (HELP_FILE[0] != '\0') {
+        buf = load_file(HELP_FILE);
+        if (buf) return buf;
+    }
+#endif
+    static const char *rel[] = { "help.txt", "../help.txt", "../../help.txt" };
+    for (size_t i = 0; i < sizeof(rel) / sizeof(rel[0]); i++) {
+        buf = load_file(rel[i]);
+        if (buf) return buf;
+    }
+#if defined(__linux__)
+    char exe[PATH_MAX];
+    ssize_t n = readlink("/proc/self/exe", exe, sizeof(exe) - 1);
+    if (n > 0) {
+        exe[n] = '\0';
+        char *dir = dirname(exe);
+        char path[PATH_MAX];
+        snprintf(path, sizeof(path), "%s/../help.txt", dir);
+        buf = load_file(path);
+        if (buf) return buf;
+        snprintf(path, sizeof(path), "%s/help.txt", dir);
+        buf = load_file(path);
+        if (buf) return buf;
+    }
+#endif
+    return NULL;
+}
 
 // Função auxiliar para carregar arquivo existente
 EditorBuffer* load_file(const char *filepath) {
@@ -93,7 +130,21 @@ int process_command(const char *cmd, char *status_msg, size_t msg_size, WINDOW *
         wrefresh(win);
         // Limpa a mensagem de status
         strcpy(status_msg, "");
+
+        EditorBuffer *help_buffer = load_help_file();
+
+        if (!help_buffer) {
+            snprintf(status_msg, msg_size, "Could not open help.txt");
+            return 0;
+        }
+
+        read_only(help_buffer, win, row, col);
+        clear();
+        refresh();
+        free_editor_buffer(help_buffer);
+        strcpy(status_msg, "");
         return 0;
+
     }
     // Comando de saída
     if (strcmp(cmd, CMD_EXIT) == 0) {
@@ -175,6 +226,7 @@ int process_command(const char *cmd, char *status_msg, size_t msg_size, WINDOW *
         snprintf(status_msg, msg_size, "File closed.");
         return 0;
     }
+
     // Qualquer outro comando inválido
     snprintf(status_msg, msg_size, "Invalid command: %s", cmd);
     return 0;
