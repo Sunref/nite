@@ -33,6 +33,19 @@ const char* detect_language_from_extension(const char *filename) {
 
     if (strcmp(dot, ".py") == 0) return "python";
     if (strcmp(dot, ".c") == 0 || strcmp(dot, ".h") == 0) return "c";
+    if (strcmp(dot, ".sh") == 0 || strcmp(dot, ".bash") == 0) return "bash";
+    if (strcmp(dot, ".cpp") == 0 || strcmp(dot, ".cc") == 0) return "cpp";
+    if (strcmp(dot, ".css") == 0) return "css";
+    if (strcmp(dot, ".go") == 0) return "go";
+    if (strcmp(dot, ".html") == 0 || strcmp(dot, ".htm") == 0) return "html";
+    if (strcmp(dot, ".java") == 0) return "java";
+    if (strcmp(dot, ".js") == 0 || strcmp(dot, ".mjs") == 0) return "javascript";
+    if (strcmp(dot, ".json") == 0) return "json";
+    if (strcmp(dot, ".jl") == 0) return "julia";
+    if (strcmp(dot, ".php") == 0) return "php";
+    if (strcmp(dot, ".rb") == 0) return "ruby";
+    if (strcmp(dot, ".rs") == 0) return "rust";
+    if (strcmp(dot, ".sql") == 0) return "sql";
 
     return NULL;
 }
