@@ -1,9 +1,15 @@
+/*
+ *
+ * Arquivo feito pelo Claude. Métodos para análise sintática de código utilizando Tree-Sitter.
+ *
+ */
+
 #include "../include/syntax.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include <stdarg.h>
-#include <dlfcn.h>
+#include <stdarg.h> // Biblioteca para variadic functions
+#include <dlfcn.h> // Biblioteca para carregar bibliotecas dinamicamente
 
 // Log para arquivo
 static FILE *debug_log = NULL;

@@ -9,10 +9,10 @@
 #include <ncurses.h>
 #include <string.h>
 
-void draw_centered_screen(WINDOW *win) {
+void draw_centered_screen(WINDOW *win) { // Desenha a tela principal centralizada na janela fornecida
 
-    int row;
-    int col;
+    int row; // Linhas da janela
+    int col; // Colunas da janela
     getmaxyx(win, row, col); // Obtém o tamanho atual da janela (linhas e colunas)
 
     wclear(win); // Limpa a janela antes de desenhar

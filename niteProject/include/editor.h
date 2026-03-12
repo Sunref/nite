@@ -45,8 +45,8 @@ typedef struct {
 
 // Funções principais do editor
 EditorBuffer* create_new_file();
-void free_editor_buffer(EditorBuffer *buffer);
 int save_file(EditorBuffer *buffer, const char *filename);
+void free_editor_buffer(EditorBuffer *buffer);
 void enter_editor_mode(EditorBuffer *buffer, WINDOW *win, int row, int col);
 void read_only(EditorBuffer *buffer,  WINDOW *win, int row, int col);
 

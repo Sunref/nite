@@ -12,7 +12,6 @@ typedef struct {
     int start_x;
 } Dialog;
 
-// Funções de diálogo
 Dialog* create_dialog(int height, int width, const char *title);
 void destroy_dialog(Dialog *dialog);
 char* file_browser_dialog(Dialog *dialog, const char *start_path);

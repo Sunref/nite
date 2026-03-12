@@ -13,8 +13,12 @@
 #include <string.h>
 #include <stdio.h>
 
+static int current_line_len(EditorBuffer *buffer);
 static void handle_system_clipboard(char *dest, int max_len);
 static void set_system_clipboard(const char *text);
+static void selection_bounds(const Selection *sel, int *sl, int *sc, int *el, int *ec);
+static void copy_selection_to_clipboard(EditorBuffer *buffer, const Selection *sel, char *dest, size_t max_len);
+static void delete_selection(EditorBuffer *buffer, Selection *sel);
 
 char clipboard[MAX_CLIPBOARD_SIZE] = ""; // Buffer global para armazenar o conteúdo copiado/colado (suporta multilinha para blocos de código)
 
@@ -72,10 +76,13 @@ int save_file(EditorBuffer *buffer, const char *filename) { // Função para sal
 
 // Retorna o comprimento da linha atual sem dereferenciar ponteiro nulo (evita SIGSEGV).
 static int current_line_len(EditorBuffer *buffer) {
-	if (!buffer || !buffer->lines || buffer->num_lines <= 0) return 0;
-	if (buffer->current_line < 0 || buffer->current_line >= buffer->num_lines) return 0;
-	char *line = buffer->lines[buffer->current_line];
-	return line ? (int)strlen(line) : 0;
+
+	if (!buffer || !buffer->lines || buffer->num_lines <= 0) return 0; // Se o buffer é nulo ou vazio, retorna 0.
+	if (buffer->current_line < 0 || buffer->current_line >= buffer->num_lines) return 0; // Se a linha atual é inválida, retorna 0.
+	char *line = buffer->lines[buffer->current_line]; // Obter a linha atual do buffer.
+
+	return line ? (int)strlen(line) : 0; // Retornar o comprimento da linha atual, evitando SIGSEGV.
+
 }
 
 void enter_editor_mode(EditorBuffer *buffer, WINDOW *win, int row, int col) { // Função principal para entrar no modo de edição, onde o usuário pode interagir com o conteúdo do buffer e realizar ações como salvar ou sair
@@ -669,13 +676,12 @@ void enter_editor_mode(EditorBuffer *buffer, WINDOW *win, int row, int col) { //
 
             case 1:  // Ctrl+A = Selecionar tudo
                 sel.active = 1;
-                sel.start_line = 0;
-                sel.start_col = 0;
-                sel.end_line = buffer->num_lines > 0 ? buffer->num_lines - 1 : 0;
-                sel.end_col = (buffer->num_lines > 0 && buffer->lines[buffer->num_lines - 1])
-                    ? (int)strlen(buffer->lines[buffer->num_lines - 1]) : 0;
-                buffer->current_line = 0;
-                buffer->current_col = 0;
+                sel.start_line = 0; // Linha inicial da seleção.
+                sel.start_col = 0; // Coluna inicial da seleção.
+                sel.end_line = buffer->num_lines > 0 ? buffer->num_lines - 1 : 0; // Linha final da seleção.
+                sel.end_col = (buffer->num_lines > 0 && buffer->lines[buffer->num_lines - 1]) ? (int)strlen(buffer->lines[buffer->num_lines - 1]) : 0; // Coluna final da seleção.
+                buffer->current_line = 0; // Linha atual do cursor.
+                buffer->current_col = 0; // Coluna atual do cursor.
                 break;
 
             case 3:  // Ctrl+C = Copiar
@@ -803,9 +809,9 @@ void read_only(EditorBuffer *buffer,  WINDOW *win, int row, int col){ // Funçã
 					mvwprintw(win, screen_line, 0, "    ");
 				}
 
-				int start_pos = wrap * content_width;
-				int chars_to_show = line_len - start_pos;
-				if(chars_to_show > content_width) chars_to_show = content_width;
+				int start_pos = wrap * content_width; // Posição inicial do segmento a mostrar na linha visual.
+				int chars_to_show = line_len - start_pos; // Número de caracteres a mostrar nesta linha visual.
+				if(chars_to_show > content_width) chars_to_show = content_width; // Limitar o número de caracteres a mostrar para não ultrapassar a largura da tela.
 
 				if(chars_to_show > 0){ // Se houver caracteres para mostrar nesta linha visual, extrair o segmento correspondente da linha original e renderizá-lo na tela. O segmento é extraído usando strncpy para copiar os caracteres da posição inicial calculada (start_pos) até o número de caracteres a mostrar (chars_to_show), garantindo que o segmento seja corretamente terminado com um caractere nulo ('\0') para formar uma string válida.
 					char segment[content_width + 1];
@@ -987,134 +993,179 @@ void handle_backspace(EditorBuffer *buffer) { // Função para lidar com a açã
 
 // Normaliza seleção: (sl,sc) = início, (el,ec) = fim em ordem do documento.
 static void selection_bounds(const Selection *sel, int *sl, int *sc, int *el, int *ec) {
-    if (sel->start_line < sel->end_line || (sel->start_line == sel->end_line && sel->start_col <= sel->end_col)) {
+
+    if (sel->start_line < sel->end_line || (sel->start_line == sel->end_line && sel->start_col <= sel->end_col)) { // Se a seleção é crescente, (start_line, start_col) é o início e (end_line, end_col) é o fim.
         *sl = sel->start_line; *sc = sel->start_col; *el = sel->end_line; *ec = sel->end_col;
-    } else {
+    } else { // Se a seleção é decrescente, (end_line, end_col) é o início e (start_line, start_col) é o fim.
         *sl = sel->end_line; *sc = sel->end_col; *el = sel->start_line; *ec = sel->start_col;
     }
+
 }
 
 // Copia o texto da seleção (ou linha atual) para dest, com \n entre linhas. Não excede max_len.
 static void copy_selection_to_clipboard(EditorBuffer *buffer, const Selection *sel, char *dest, size_t max_len) {
-    if (!buffer->lines || buffer->num_lines <= 0) { dest[0] = '\0'; return; }
-    if (!sel->active) {
-        const char *line = buffer->lines[buffer->current_line];
-        if (line) {
+
+    if (!buffer->lines || buffer->num_lines <= 0) { dest[0] = '\0'; return; } // Se o buffer estiver vazio, retorna uma string vazia.
+
+    if (!sel->active) { // Se a seleção não estiver ativa, copia a linha atual.
+        const char *line = buffer->lines[buffer->current_line]; // Obtém a linha atual.
+        if (line) { // Se a linha existir, copia para o destino.
             size_t n = strlen(line);
-            if (n >= max_len) n = max_len - 1;
-            memcpy(dest, line, n + 1);
+            if (n >= max_len) n = max_len - 1; // Se a linha for maior que o limite, corta para max_len - 1.
+            memcpy(dest, line, n + 1); // Copia a linha para o destino, incluindo o terminador nulo.
             dest[n] = '\0';
-        } else dest[0] = '\0';
+        } else dest[0] = '\0'; // Se a linha não existir, retorna uma string vazia.
         return;
     }
-    int sl, sc, el, ec;
-    selection_bounds(sel, &sl, &sc, &el, &ec);
+
+    int sl; // Linha inicial da seleção.
+    int sc; // Coluna inicial da seleção.
+    int el; // Linha final da seleção.
+    int ec; // Coluna final da seleção.
+    selection_bounds(sel, &sl, &sc, &el, &ec); // Obtém os limites da seleção.
     size_t i = 0;
-    for (int L = sl; L <= el && i < max_len - 1; L++) {
-        if (L >= buffer->num_lines) break;
-        char *line = buffer->lines[L];
-        if (!line) { if (L < el) dest[i++] = '\n'; continue; }
-        int len = (int)strlen(line);
-        int start_off = (L == sl) ? sc : 0;
-        int end_off   = (L == el) ? ec : len;
-        if (start_off > len) start_off = len;
-        if (end_off > len) end_off = len;
-        if (start_off >= end_off) { if (L < el && i < max_len - 1) dest[i++] = '\n'; continue; }
-        for (int j = start_off; j < end_off && i < max_len - 1; j++) dest[i++] = line[j];
-        if (L < el && i < max_len - 1) dest[i++] = '\n';
+
+    for (int L = sl; L <= el && i < max_len - 1; L++) { // Percorre as linhas da seleção.
+        if (L >= buffer->num_lines) break; // Se a linha não existir, sai do loop.
+
+        char *line = buffer->lines[L]; // Obtém a linha atual.
+
+        if (!line) { if (L < el) dest[i++] = '\n'; continue; } // Se a linha não existir, adiciona uma quebra de linha e continua.
+
+        int len = (int)strlen(line); // Obtém o comprimento da linha atual.
+        int start_off = (L == sl) ? sc : 0; // Obtém o offset inicial da seleção na linha atual.
+        int end_off   = (L == el) ? ec : len; // Obtém o offset final da seleção na linha atual.
+
+        if (start_off > len) start_off = len; // Se o offset inicial for maior que o comprimento da linha, ajusta para o final da linha.
+        if (end_off > len) end_off = len; // Se o offset final for maior que o comprimento da linha, ajusta para o final da linha.
+        if (start_off >= end_off) { if (L < el && i < max_len - 1) dest[i++] = '\n'; continue; } // Se o offset inicial for maior ou igual ao offset final, pula para a próxima linha.
+
+        for (int j = start_off; j < end_off && i < max_len - 1; j++) dest[i++] = line[j]; // Copia os caracteres da seleção para o buffer de destino.
+
+        if (L < el && i < max_len - 1) dest[i++] = '\n'; // Se não é a última linha da seleção, adiciona uma quebra de linha.
     }
-    dest[i] = '\0';
+    dest[i] = '\0'; // Termina a string no buffer de destino.
+
 }
 
 // Remove a região selecionada do buffer e coloca o cursor no início da região. Limpa sel->active.
 static void delete_selection(EditorBuffer *buffer, Selection *sel) {
-    if (!sel->active || !buffer->lines || buffer->num_lines <= 0) return;
-    int sl, sc, el, ec;
-    selection_bounds(sel, &sl, &sc, &el, &ec);
-    if (sl == el) {
-        char *line = buffer->lines[sl];
-        int len = (int)strlen(line);
-        if (sc > len) sc = len;
-        if (ec > len) ec = len;
-        if (sc >= ec) { sel->active = 0; return; }
-        size_t tail = (size_t)(len - ec);
-        memmove(line + sc, line + ec, tail + 1);
-        buffer->current_line = sl;
-        buffer->current_col = sc;
-    } else {
-        char *line_sl = buffer->lines[sl];
-        char *line_el = buffer->lines[el];
-        int len_sl = line_sl ? (int)strlen(line_sl) : 0;
-        int len_el = line_el ? (int)strlen(line_el) : 0;
-        if (sc > len_sl) sc = len_sl;
-        if (ec > len_el) ec = len_el;
-        size_t left_len = (size_t)sc;
-        size_t right_len = (size_t)(len_el - ec);
-        char *new_line = malloc(left_len + right_len + 1);
-        if (!new_line) return;
-        if (left_len) memcpy(new_line, line_sl, left_len);
-        if (right_len) memcpy(new_line + left_len, line_el + ec, right_len);
-        new_line[left_len + right_len] = '\0';
-        free(line_sl);
-        for (int i = sl + 1; i <= el; i++) free(buffer->lines[i]);
-        buffer->lines[sl] = new_line;
-        int n_remove = el - sl;
-        for (int i = sl + 1; i < buffer->num_lines - n_remove; i++)
-            buffer->lines[i] = buffer->lines[i + n_remove];
-        buffer->num_lines -= n_remove;
-        buffer->current_line = sl;
-        buffer->current_col = sc;
+
+    if (!sel->active || !buffer->lines || buffer->num_lines <= 0) return; // Se a seleção não estiver ativa ou o buffer estiver vazio, retornar imediatamente.
+
+    int sl; // Flag para indicar a linha inicial da seleção.
+    int sc; // Flag para indicar a coluna inicial da seleção.
+    int el; // Flag para indicar a linha final da seleção.
+    int ec; // Flag para indicar a coluna final da seleção.
+
+    selection_bounds(sel, &sl, &sc, &el, &ec); // Obter os limites da seleção.
+
+    if (sl == el) { // Se a seleção estiver em uma única linha.
+        char *line = buffer->lines[sl]; // Obter a linha da seleção.
+        int len = (int)strlen(line); // Obter o comprimento da linha.
+        if (sc > len) sc = len; // Se a coluna inicial estiver além do final da linha, ajustar para o final.
+        if (ec > len) ec = len; // Se a coluna final estiver além do final da linha, ajustar para o final.
+        if (sc >= ec) { sel->active = 0; return; } // Se a seleção for inválida (coluna inicial maior ou igual à coluna final), desativar a seleção e retornar.
+
+        size_t tail = (size_t)(len - ec); // Obter o comprimento da parte da linha após a seleção.
+        memmove(line + sc, line + ec, tail + 1); // Mover a parte da linha após a seleção para a posição da coluna inicial.
+        buffer->current_line = sl; // Atualizar a linha atual do cursor para a linha da seleção.
+        buffer->current_col = sc; // Atualizar a coluna atual do cursor para a coluna inicial da seleção.
+    } else { // Se a seleção abranger mais de uma linha.
+        char *line_sl = buffer->lines[sl]; // Obter a linha inicial da seleção.
+        char *line_el = buffer->lines[el]; // Obter a linha final da seleção.
+        int len_sl = line_sl ? (int)strlen(line_sl) : 0; // Obter o comprimento da linha inicial da seleção.
+        int len_el = line_el ? (int)strlen(line_el) : 0; // Obter o comprimento da linha final da seleção.
+
+        if (sc > len_sl) sc = len_sl; // Se a coluna inicial da seleção estiver além do comprimento da linha inicial, ajustar para o final da linha.
+        if (ec > len_el) ec = len_el; // Se a coluna final da seleção estiver além do comprimento da linha final, ajustar para o final da linha.
+
+        size_t left_len = (size_t)sc; // Obter o comprimento do segmento da linha inicial antes da coluna inicial da seleção.
+        size_t right_len = (size_t)(len_el - ec); // Obter o comprimento do segmento da linha final após a coluna final da seleção.
+        char *new_line = malloc(left_len + right_len + 1); // Alocar memória para a nova linha.
+
+        if (!new_line) return; // Se a alocação falhar, retornar sem fazer nada.
+        if (left_len) memcpy(new_line, line_sl, left_len); // Copiar o segmento da linha inicial antes da coluna inicial da seleção.
+        if (right_len) memcpy(new_line + left_len, line_el + ec, right_len); // Copiar o segmento da linha final após a coluna final da seleção.
+
+        new_line[left_len + right_len] = '\0'; // Terminar a string com nulo.
+        free(line_sl); // Liberar a linha inicial antiga.
+
+        for (int i = sl + 1; i <= el; i++) free(buffer->lines[i]); // Liberar as linhas do buffer que estão dentro da seleção.
+
+        buffer->lines[sl] = new_line; // Substituir a linha inicial com a nova linha.
+        int n_remove = el - sl; // Número de linhas a serem removidas.
+
+        for (int i = sl + 1; i < buffer->num_lines - n_remove; i++){ // Mover as linhas restantes para preencher o espaço vazio.
+            buffer->lines[i] = buffer->lines[i + n_remove]; // Copiar a linha seguinte para a posição atual.
+        }
+
+        buffer->num_lines -= n_remove; // Atualizar o número de linhas no buffer.
+        buffer->current_line = sl; // Atualizar a linha atual para a linha inicial da seleção.
+        buffer->current_col = sc; // Atualizar a coluna atual para a coluna inicial da seleção.
     }
-    buffer->modified = 1;
-    sel->active = 0;
+    buffer->modified = 1; // Atualizar o flag de modificação do buffer.
+    sel->active = 0; // Limpar a seleção ativa.
+
 }
 
-void handle_copy(EditorBuffer *buffer, const Selection *sel) {
-    copy_selection_to_clipboard(buffer, sel, clipboard, MAX_CLIPBOARD_SIZE);
-    set_system_clipboard(clipboard);
+void handle_copy(EditorBuffer *buffer, const Selection *sel) { // Função para copiar o conteúdo selecionado para o clipboard do sistema.
+
+    copy_selection_to_clipboard(buffer, sel, clipboard, MAX_CLIPBOARD_SIZE); // Copia o conteúdo selecionado para o buffer local clipboard.
+    set_system_clipboard(clipboard); // Envia o conteúdo do buffer clipboard para o clipboard do sistema.
+
 }
 
-void handle_cut(EditorBuffer *buffer, Selection *sel) {
-    if (sel->active) {
+void handle_cut(EditorBuffer *buffer, Selection *sel) { // Função para cortar o conteúdo selecionado do editor e colocá-lo no clipboard do sistema.
+
+    if (sel->active) { // Se a seleção está ativa, copia o conteúdo selecionado para o clipboard e remove-o do buffer.
         copy_selection_to_clipboard(buffer, sel, clipboard, MAX_CLIPBOARD_SIZE);
         delete_selection(buffer, sel);
-    } else {
-        if (!buffer->lines || buffer->num_lines <= 0) return;
-        copy_selection_to_clipboard(buffer, sel, clipboard, MAX_CLIPBOARD_SIZE);
-        int cur = buffer->current_line;
-        free(buffer->lines[cur]);
-        for (int i = cur; i < buffer->num_lines - 1; i++)
+    } else { // Se a seleção não está ativa, copia a linha atual para o clipboard e remove-a do buffer.
+        if (!buffer->lines || buffer->num_lines <= 0) return; // Se o buffer estiver vazio, não faz nada.
+
+        copy_selection_to_clipboard(buffer, sel, clipboard, MAX_CLIPBOARD_SIZE); // Copia a linha atual para o clipboard.
+        int cur = buffer->current_line; // Obtém a linha atual.
+        free(buffer->lines[cur]); // Libera a memória da linha atual.
+
+        for (int i = cur; i < buffer->num_lines - 1; i++){ // Desloca todas as linhas após a linha atual uma posição para cima.
             buffer->lines[i] = buffer->lines[i + 1];
-        buffer->num_lines--;
-        if (buffer->current_line >= buffer->num_lines)
+        }
+
+        buffer->num_lines--; // Decrementa o número de linhas no buffer.
+        if (buffer->current_line >= buffer->num_lines) { // Se a linha atual ultrapassar o número de linhas, ajusta para a última linha disponível.
             buffer->current_line = buffer->num_lines > 0 ? buffer->num_lines - 1 : 0;
+        }
+
         buffer->current_col = 0;
         buffer->modified = 1;
     }
-    set_system_clipboard(clipboard);
+    set_system_clipboard(clipboard); // Envia o conteúdo do clipboard interno para o clipboard do sistema.
+
 }
 
 void handle_paste(EditorBuffer *buffer) { // Função para lidar com a ação de colar no editor, permitindo que o usuário insira o conteúdo do clipboard interno na posição atual do cursor.
 
-	if (!buffer) return;
-	if (!buffer->lines) return;
+	if (!buffer) return; // Se o buffer for nulo, retorna imediatamente.
+	if (!buffer->lines) return; // Se as linhas do buffer forem nulas, retorna imediatamente.
 
-	if (buffer->num_lines == 0) {
+	if (buffer->num_lines == 0) { // Se o buffer estiver vazio, cria uma linha vazia antes de colar.
 	    buffer->lines[0] = strdup("");
 	    buffer->num_lines = 1;
 	}
-	if (buffer->num_lines == 0) return;
-	if (buffer->current_line >= buffer->num_lines) return;
+
+	if (buffer->num_lines == 0) return; // Se o buffer ainda estiver vazio após a criação, retorna imediatamente.
+	if (buffer->current_line >= buffer->num_lines) return; // Se o cursor estiver além do número de linhas, retorna imediatamente.
 
 	// Ler estado da linha atual ANTES de chamar handle_system_clipboard (popen/vfork pode alterar memória em alguns ambientes)
-	char *current_line = buffer->lines[buffer->current_line];
-	if (!current_line) return;
-	int line_len = (int)strlen(current_line);
-	if (buffer->current_col > line_len) buffer->current_col = line_len;
+	char *current_line = buffer->lines[buffer->current_line]; // Ler a linha atual do buffer.
+	if (!current_line) return; // Se a linha atual for nula, retorna imediatamente.
+	int line_len = (int)strlen(current_line); // Obter o comprimento da linha atual.
+	if (buffer->current_col > line_len) buffer->current_col = line_len; // Se o cursor estiver além do comprimento da linha, ajusta para o final da linha.
 
 	handle_system_clipboard(clipboard, MAX_CLIPBOARD_SIZE); // Ler o conteúdo atualizado do clipboard do sistema (multilinha) para o buffer interno antes de colar.
 
-    int clipboard_len = (int)strlen(clipboard);
+    int clipboard_len = (int)strlen(clipboard); // Obter o comprimento do conteúdo do clipboard.
     if (clipboard_len == 0) return; // Se o clipboard estiver vazio, não há nada para colar, então retornar imediatamente.
 
     char *after_cursor = strdup(current_line + buffer->current_col); // Salvar a parte da linha atual que está após a posição do cursor (buffer->current_col) em uma nova string (after_cursor) para ser reinserida no final da última linha colada. A função strdup é usada para alocar uma nova string e copiar o conteúdo da parte da linha atual que deve ser preservada, garantindo que o texto à direita do cursor seja mantido e possa ser corretamente posicionado após o conteúdo colado. Se a alocação falhar, retornar imediatamente para evitar erros de memória.
@@ -1124,7 +1175,7 @@ void handle_paste(EditorBuffer *buffer) { // Função para lidar com a ação de
 
     // Duplicar o conteúdo do clipboard para poder modificá-lo durante o processo de divisão por '\n' sem alterar o buffer original do clipboard, garantindo que operações futuras de colagem continuem funcionando corretamente.
     char *clip_copy = strdup(clipboard);
-    if (!clip_copy) {
+    if (!clip_copy) { // Se a alocação falhar, retornar imediatamente para evitar erros de memória.
         free(after_cursor);
         return;
     }
@@ -1160,7 +1211,7 @@ void handle_paste(EditorBuffer *buffer) { // Função para lidar com a ação de
             if (buffer->num_lines >= buffer->capacity) {
                 buffer->capacity *= 2;
                 char **tmp = realloc(buffer->lines, buffer->capacity * sizeof(char*));
-                if (!tmp) {
+                if (!tmp) { // Se a alocação falhar, retornar imediatamente para evitar erros de memória.
                     free(after_cursor);
                     free(clip_copy);
                     return;
@@ -1196,8 +1247,8 @@ void handle_paste(EditorBuffer *buffer) { // Função para lidar com a ação de
     int cur_len = strlen(buffer->lines[buffer->current_line]);
     int after_len = strlen(after_cursor);
 
-    char *tmp = realloc(buffer->lines[buffer->current_line], cur_len + after_len + 1);
-    if (!tmp) {
+    char *tmp = realloc(buffer->lines[buffer->current_line], cur_len + after_len + 1); // Realocar a última linha inserida para ter espaço suficiente para o conteúdo reinserido após o cursor.
+    if (!tmp) { // Se a alocação falhar, retornar imediatamente para evitar erros de memória.
         free(after_cursor);
         free(clip_copy);
         return;
@@ -1231,23 +1282,24 @@ static void set_system_clipboard(const char *text) { // Função para enviar o c
 
 static void handle_system_clipboard(char *dest, int max_len) { // Função para enviar o conteúdo copiado/recortado para o clipboard do sistema, permitindo que o usuário cole o conteúdo em outros aplicativos fora do editor. A função usa popen para executar um comando de shell que tenta escrever no clipboard usando xclip ou xsel, dependendo de qual estiver disponível no sistema.
 
-	FILE *pipe = popen(
+	FILE *pipe = popen( // Abrir um pipe para ler o conteúdo do clipboard usando xclip ou xsel.
         "xclip -selection clipboard -o 2>/dev/null || xsel --clipboard --output 2>/dev/null",
         "r"
     );
-    if (!pipe) return;
+    if (!pipe) return; // Se falhar, retornar imediatamente.
 
     int i = 0;
     int ch;
     int prev_was_cr = 0;
-    while (i < max_len - 1 && (ch = fgetc(pipe)) != EOF) {
-        if (ch == '\r') {
+
+    while (i < max_len - 1 && (ch = fgetc(pipe)) != EOF) { // Ler caracteres do pipe até o limite máximo ou até o fim do arquivo.
+        if (ch == '\r') { // Converter \r para \n.
             dest[i++] = '\n';
             prev_was_cr = 1;
-        } else if (ch == '\n') {
+        } else if (ch == '\n') { // Converter \n para \n (mantendo o \n original).
             if (!prev_was_cr) dest[i++] = '\n'; /* \r\n já gerou \n no \r */
             prev_was_cr = 0;
-        } else {
+        } else { // Copiar caracteres normais para o destino.
             dest[i++] = (char)ch;
             prev_was_cr = 0;
         }

@@ -10,7 +10,18 @@
 #include "../include/status.h"
 #include "../include/menu.h"
 #include <ncurses.h>
+#include <signal.h> // Biblioteca para tratamento de sinais
+#include <stdlib.h>
 #include <panel.h>
+
+void cleanup_ncurses() { // Função para limpar a tela ncurses ao sair
+    endwin();
+}
+
+void handle_sigint(int sig) { // Função para tratar o sinal SIGINT
+    endwin();
+    exit(1);
+}
 
 int main() {
 
@@ -20,6 +31,9 @@ int main() {
     keypad(stdscr, TRUE); // Habilita captura de teclas especiais (setas, F1, etc.)
     start_color(); // Inicia o uso de cores no terminal
     use_default_colors(); // Usa as cores padrão do terminal
+
+    atexit(cleanup_ncurses); // Limpa a tela ncurses ao sair
+    signal(SIGINT, handle_sigint); // Trata o sinal SIGINT
 
     // Define pares de cores para uso posterior
     init_pair(1, COLOR_BLUE, -1);
@@ -34,7 +48,7 @@ int main() {
 
     char status_msg[128] = ""; // Buffer para mensagem de status
 
-    while (1) {
+    while (1) { // Loop principal
 
         draw_centered_screen(stdscr); // Desenha a interface centralizada
 
@@ -47,7 +61,7 @@ int main() {
 
         // Toda lógica de comando é tratada em command.c
         int cmd_result = process_command(input, status_msg, sizeof(status_msg), stdscr, row, col);
-        if (cmd_result == 1) {
+        if (cmd_result == 1) { // Comando sair
             break;
         }
 
