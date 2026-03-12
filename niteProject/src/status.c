@@ -8,10 +8,9 @@
 #include "../include/config.h"
 #include <ncurses.h>
 #include <string.h>
-#include <stddef.h>
+#include <stddef.h> // Biblioteca para tipos size_t e outras funções relacionadas
 
-// Escreve a mensagem de status.
-void show_status(WINDOW *win, int row, int col, const char *msg) {
+void show_status(WINDOW *win, int row, int col, const char *msg) { // Escreve a mensagem de status na janela fornecida
 
     // Proteção básica: se a janela for menor que 2 linhas, não escreve
     if (row < 2 || !win) {
@@ -26,10 +25,10 @@ void show_status(WINDOW *win, int row, int col, const char *msg) {
 
     // Força ncurses a atualizar a área afetada na tela.
     wrefresh(win);
+
 }
 
-// Desenha o prompt no final da janela e lê a string digitada pelo usuário.
-void get_user_input(WINDOW *win, int row, int col, char *input, size_t input_size) {
+void get_user_input(WINDOW *win, int row, int col, char *input, size_t input_size) { // Desenha o prompt no final da janela e lê a string digitada pelo usuário.
 
     // Valida parâmetros básicos para evitar comportamento indefinido
     if (!win || !input || input_size == 0 || row < 1) {
@@ -39,12 +38,12 @@ void get_user_input(WINDOW *win, int row, int col, char *input, size_t input_siz
 
     // Calcula posição segura para colocar a dica de ajuda à direita
     size_t help_len = strlen(CMD_HELP);
-    int help_x = col - (int)help_len;
+    int help_x = col - (int)help_len; // Posição X para começar a dica de ajuda
     if (help_x < 0) help_x = 0; // evita coordenada negativa
 
     // Desenha o prompt na última linha (row - 1) e limpa o resto da linha
     mvwprintw(win, row - 1, 0, ">_ ");
-    wclrtoeol(win);
+    wclrtoeol(win); // Limpa o resto da linha após o prompt
 
     // Exibe a dica de ajuda no final da linha (pode sobrescrever se espaço insuficiente, ajustar)
     mvwprintw(win, row - 1, help_x, CMD_HELP);
@@ -66,4 +65,5 @@ void get_user_input(WINDOW *win, int row, int col, char *input, size_t input_siz
 
     // Desliga o eco de volta ao estado padrão do programa
     noecho();
+
 }

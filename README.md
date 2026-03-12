@@ -19,5 +19,7 @@ I chose nano as a reference because it represents the balance between simplicity
 - Support for creating and editing text files.
 - Written in **C** for maximum performance.
 
+![Interface](interface.png)
+
 ## *Note*
 This project was developed as the final requirement for my Computer Science degree.
