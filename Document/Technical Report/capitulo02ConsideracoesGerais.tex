@@ -146,6 +146,117 @@ de texto é vasto e diversificado, abrangendo desde simples e comuns editores de
 texto usados diariamente até sofisticados e completos ambientes de
 desenvolvimento.
 
+\subsection{Buffer de Texto}
+
+Para entender os processadores de texto, é importante entender o que é um buffer de texto. Pense nisso: quando o usuário digita um caractere, ele é inserido em um \textit{buffer} de edição, uma estrutura em memória que mantém o conteúdo do documento em tempo real, permitindo manipulações rápidas, como inserções, remoções e formatações, sem acessar diretamente o arquivo no disco. Somente quando o usuário salva o documento (ou ocorre um salvamento automático) é que o conteúdo de fato é gravado permanentemente no arquivo de armazenamento \cite{Jacobson1989}.
+
+\begin{tikzpicture}[
+    scale=0.9,
+    every node/.style={transform shape, font=\sffamily\scriptsize},
+    node distance=2.8cm and 3.5cm,
+    ->, >=stealth, thick
+]
+
+    % ===== Estilos =====
+    \tikzset{
+        state/.style={
+            circle, very thick, draw=blue!70, fill=blue!10,
+            minimum size=1.8cm, align=center, drop shadow
+        },
+        state_special/.style={
+            circle, very thick, draw=red!70, fill=red!10,
+            minimum size=1.8cm, align=center, drop shadow
+        },
+        action/.style={
+            rectangle, rounded corners, thick, fill=green!10, draw=green!60!black,
+            minimum width=2cm, minimum height=0.8cm, align=center
+        },
+        memory/.style={
+            rectangle, very thick, draw=purple!70, fill=purple!5,
+            minimum width=9cm, minimum height=1.1cm, align=center,
+            font=\footnotesize
+        },
+        label_edge/.style={
+            font=\tiny, fill=white, inner sep=1.5pt
+        }
+    }
+
+    % ===== MEMÓRIA (BUFFER) =====
+    \node[memory] (buffer) at (0, 3.2) {
+        \textbf{BUFFER EM MEMÓRIA (RAM)}\\
+        Array de caracteres com tamanho fixo
+    };
+
+    % ===== ESTADOS =====
+    \node[state] (vazio) at (-4.5, 0) {\textbf{VAZIO}\\(Empty)};
+    \node[state] (parcial) at (0, 0) {\textbf{PARCIAL}\\(Partial)};
+    \node[state_special] (cheio) at (4.5, 0) {\textbf{CHEIO}\\(Full)};
+
+    % ===== AÇÕES (embaixo) =====
+    \node[action] (write) at (-2.5, -2.8) {Escrita\\(Write)};
+    \node[action] (read) at (2.5, -2.8) {Leitura\\(Read)};
+
+    % ===== TRANSIÇÕES ENTRE ESTADOS =====
+
+    % Vazio -> Parcial (write) - seta por cima
+    \draw (vazio) to[bend left=15] node[label_edge, above] {write()} (parcial);
+
+    % Parcial -> Cheio (write) - seta por cima
+    \draw (parcial) to[bend left=15] node[label_edge, above] {write()} (cheio);
+
+    % Cheio -> Parcial (read) - seta por baixo
+    \draw (cheio) to[bend left=15] node[label_edge, below] {read()} (parcial);
+
+    % Parcial -> Vazio (read) - seta por baixo
+    \draw (parcial) to[bend left=15] node[label_edge, below] {read()} (vazio);
+
+    % Parcial loop (escrita/leitura) - loop no topo
+    \draw (parcial) edge[loop above, looseness=8, min distance=18mm]
+        node[label_edge, above=4mm] {write()/read()} (parcial);
+
+    % Vazio loop (tentativa de leitura) - loop na esquerda
+    \draw (vazio) edge[loop left, looseness=6]
+        node[label_edge, left=2mm] {\tiny read():\\bloqueia} (vazio);
+
+    % Cheio loop (tentativa de escrita) - loop na direita
+    \draw (cheio) edge[loop right, looseness=6]
+        node[label_edge, right=2mm] {\tiny write():\\bloqueia} (cheio);
+
+    % ===== CONEXÕES COM AÇÕES (tracejadas) =====
+    \draw[dashed, gray!60] (write) -- (vazio.south west);
+    \draw[dashed, gray!60] (write) -- (parcial.south);
+    \draw[dashed, gray!60] (read) -- (parcial.south);
+    \draw[dashed, gray!60] (read) -- (cheio.south east);
+
+    % ===== CONEXÕES COM BUFFER =====
+    \draw[<->, dashed, purple!70, very thick] (buffer.south) -- (parcial.north);
+    \draw[<->, dashed, purple!70, thick] (buffer.south west) -- (vazio.north east);
+    \draw[<->, dashed, purple!70, thick] (buffer.south east) -- (cheio.north west);
+
+\end{tikzpicture}
+
+\vspace{0.2cm}
+
+\begin{columns}
+    \begin{column}
+        \scriptsize
+        \textbf{Operações:}
+        \begin{itemize}
+            \item \texttt{write()}: Adiciona dados ao buffer
+            \item \texttt{read()}: Remove dados do buffer
+        \end{itemize}
+    \end{column}
+
+    \begin{column}
+        \scriptsize
+        \textbf{Sincronização:}
+        \begin{itemize}
+            \item Estado CHEIO bloqueia escritas
+            \item Estado VAZIO bloqueia leituras
+        \end{itemize}
+    \end{column}
+\end{columns}
+
 \subsection{Processadores de Texto}
 
 Um processador de texto é qualquer software comumente utilizado para a
@@ -168,14 +279,6 @@ o Google Documents\footnote{Disponível em: https://docs.google.com/}, uma ferra
 baseada na nuvem que permite a criação e edição de documentos em tempo real,
 ideal para colaboração.
 
-No entanto, sua estrutura ultrapassa esse aspecto. Tais ferramentas são projetadas usando \textit{buffers}
-de texto. Pense nisso: quando o usuário digita um caractere, ele é inserido em um
-\textit{buffer} de edição, uma estrutura em memória que mantém o
-conteúdo do documento em tempo real, permitindo manipulações rápidas, como
-inserções, remoções e formatações, sem acessar diretamente o arquivo no disco. Somente
-quando o usuário salva o documento (ou ocorre um salvamento automático) é que o conteúdo
-de fato é gravado permanentemente no arquivo de armazenamento \cite{Jacobson1989}.
-
 \subsection{Editores}
 
 Outras alternativas (e as mais comuns para pessoas da área) são os editores
@@ -196,27 +299,6 @@ são voltados para programação, funcionalidades já descritas antes como
 realce de sintaxe, autocompletar e entre outros estão presentes. Além
 disso, esses editores frequentemente suportam múltiplos \textit{buffers} ou abas,
 permitindo que os desenvolvedores trabalhem em vários arquivos simultaneamente.
-
-Podemos destacar neste ponto alguns princípios de funcionamento dos \textit{buffers}, apresentados em \cite{glibc-buffering-concepts}:
-
-\begin{itemize}
-    \item Evento de tecla: fila de eventos;
-
-    \item Buffer de edição (RAM): o editor aplica a operação (inserir/apagar)
-        em uma estrutura interna que representa o documento;
-
-    \item Histórico/\textit{undo}: a operação é registrada (por \textit{log} de
-        comandos, \textit{snapshots} ou ambos);
-
-    \item Tela: um \textit{buffer} de renderização recalcula apenas o que mudou
-        (linha, trecho, \textit{layout});
-
-    \item Persistência: só vai ao disco quando você manda salvar (ou quando o auto-save
-        dispara). Antes disso, a maior parte está em memória, mas mesmo ao salvar,
-        bibliotecas padrão e o SO aplicam \textit{line/full buffering} antes de gravar
-        no arquivo físico.
-\end{itemize}
-
 
 \subsection{IDEs}
 

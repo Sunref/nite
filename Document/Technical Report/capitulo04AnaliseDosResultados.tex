@@ -109,6 +109,11 @@ A ferramenta é um gerador de \textit{parser\footnote{É um analisador sintátic
 
 \subsection{Modo leitura e edição}
 
+Planejado inicialmente, a ferramenta deveria apresentar funcionalidades modais, tais qual o vim. Após o desenvolvimento de toda a lógica de criação e edição de arquivos, o próximo passo foi fazer com que arquivos abertos pudessem ser somente lidos. TODO
+
+\subsection{Dificuldades}
+Durante o desenvolvimento do NITE, diversos obstaculos foram analisados, sendo o principal a biblioteca escolhida. Apesar de ser uma ferramenta muito robusta, existem funcionalidades que são extremamnete semelhantes (como o \textit{mvprintw} e \textit{mvwprintw}, o que dificultou muito o desenvolvimento. Outro problema encontrado foi durante a implementação do \textit{Tree-Sitter}, pois a biblioteca aceita apenas 8 cores básicas, e manipular 256 cores pode se tornar outro desafio. Ademais, a biblioteca continua sendo extremamente completa e uma escolha muito sábia para desenvolvimento em terminais
+
 \section{Repositório do Github}
 
 O código base do editor e este documento se encontram disponíveis no link do Github: \url{https://github.com/Sunref/nite}
