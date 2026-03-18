@@ -54,6 +54,7 @@ char* file_browser_dialog(Dialog *dialog, const char *start_path) {
     int is_dir[50];         // Flag: 1 = diretório, 0 = arquivo
     int num_entries = 0; // Número de entradas encontradas no diretório atual
     int selected = 0; // Índice da entrada selecionada pelo usuário
+    int scroll_offset = 0;
 
     while (1) { // Loop principal do diálogo
         num_entries = 0; // Reinicia o número de entradas a cada iteração
@@ -103,18 +104,19 @@ char* file_browser_dialog(Dialog *dialog, const char *start_path) {
         // Mostrar lista de entradas
         int max_display = dialog->height - 8; // Número máximo de linhas para exibir entradas
         for (int i = 0; i < num_entries && i < max_display; i++) { // Itera pelas entradas até o máximo de linhas
-            if (i == selected) { // Se for a entrada selecionada, inverte a cor
+        	int index = scroll_offset + i;
+            if (index == selected) { // Se for a entrada selecionada, inverte a cor
                 wattron(dialog->win, A_REVERSE);
             }
 
             // Diretórios entre colchetes, arquivos sem
-            if (is_dir[i]) { // Se for diretório, exibe entre colchetes
-                mvwprintw(dialog->win, 5 + i, 2, " [%s] ", entries[i]);
+            if (is_dir[index]) { // Se for diretório, exibe entre colchetes
+                mvwprintw(dialog->win, 5 + i, 2, " [%s] ", entries[index]);
             } else {
-                mvwprintw(dialog->win, 5 + i, 2, "  %s  ", entries[i]); // Se for arquivo, exibe normalmente
+                mvwprintw(dialog->win, 5 + i, 2, "  %s  ", entries[index]); // Se for arquivo, exibe normalmente
             }
 
-            if (i == selected) { // Se for a entrada selecionada, desinverte a cor
+            if (index == selected) { // Se for a entrada selecionada, desinverte a cor
                 wattroff(dialog->win, A_REVERSE);
             }
         }
@@ -158,11 +160,21 @@ char* file_browser_dialog(Dialog *dialog, const char *start_path) {
                 break;
 
             case 259: // KEY_UP
-                if (selected > 0) selected--;
+                if (selected > 0){
+                    selected--;
+                    if (selected < scroll_offset) {
+                        scroll_offset--;
+                    }
+                }
                 break;
 
             case 258: // KEY_DOWN
-                if (selected < num_entries - 1) selected++;
+                if (selected < num_entries - 1) {
+                    selected++;
+                    if (selected >= scroll_offset + dialog->height - 8) {
+                        scroll_offset++;
+                    }
+                }
                 break;
         }
     }
@@ -295,6 +307,7 @@ char* directory_dialog(Dialog *dialog, const char *current_path) { // Exibe um d
     char dirs[50][256]; // Armazena os nomes dos diretórios disponíveis
     int num_dirs = 0; // Contador de diretórios disponíveis
     int selected = 0; // Índice do diretório selecionado
+    int scroll_offset = 0; // Deslocamento de rolagem para exibir diretórios fora da área visível
 
     // Inicialmente é obtido o diretório atual de trabalho
     getcwd(selected_path, sizeof(selected_path));
@@ -314,15 +327,16 @@ char* directory_dialog(Dialog *dialog, const char *current_path) { // Exibe um d
         // Título da lista
         mvwprintw(dialog->win, 3, 2, "Select directory:");
 
-        int max_display = dialog->height - 8; // espaço útil para listar entradas
+        int max_display = 8; // espaço útil para listar entradas
         for (int i = 0; i < num_dirs && i < max_display; i++) { // Percorre os diretórios disponíveis
-		    if (i == selected) {
+        	int display_index = scroll_offset + i;
+		    if (display_index == selected) {
 		        // Destaque visual para a linha selecionada
 		        wattron(dialog->win, A_REVERSE);
-		        mvwprintw(dialog->win, 5 + i, 2, " [%s] ", dirs[i]);
+		        mvwprintw(dialog->win, 5 + i, 2, " [%s] ", dirs[display_index]);
 		        wattroff(dialog->win, A_REVERSE);
 		    } else { // Diretório não selecionado
-		        mvwprintw(dialog->win, 5 + i, 2, " [%s] ", dirs[i]);
+		        mvwprintw(dialog->win, 5 + i, 2, " [%s] ", dirs[display_index]);
 		    }
         }
 
@@ -350,15 +364,26 @@ char* directory_dialog(Dialog *dialog, const char *current_path) { // Exibe um d
                     }
                     // Recarrega a lista após mudança de diretório
                     reload_dirs(dirs, &num_dirs, &selected, selected_path);
+                    scroll_offset = 0;
                 }
                 break;
 
             case 259: // KEY_UP
-                if (selected > 0) selected--;
+                if (selected > 0){
+                	selected--;
+                 	if(selected < scroll_offset){
+                 		scroll_offset = selected;
+                 	}
+                }
                 break;
 
             case 258: // KEY_DOWN
-                if (selected < num_dirs - 1) selected++;
+                if (selected < num_dirs - 1) {
+                    selected++;
+                    if (selected >= scroll_offset + max_display) {
+                        scroll_offset = selected - max_display + 1;
+                    }
+                }
                 break;
 
             case 's': case 'S': // Selecionar diretório atual e retornar seu caminho
