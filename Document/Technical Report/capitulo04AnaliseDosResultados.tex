@@ -79,7 +79,7 @@ Ao criar um arquivo no NITE, o mesmo inicia o modo edição em um arquivo limpo 
     \end{tabular}
 \end{table}
 
-Caso uma das extensão não aceitas seja chamada, o editor exibirá um erro e solicitará que o usuário crie um arquivo válido. Em caso do usuário não fornecer uma extensão, o editor continuará o processo normalmente.
+Caso uma das extensões não aceitas seja chamada, o editor exibirá um erro e solicitará que o usuário crie um arquivo válido. Em caso de o usuário não fornecer uma extensão, o editor continuará o processo normalmente.
 
 \FloatBarrier
 \begin{figure}[!htbp]
@@ -90,14 +90,14 @@ Caso uma das extensão não aceitas seja chamada, o editor exibirá um erro e so
 \end{figure}
 \FloatBarrier
 
-Caso o usuário resolva sair do editor sem salvar o arquivo, uma mensagem é exibida no terminal após a saída. Caso o arquivo foi salvo, após a saída do editor, outra mensagem é exibida. Para essa funcionalidade, a biblioteca \textit{panel}\footnote{Faz parte do conjunto de bibliotecas \textit{ncurses}, usada para criar interfaces de texto como janelas, menus e painéis sobrepostos} foi utilizada.
+Caso o usuário resolva sair do editor sem salvar o arquivo, uma mensagem é exibida no terminal após a saída. Caso o arquivo tenha sido, após a saída do editor, outra mensagem é exibida. Para essa funcionalidade, a biblioteca \textit{panel}\footnote{Faz parte do conjunto de bibliotecas \textit{ncurses}, usada para criar interfaces de texto como janelas, menus e painéis sobrepostos} foi utilizada.
 
 \subsection{Tree-Sitter}
 \label{subsec:tree_s}
 
-Utilizando a ferramenta \textit{Tree-Sitter\footnote{Disponível em: https://tree-sitter.github.io/tree-sitter/}} foi possível implementar o destaque de sintaxe para determinadas linguagens. No momento de finalização do editor, o mesmo suporta destaque para as linguagens de programação C e Python.
+Utilizando a ferramenta \textit{Tree-Sitter\footnote{Disponível em: https://tree-sitter.github.io/tree-sitter/}}, foi possível implementar o destaque de sintaxe para determinadas linguagens. No momento de finalização do editor, o editor suporta destaque para diversas linguagens de programação.
 
-A ferramenta é um gerador de \textit{parser\footnote{É um analisador sintático. Sua função é ler uma entrada de dados que possuem certas regras específicas e montar sua estrutura.}} possuindo sua própria biblioteca. É conhecida por ser uma opção robusta e rápida, e que pode ser implementada em qualquer aplicação. Em seu site, a mesma disponibiliza uma série de linguagens que foram implementadas de forma oficial e/ou colaborativa.
+A ferramenta é um gerador de \textit{parser\footnote{É um analisador sintático. Sua função é ler uma entrada de dados que possuem certas regras específicas e montar sua estrutura.}} e possui sua própria biblioteca. É conhecida por ser uma opção robusta, rápida e que pode ser implementada em qualquer aplicação. Em seu site, a ferramenta disponibiliza uma série de linguagens que foram implementadas de forma oficial e/ou colaborativa.
 
 \FloatBarrier
 \begin{figure}[!htbp]
@@ -110,9 +110,9 @@ A ferramenta é um gerador de \textit{parser\footnote{É um analisador sintátic
 
 \subsection{Modo leitura e edição}
 
-Planejado inicialmente, a ferramenta deveria apresentar funcionalidades modais, tais qual o vim. Após o desenvolvimento de toda a lógica de criação e edição de arquivos, o próximo passo foi fazer com que arquivos abertos pudessem ser somente lidos.
+Planejada inicialmente, a ferramenta deveria apresentar funcionalidades modais, tais quais o vim. Após o desenvolvimento de toda a lógica de criação e edição de arquivos, o próximo passo foi fazer com que arquivos abertos pudessem ser somente lidos.
 
-Diversas possibilidades foram analisadas, como criar um comando no modo texto que transformaria o arquivo em somente leitura, mas a ideia que seguiu e foi implementada foi a de dar opção de escolha para o usuário assim que o mesmo escolhesse qual arquivo abrir. Ao selecionar o arquivo escolhido para abrir no editor, uma janela de dialogo é apresentada, perguntando como o usuário vai abrir aquele arquivo, se será no padão (modo edição) ou em modo somente leitura, como mostra a Figura \ref{fig:OPCAO} abaixo:
+Diversas possibilidades foram analisadas, como criar um comando no modo texto que transformaria o arquivo em somente leitura, mas a ideia que seguiu e foi implementada foi a de dar opção de escolha para o usuário assim que o mesmo escolhesse qual arquivo abrir. Ao selecionar o arquivo escolhido para abrir no editor, uma janela de diálogo é apresentada, perguntando como o usuário abriria aquele arquivo, se será no padrão (modo edição) ou em modo somente leitura, como mostra a Figura \ref{fig:OPCAO} abaixo:
 
 \FloatBarrier
 \begin{figure}[!htbp]
@@ -123,9 +123,9 @@ Diversas possibilidades foram analisadas, como criar um comando no modo texto qu
 \end{figure}
 \FloatBarrier
 
-O modo edição, modo padrão do editor já foi mostrado anteriormente na \autoref{subsec:tree_s}, Figura \ref{fig:TreeSitter}. Lá, o usuário tem ao topo do terminal os comandos principais, sendo ativação do modo de comando, o comando de salvar e o comando de saída, além de informações do documento. Cada linha do arquivo é númerada, e a linha onde o cursor está é destacada. O usuário também consegue usar comandos básicos, como copiar, colar, recortar, selecionar e navegar entre as linhas com as setas. Tudo esta explicado no arquivo ``help.txt'', disponível na página inicial do programa.
+O modo edição, modo padrão do editor, já foi mostrado anteriormente na \autoref{subsec:tree_s} Figura \ref{fig:TreeSitter}. Lá, o usuário tem ao topo do terminal os comandos principais, sendo a ativação do modo de comando, o comando de salvar e o comando de saída, além de informações do documento. Cada linha do arquivo é numerada, e a linha onde o cursor está é destacada. O usuário também consegue usar comandos básicos, como copiar, colar, recortar, selecionar e navegar entre as linhas com as setas. Tudo está explicado no arquivo ``help.txt'', disponível na página inicial do programa.
 
-Já o modo leitura é ligeiramente diferente. Nele, o usuário consegue navegar entre as linhas, também numeradas, mas agora não destacadas. Acima, o usuário também tem acesso as informações do documento indicando que o mesmo só pode ser lido, além de como sair do arquivo. Mais abaixo no terminal, o editor disponibiliza a linha atual do cursor e quantas linhas totais o documento possuí. O modo leitura pode ser visualizado na Figura \ref{fig:LEITURA} abaixo:
+Já o modo leitura é ligeiramente diferente. Nele, o usuário consegue navegar entre as linhas, também numeradas, mas agora não destacadas. Acima, o usuário também tem acesso as informações do documento indicando que o mesmo só pode ser lido, além de como sair do arquivo. Mais abaixo no terminal, o editor disponibiliza a linha atual do cursor e quantas linhas totais o documento possui. O modo leitura pode ser visualizado na Figura \ref{fig:LEITURA} abaixo:
 
 \FloatBarrier
 \begin{figure}[!htbp]
@@ -138,7 +138,7 @@ Já o modo leitura é ligeiramente diferente. Nele, o usuário consegue navegar 
 
 \subsection{Dificuldades}
 
-Durante o desenvolvimento do NITE, diversos obstaculos foram analisados, sendo o principal a biblioteca escolhida. Apesar de ser uma ferramenta muito robusta, existem funcionalidades que são extremamnete semelhantes (como o \textit{mvprintw} e \textit{mvwprintw}, o que dificultou muito o desenvolvimento. Outro problema encontrado foi durante a implementação do \textit{Tree-Sitter}, pois a biblioteca aceita apenas 8 cores básicas, e manipular 256 cores pode se tornar outro desafio. Ademais, a biblioteca continua sendo extremamente completa e uma escolha muito sábia para desenvolvimento em terminais.
+Durante o desenvolvimento do NITE, diversos obstáculos foram encontrados, sendo o principal a biblioteca escolhida. Apesar de ser uma ferramenta muito robusta, existem funcionalidades que são extremamente semelhantes (como o \textit{mvprintw} e \textit{mvwprintw}), o que dificultou muito o desenvolvimento. Outro problema encontrado foi durante a implementação do \textit{Tree-Sitter}, pois a biblioteca aceita apenas 8 cores básicas, e manipular 256 cores pode se tornar outro desafio. Ademais, a biblioteca continua sendo extremamente completa e uma escolha muito sábia para desenvolvimento em terminais.
 
 \section{Repositório do Github}
 
