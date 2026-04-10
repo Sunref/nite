@@ -48,7 +48,7 @@ $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
 # Link final binary
-$(BUILD_BIN): $(OBJS) | $(BUILD_DIR)
+$(BUILD_BIN): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $@ $(LDLIBS)
 	@printf "Built %s\n" $@
 

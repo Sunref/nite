@@ -31,21 +31,21 @@ void draw_centered_screen(WINDOW *win) { // Desenha a tela principal centralizad
     // Digite !o para abrir um arquivo
     mvwprintw(win, cmd_y, (col - 50) / 2, "Enter ");
     wattron(win, COLOR_PAIR(1)); // azul
-    wprintw(win, "!o");
+    wprintw(win, CMD_OPEN);
     wattroff(win, COLOR_PAIR(1));
     wprintw(win, " to open a file");
 
     // Digite !n para criar novo arquivo
     mvwprintw(win, cmd_y + 1, (col - 50) / 2, "Enter ");
     wattron(win, COLOR_PAIR(2)); // amarelo
-    wprintw(win, "!n");
+    wprintw(win, CMD_NEW);
     wattroff(win, COLOR_PAIR(2));
     wprintw(win, " to create a new file");
 
     // Digite !q para sair do editor
     mvwprintw(win, cmd_y + 2, (col - 50) / 2, "Enter ");
     wattron(win, COLOR_PAIR(3)); // vermelho
-    wprintw(win, "!q");
+    wprintw(win, CMD_EXIT);
     wattroff(win, COLOR_PAIR(3));
     wprintw(win, " to exit the editor");
 

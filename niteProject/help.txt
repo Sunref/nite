@@ -18,6 +18,10 @@ CTRL + Z  - Undo
 CTRL + Y  - Redo
 CTRL + A  - Select All
 SHIFT + Arrow Keys - Select text using the arrow keys
+HOME/CTRL + Left - Move cursor to the beginning of the line
+END/CTRL + Right  - Move cursor to the end of the line
+CTRL + Up      - Move cursor to the beginning of the word
+CTRL + Down    - Move cursor to the end of the word
 
 --------------------------------------------------
 
