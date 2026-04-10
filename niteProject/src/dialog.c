@@ -47,87 +47,124 @@ void destroy_dialog(Dialog *dialog) {
 // Exibe um diálogo que permite navegar entre diretórios E selecionar arquivos
 char* file_browser_dialog(Dialog *dialog, const char *start_path) {
 
-    char current_path[512]; // Armazena o caminho atual do diretório
-    snprintf(current_path, sizeof(current_path), "%s", start_path); // Inicializa com o caminho de início
+    char current_path[512];
+    snprintf(current_path, sizeof(current_path), "%s", start_path);
 
-    char entries[50][256];  // Nomes das entradas (pastas + arquivos)
-    int is_dir[50];         // Flag: 1 = diretório, 0 = arquivo
-    int num_entries = 0; // Número de entradas encontradas no diretório atual
-    int selected = 0; // Índice da entrada selecionada pelo usuário
+    char entries[50][256];
+    int is_dir[50];
+    int num_entries = 0;
+    int selected = 0;
     int scroll_offset = 0;
 
-    while (1) { // Loop principal do diálogo
-        num_entries = 0; // Reinicia o número de entradas a cada iteração
+    while (1) {
+        // Arrays temporários para ordenar diretórios e arquivos separadamente
+        char dir_names[50][256];
+        int num_dirs = 0;
+        char file_names[50][256];
+        int num_files = 0;
 
-        // Adicionar ".." se não estiver na raiz
+        // Ler diretório atual, pulando TODOS os arquivos ocultos (. e ..)
+        DIR *dir = opendir(current_path);
+        if (dir) {
+            struct dirent *entry;
+            while ((entry = readdir(dir)) != NULL) {
+                // Pular tudo que começa com '.' (inclui '.' e '..')
+                if (entry->d_name[0] == '.') continue;
+
+                if (entry->d_type == DT_DIR && num_dirs < 49) {
+                    strncpy(dir_names[num_dirs], entry->d_name, 255);
+                    dir_names[num_dirs][255] = '\0';
+                    num_dirs++;
+                } else if (entry->d_type == DT_REG && num_files < 49) {
+                    strncpy(file_names[num_files], entry->d_name, 255);
+                    file_names[num_files][255] = '\0';
+                    num_files++;
+                }
+            }
+            closedir(dir);
+        }
+
+        // Ordenar diretórios alfabeticamente
+        for (int i = 0; i < num_dirs - 1; i++) {
+            for (int j = i + 1; j < num_dirs; j++) {
+                if (strcmp(dir_names[i], dir_names[j]) > 0) {
+                    char tmp[256];
+                    strcpy(tmp, dir_names[i]);
+                    strcpy(dir_names[i], dir_names[j]);
+                    strcpy(dir_names[j], tmp);
+                }
+            }
+        }
+
+        // Ordenar arquivos alfabeticamente
+        for (int i = 0; i < num_files - 1; i++) {
+            for (int j = i + 1; j < num_files; j++) {
+                if (strcmp(file_names[i], file_names[j]) > 0) {
+                    char tmp[256];
+                    strcpy(tmp, file_names[i]);
+                    strcpy(file_names[i], file_names[j]);
+                    strcpy(file_names[j], tmp);
+                }
+            }
+        }
+
+        // Montar lista final: [..] primeiro, depois dirs ordenados, depois arquivos ordenados
+        num_entries = 0;
+
         if (strlen(current_path) > 1) {
-            strcpy(entries[num_entries], ".."); // Adiciona ".." ao início das entradas
-            is_dir[num_entries] = 1; // Indica que ".." é um diretório
+            strcpy(entries[num_entries], "..");
+            is_dir[num_entries] = 1;
             num_entries++;
         }
 
-        // Ler diretório atual
-        DIR *dir = opendir(current_path); // Abre o diretório atual
-        if (dir) { // Se o diretório foi aberto com sucesso
-            struct dirent *entry; // Pega a próxima entrada do diretório
-            while ((entry = readdir(dir)) != NULL && num_entries < 49) { // Enquanto houver entradas e não ultrapassar o limite
-                // Pular arquivos ocultos (exceto "..")
-                if (entry->d_name[0] == '.' && strcmp(entry->d_name, "..") != 0) { // Se for um arquivo oculto e não for ".."
-                    continue;
-                }
-
-                // Adicionar diretórios e arquivos
-                if (entry->d_type == DT_DIR && strcmp(entry->d_name, ".") != 0) { // Se for um diretório e não for "."
-                    strncpy(entries[num_entries], entry->d_name, 255); // Copia o nome da entrada para o array de nomes
-                    entries[num_entries][255] = '\0'; // Termina a string com '\0'
-                    is_dir[num_entries] = 1; // Marca como diretório
-                    num_entries++; // Incrementa o número de entradas
-                } else if (entry->d_type == DT_REG) { // Se for um arquivo
-                    strncpy(entries[num_entries], entry->d_name, 255); // Copia o nome da entrada para o array de nomes
-                    entries[num_entries][255] = '\0'; // Termina a string com '\0'
-                    is_dir[num_entries] = 0; // Marca como arquivo
-                    num_entries++; // Incrementa o número de entradas
-                }
-            }
-            closedir(dir); // Fecha o diretório
+        for (int i = 0; i < num_dirs && num_entries < 49; i++) {
+            strcpy(entries[num_entries], dir_names[i]);
+            is_dir[num_entries] = 1;
+            num_entries++;
         }
+
+        for (int i = 0; i < num_files && num_entries < 49; i++) {
+            strcpy(entries[num_entries], file_names[i]);
+            is_dir[num_entries] = 0;
+            num_entries++;
+        }
+
+        // Garantir que selected não ultrapasse os limites após recarregar
+        if (selected >= num_entries) selected = num_entries > 0 ? num_entries - 1 : 0;
+        if (scroll_offset > selected) scroll_offset = selected;
 
         // Limpar área interna
         for (int i = 1; i < dialog->height - 1; i++) {
-            mvwhline(dialog->win, i, 1, ' ', dialog->width - 2); // limpa linha por linha
+            mvwhline(dialog->win, i, 1, ' ', dialog->width - 2);
         }
 
         // Mostrar caminho atual
         mvwprintw(dialog->win, 1, 2, "Current: %.*s", dialog->width - 12, current_path);
         mvwprintw(dialog->win, 3, 2, "Select file:");
 
-        // Mostrar lista de entradas
-        int max_display = dialog->height - 8; // Número máximo de linhas para exibir entradas
-        for (int i = 0; i < num_entries && i < max_display; i++) { // Itera pelas entradas até o máximo de linhas
-        	int index = scroll_offset + i;
-            if (index == selected) { // Se for a entrada selecionada, inverte a cor
-                wattron(dialog->win, A_REVERSE);
-            }
+        // Mostrar lista de entradas com scroll correto
+        int max_display = dialog->height - 8;
+        for (int i = 0; i < max_display && (scroll_offset + i) < num_entries; i++) {
+            int index = scroll_offset + i;
 
-            // Diretórios entre colchetes, arquivos sem
-            if (is_dir[index]) { // Se for diretório, exibe entre colchetes
+            if (index == selected) wattron(dialog->win, A_REVERSE);
+
+            if (is_dir[index]) {
                 mvwprintw(dialog->win, 5 + i, 2, " [%s] ", entries[index]);
             } else {
-                mvwprintw(dialog->win, 5 + i, 2, "  %s  ", entries[index]); // Se for arquivo, exibe normalmente
+                mvwprintw(dialog->win, 5 + i, 2, "  %s  ", entries[index]);
             }
 
-            if (index == selected) { // Se for a entrada selecionada, desinverte a cor
-                wattroff(dialog->win, A_REVERSE);
-            }
+            if (index == selected) wattroff(dialog->win, A_REVERSE);
         }
 
         // Instruções
         mvwprintw(dialog->win, dialog->height - 3, 2, "Arrows: Navigate  Enter: Open/Select");
         mvwprintw(dialog->win, dialog->height - 2, 2, "ESC: Cancel");
 
-        wrefresh(dialog->win); // Atualiza a tela
+        wrefresh(dialog->win);
 
-        int ch = wgetch(dialog->win); // Aguarda o próximo caractere
+        int ch = wgetch(dialog->win);
 
         switch (ch) {
             case 27: // ESC
@@ -136,22 +173,23 @@ char* file_browser_dialog(Dialog *dialog, const char *start_path) {
             case 10: // Enter
                 if (num_entries > 0) {
                     if (is_dir[selected]) {
-                        // É um diretório - navegar
                         if (strcmp(entries[selected], "..") == 0) {
                             // Voltar um nível
-                            char *last_slash = strrchr(current_path, '/'); // Pega o último segmento do caminho
-                            if (last_slash && last_slash != current_path) { // Se não for a raiz
-                                *last_slash = '\0'; // Remove o último segmento do caminho
+                            char *last_slash = strrchr(current_path, '/');
+                            if (last_slash && last_slash != current_path) {
+                                *last_slash = '\0';
                             }
                         } else {
                             // Entrar no diretório
-                            char new_path[512]; // Caminho completo do novo diretório
-                            snprintf(new_path, sizeof(new_path), "%s/%s", current_path, entries[selected]); // Constrói o caminho completo do novo diretório
-                            strcpy(current_path, new_path); // Copia o novo caminho para o caminho atual
+                            char new_path[512];
+                            snprintf(new_path, sizeof(new_path), "%s/%s", current_path, entries[selected]);
+                            strncpy(current_path, new_path, sizeof(current_path) - 1);
+                            current_path[sizeof(current_path) - 1] = '\0';
                         }
-                        selected = 0; // Reinicia a seleção para o início da lista
+                        selected = 0;
+                        scroll_offset = 0;
                     } else {
-                        // É um arquivo - selecionar e retornar caminho completo
+                        // Selecionar arquivo e retornar caminho completo
                         char full_path[512];
                         snprintf(full_path, sizeof(full_path), "%s/%s", current_path, entries[selected]);
                         return strdup(full_path);
@@ -160,20 +198,18 @@ char* file_browser_dialog(Dialog *dialog, const char *start_path) {
                 break;
 
             case 259: // KEY_UP
-                if (selected > 0){
+                if (selected > 0) {
                     selected--;
-                    if (selected < scroll_offset) {
-                        scroll_offset--;
-                    }
+                    if (selected < scroll_offset)
+                        scroll_offset = selected;
                 }
                 break;
 
             case 258: // KEY_DOWN
                 if (selected < num_entries - 1) {
                     selected++;
-                    if (selected >= scroll_offset + dialog->height - 8) {
-                        scroll_offset++;
-                    }
+                    if (selected >= scroll_offset + max_display)
+                        scroll_offset = selected - max_display + 1;
                 }
                 break;
         }
