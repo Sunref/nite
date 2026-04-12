@@ -10,6 +10,7 @@
 #include "../include/dialog.h"
 #include "../include/syntax.h"
 #include "../include/config.h"
+#include "../include/command.h"
 #include <ncurses.h>
 #include <stdlib.h>
 #include <string.h>
@@ -425,6 +426,22 @@ void enter_editor_mode(EditorBuffer *buffer, WINDOW *win, int row, int col) { //
                         cmdbuf[0] = '\0';
                     }
                 }
+                else if (strcmp(cmdbuf, CMD_HELP) == 0) {
+                    // Abrir help.txt em janela sobreposta (read_only); ao sair, volta ao editor
+                    command_line_active = 0;
+                    cmdlen = 0;
+                    cmdbuf[0] = '\0';
+                    EditorBuffer *help_buf = load_help_file();
+                    if (help_buf) {
+                        read_only(help_buf, win, row, col);
+                        free_editor_buffer(help_buf);
+                    } else {
+                        mvwhline(win, row - 1, 0, ' ', col);
+                        mvwprintw(win, row - 1, 0, "Could not open help.txt");
+                        wrefresh(win);
+                        napms(800);
+                    }
+                }
                 else {
                     // Comando desconhecido = limpar e continuar
                     cmdlen = 0;
@@ -652,6 +669,11 @@ void enter_editor_mode(EditorBuffer *buffer, WINDOW *win, int row, int col) { //
             case 8: case 127: case 263: // Backspace
                 sel.active = 0;
                 handle_backspace(buffer);
+                break;
+
+            case KEY_DC: // Delete = Apagar caractere sob o cursor (ou seleção ativa)
+                history_push(history, buffer);
+                handle_delete(buffer, &sel);
                 break;
 
             case 259: // KEY_UP
@@ -903,16 +925,22 @@ void read_only(EditorBuffer *buffer,  WINDOW *win, int row, int col){ // Funçã
 		wrefresh(win);
 		ch = wgetch(win);
 
-		// Ativar/desativar modo comando
+		// Ativar/desativar modo comando com CTRL+Space (toggle)
 		if (ch == 0) {
-		   command_line_active = 1;
+		    command_line_active = !command_line_active;
 		    cmdlen = 0;
 		    cmdbuf[0] = '\0';
-	        goto render; // Re-renderizar para atualizar a linha de comando ou ocultá-la
+	        goto render;
 	    }
 
 	    // Modo comando ativo
 	    if (command_line_active) {
+	        if (ch == 27) { // ESC = fechar linha de comando sem executar
+	            command_line_active = 0;
+	            cmdlen = 0;
+	            cmdbuf[0] = '\0';
+	            goto render;
+	        }
 	        if (ch == KEY_BACKSPACE || ch == 127 || ch == 8) {
 	            if (cmdlen > 0) cmdbuf[--cmdlen] = '\0';
 	        } else if (ch == 10) { // Enter

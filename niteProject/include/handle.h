@@ -24,6 +24,7 @@ typedef struct {
 } EditorHistory;
 
 void handle_backspace(EditorBuffer *buffer);
+void handle_delete(EditorBuffer *buffer, Selection *sel);
 void handle_copy(EditorBuffer *buffer, const Selection *sel);
 void handle_cut(EditorBuffer *buffer, Selection *sel);
 void handle_paste(EditorBuffer *buffer);

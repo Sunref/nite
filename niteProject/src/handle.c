@@ -67,6 +67,64 @@ void handle_backspace(EditorBuffer *buffer) { // Função para lidar com a açã
 
 }
 
+// Deleta o caractere sob o cursor ou, se houver seleção ativa, apaga toda a seleção.
+void handle_delete(EditorBuffer *buffer, Selection *sel) {
+
+    if (!buffer || !buffer->lines || buffer->num_lines <= 0) return;
+
+    // Se há seleção ativa, apagar toda a seleção
+    if (sel && sel->active) {
+        delete_selection(buffer, sel);
+        if (buffer->syntax)
+            syntax_update(buffer->syntax, buffer->lines, buffer->num_lines);
+        buffer->modified = 1;
+        return;
+    }
+
+    char *line = buffer->lines[buffer->current_line];
+    int line_len = (int)strlen(line);
+
+    if (buffer->current_col < line_len) {
+        // Há um caractere à direita do cursor: removê-lo deslocando os seguintes para a esquerda
+        for (int i = buffer->current_col; i < line_len; i++) {
+            line[i] = line[i + 1]; // inclui o '\0' ao final
+        }
+
+        if (buffer->syntax)
+            syntax_update(buffer->syntax, buffer->lines, buffer->num_lines);
+
+        buffer->modified = 1;
+
+    } else if (buffer->current_line < buffer->num_lines - 1) {
+        // Cursor está no fim da linha e há uma próxima linha: juntar com ela
+        char *next_line = buffer->lines[buffer->current_line + 1];
+        int next_len = (int)strlen(next_line);
+
+        // Realocar a linha atual para comportar a concatenação
+        char *merged = realloc(line, (size_t)(line_len + next_len + 1));
+        if (!merged) return;
+
+        memcpy(merged + line_len, next_line, (size_t)(next_len + 1)); // copia conteúdo + '\0'
+        buffer->lines[buffer->current_line] = merged;
+
+        free(next_line);
+
+        // Deslocar as linhas seguintes uma posição para cima
+        for (int i = buffer->current_line + 1; i < buffer->num_lines - 1; i++) {
+            buffer->lines[i] = buffer->lines[i + 1];
+        }
+
+        buffer->num_lines--;
+        // O cursor permanece na mesma linha e coluna (fim da linha original)
+
+        if (buffer->syntax)
+            syntax_update(buffer->syntax, buffer->lines, buffer->num_lines);
+
+        buffer->modified = 1;
+    }
+    // Se cursor está no fim da última linha, não há nada a fazer
+}
+
 // Normaliza seleção: (sl,sc) = início, (el,ec) = fim em ordem do documento.
 static void selection_bounds(const Selection *sel, int *sl, int *sc, int *el, int *ec) {
 

@@ -23,7 +23,7 @@
 
 // ! FUNÇÃO POR CURSOR
 // Retorna o buffer do help.txt: caminho do make, cwd, ../ e relativo ao executável (Linux).
-static EditorBuffer *load_help_file(void) {
+EditorBuffer *load_help_file(void) {
 
     EditorBuffer *buf;
 #ifdef HELP_FILE
