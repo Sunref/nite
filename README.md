@@ -33,7 +33,7 @@ I chose nano as a reference because it represents the balance between simplicity
 ```sh
 # Clone the repository
 git clone https://github.com/yourusername/nite.git
-cd nite/niteProject
+cd nite
 
 # Build
 make
