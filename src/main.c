@@ -1,0 +1,73 @@
+/*
+ *
+ * Projeto nite
+ * Autor: Fernanda Martins da Silva
+ * Loop principal do programa.
+ *
+ */
+
+#include "../include/command.h"
+#include "../include/status.h"
+#include "../include/menu.h"
+#include <ncurses.h>
+#include <signal.h> // Biblioteca para tratamento de sinais
+#include <stdlib.h>
+#include <panel.h>
+
+void cleanup_ncurses() { // Função para limpar a tela ncurses ao sair
+    endwin();
+}
+
+void handle_sigint(int sig) { // Função para tratar o sinal SIGINT
+    endwin();
+    exit(1);
+}
+
+int main() {
+
+    initscr(); // Inicializa a tela ncurses
+    raw(); // Desativa o buffer da linha (modo raw)
+    noecho();  // Não ecoa os caracteres digitados pelo usuário
+    keypad(stdscr, TRUE); // Habilita captura de teclas especiais (setas, F1, etc.)
+    start_color(); // Inicia o uso de cores no terminal
+    use_default_colors(); // Usa as cores padrão do terminal
+
+    atexit(cleanup_ncurses); // Limpa a tela ncurses ao sair
+    signal(SIGINT, handle_sigint); // Trata o sinal SIGINT
+
+    // Define pares de cores para uso posterior
+    init_pair(1, COLOR_BLUE, -1);
+    init_pair(2, COLOR_YELLOW, -1);
+    init_pair(3, COLOR_RED, -1);
+    init_pair(4, COLOR_WHITE, -1);
+
+    // Variáveis para armazenar o tamanho da tela
+    int row;
+    int col;
+    getmaxyx(stdscr, row, col); // Armazenando tamanho da janela
+
+    char status_msg[128] = ""; // Buffer para mensagem de status
+
+    while (1) { // Loop principal
+
+        draw_centered_screen(stdscr); // Desenha a interface centralizada
+
+        // Mostra mensagem de status na linha acima do prompt
+        show_status(stdscr, row, col, status_msg);
+
+        // Prompt na última linha e lê input do usuário
+        char input[128] = "";
+        get_user_input(stdscr, row, col, input, sizeof(input));
+
+        // Toda lógica de comando é tratada em command.c
+        int cmd_result = process_command(input, status_msg, sizeof(status_msg), stdscr, row, col);
+        if (cmd_result == 1) { // Comando sair
+            break;
+        }
+
+    }
+
+    endwin(); // Finaliza a tela ncurses
+    return 0; // Finaliza programa
+
+}
